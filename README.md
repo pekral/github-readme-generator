@@ -10,45 +10,53 @@ Code, Codex, and Cursor from a single canonical skill definition.
 ## Requirements
 
 An agent host that loads Agent Skills — Claude Code, Codex, or Cursor. The skill
-has no dependencies; the `install.sh` route needs Bash.
+itself has no dependencies; installing with `npx` needs Node.js.
 
 ## Installation
 
-### Claude Code
+```text
+npx skills add pekral/github-readme-generator
+```
+
+That installs into every agent it detects — Claude Code, Codex, Cursor, and
+[70-odd others](https://github.com/vercel-labs/skills#supported-agents). Add
+`-g` to install for your user instead of the current project, and `-a` to pick
+agents explicitly:
+
+```text
+npx skills add pekral/github-readme-generator -g -a claude-code -a codex
+```
+
+### As a plugin instead
+
+Both plugin hosts carry a marketplace entry, which trades a second command for
+managed updates.
+
+Claude Code:
 
 ```text
 /plugin marketplace add pekral/github-readme-generator
 /plugin install github-readme-generator@pekral
 ```
 
-Restart the session afterwards so the skill loads. The same two steps work from
-the shell as `claude plugin marketplace add` and `claude plugin install`.
-
-### Codex
+Codex:
 
 ```text
 codex plugin marketplace add pekral/github-readme-generator
 ```
 
-Then restart the ChatGPT desktop app, open the Plugins Directory, pick the
-`pekral` marketplace, and install the plugin from there. Codex resolves the
-catalog from [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json)
-and the plugin itself from [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json).
-
-### Cursor
-
-```text
-./install.sh
-```
-
-This copies `skills/github-readme-generator/` into `.agents/skills/` — the
-directory Cursor reads — and into `.claude/skills/`, for the current project.
-Re-running it replaces the installed copy rather than merging into it. It also
-works for Codex if you would rather not use the plugin.
+Codex then needs a restart of the ChatGPT desktop app, after which the plugin
+appears in the Plugins Directory under the `pekral` marketplace.
 
 ## Configuration
 
-Turn the Claude Code plugin off and on without uninstalling it:
+List what is installed, and where:
+
+```text
+npx skills list
+```
+
+Turn the Claude Code plugin off without uninstalling it:
 
 ```text
 claude plugin disable github-readme-generator
@@ -57,22 +65,6 @@ claude plugin enable github-readme-generator
 
 Both write to `enabledPlugins` in `~/.claude/settings.json`, so the setting is
 user-wide.
-
-For the script route, the install target is an argument — any number of skills
-directories, including user-wide ones:
-
-```text
-./install.sh ~/.cursor/skills
-```
-
-Verify an installed copy still matches the source:
-
-```text
-./install.sh --check ~/.cursor/skills
-```
-
-It exits non-zero when a copy is missing or has drifted, which makes it usable
-as a CI step. `./install.sh --help` lists the full usage.
 
 ## Quick start
 
@@ -94,25 +86,18 @@ Audit this README and tell me what's wrong.
 
 ## Updating
 
-Claude Code updates in two steps, then needs a restart:
-
 ```text
-claude plugin marketplace update pekral
-claude plugin update github-readme-generator
+npx skills update github-readme-generator
 ```
 
-Codex refreshes its marketplace snapshot, then reinstalls from the Plugins
-Directory:
+Plugin installs update through their own host instead:
 
 ```text
+claude plugin marketplace update pekral && claude plugin update github-readme-generator
 codex plugin marketplace upgrade pekral
 ```
 
-Copies made by `install.sh` are static — pull and reinstall:
-
-```text
-git pull && ./install.sh
-```
+Claude Code needs a session restart afterwards.
 
 ## What it does
 

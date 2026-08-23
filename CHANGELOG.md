@@ -12,7 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Codex plugin packaging — `.codex-plugin/plugin.json` and a repo marketplace at
   `.agents/plugins/marketplace.json`, installable with
   `codex plugin marketplace add pekral/github-readme-generator`.
-- `.gitignore` for the local skill copies `install.sh` writes.
+- `.gitignore` for the local skill copies an installer writes.
+
+### Removed
+
+- `install.sh`. Installing is now `npx skills add pekral/github-readme-generator`,
+  which covers Claude Code, Codex, Cursor, and every other agent the `skills` CLI
+  knows, and brings `list`, `update`, and `remove` with it.
 
 ## 1.0.0 - 2026-08-23
 

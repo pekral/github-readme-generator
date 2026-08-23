@@ -5,8 +5,8 @@ Thanks for considering a contribution.
 ## The canonical skill lives in one place
 
 `skills/github-readme-generator/` is the only copy of the skill. Everything else
-— the Claude Code and Codex plugin manifests, the two marketplace catalogs,
-`install.sh` — points at it. Never add a second copy for
+— the Claude Code and Codex plugin manifests, the two marketplace catalogs —
+points at it. Never add a second copy for
 another host; the whole distribution model depends on there being exactly one.
 
 ## Making a change
@@ -22,11 +22,12 @@ another host; the whole distribution model depends on there being exactly one.
 
 ```text
 claude plugin validate .
-./install.sh --check .agents/skills .claude/skills
+npx skills add . --list
 ```
 
-The first validates the plugin and marketplace manifests. The second confirms an
-installed copy still matches the source, and exits non-zero when it has drifted.
+The first validates the Claude Code plugin and marketplace manifests. The second
+confirms the skill is still discoverable and prints the description agents match
+against — the frontmatter that decides whether the skill ever activates.
 
 Changes to the skill's behaviour should also be exercised against
 [`tests/scenarios.md`](tests/scenarios.md). Run the affected scenario in a clean

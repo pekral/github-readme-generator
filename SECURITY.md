@@ -14,11 +14,9 @@ be credited in the release notes unless you ask otherwise.
 
 ## What is in scope
 
-This package is a set of instructions for an AI coding agent, plus a shell
-script that copies them into place. The security-relevant surface is:
+This package is a set of instructions for an AI coding agent. The
+security-relevant surface is:
 
-- `install.sh` — it writes into directories you name, and replaces the target
-  skill directory when it runs.
 - The skill instructions themselves. The skill reads a repository's contents in
   order to describe them, so a malicious repository could try to influence the
   agent through the text it plants there. The skill restricts itself to writing
