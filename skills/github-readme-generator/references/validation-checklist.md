@@ -18,8 +18,11 @@ becomes a line in the handover summary.
 8. No example contains a real secret or personal data taken from the local
    environment.
 9. The document reads in order: identity → first successful use → contributor
-   information.
-10. The diff touches only documentation, within the agreed scope.
+   information, with Requirements, Installation, Quick start and Configuration
+   consecutive and unbroken.
+10. No sentence merely announces the block below it, and nothing is stated twice
+    in two sections.
+11. The diff touches only documentation, within the agreed scope.
 
 Run any Markdown, link, or documentation test the environment safely allows. If
 none is available, say so in the summary rather than implying a check ran.

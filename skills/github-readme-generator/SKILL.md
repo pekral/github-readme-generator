@@ -31,15 +31,19 @@ to production code, configuration, or tests.
 2. **Zero invention.** Any command, flag, env var, config key, public symbol,
    version, badge, link, author, license, or support claim that cannot be traced
    to the repository is omitted — not guessed. See `references/evidence-policy.md`.
-3. **Conditional sections.** A section without verified content is dropped. Never
-   emit empty headings or placeholders (`TODO` only when the user explicitly asks
-   for a skeleton).
-4. **Documentation-only diff.** Modify only the root `README.md`, or another file
+3. **Conditional sections, nothing padded.** A section without verified content
+   is dropped — no empty headings, no placeholders (`TODO` only when the user
+   explicitly asks for a skeleton). Every sentence must carry a fact; delete any
+   that only announces what follows. Short and wholly true beats thorough and
+   padded.
+4. **Install path first.** Requirements → Installation → Quick start →
+   Configuration run in that order, unbroken, so the reader never scrolls back.
+5. **Documentation-only diff.** Modify only the root `README.md`, or another file
    the user names. Never edit code, tests, manifests, workflows, or config to
    "match the README".
-5. **No git side effects.** No staging, committing, pushing, or opening a PR
+6. **No git side effects.** No staging, committing, pushing, or opening a PR
    unless the user explicitly asks. Preserve the user's existing working-tree changes.
-6. **No secrets.** Document variable *names* from safe templates; never copy real
+7. **No secrets.** Document variable *names* from safe templates; never copy real
    values out of a local `.env` or environment.
 
 ## Workflow

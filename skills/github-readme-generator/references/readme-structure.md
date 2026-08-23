@@ -6,13 +6,16 @@ evidence.
 
 ## Default order
 
+The reader installs, runs, and only then explores. Keep that path unbroken — no
+section may sit between two steps of it.
+
 1. header block — optional logo or light/dark banner, title, badges (see below)
-2. one short paragraph: what it does, for whom, why it helps
-3. `What it does` — short capability list, only when it aids orientation
-4. `Requirements` — verified runtimes, tools, system prerequisites
-5. `Installation` — verified install command
-6. `Quick start` — smallest verified example with a useful result
-7. `Configuration` — existing config keys and env var names, never real secrets
+2. one paragraph: what it does, for whom, why it helps
+3. `Requirements` — verified runtimes, tools, system prerequisites
+4. `Installation` — verified install command
+5. `Quick start` — smallest verified example with a useful result
+6. `Configuration` — existing config keys and env var names, never real secrets
+7. `What it does` — capability list, only when the intro genuinely cannot carry it
 8. `Documentation` — link to separate docs, when they exist
 9. `Testing` — verified test command
 10. `Upgrading` — only with an existing upgrade guide or specific procedure
@@ -20,9 +23,30 @@ evidence.
 12. `Credits` — verified names, or a contributors link
 13. `License` — short verified statement plus a link to the license file
 
+A capability list is not part of the install path, so it goes after it. Put it
+above `Requirements` only when the project's value is genuinely unclear without
+it — and then keep it to three or four lines.
+
 `Support`, `Sponsors`, `Alternatives`, `Roadmap`, `Deployment`, `API`, and
 `Architecture` are optional. Add one only when it matters for this project and
 the repository supports it.
+
+## Cut everything that is not load-bearing
+
+Simplicity is the point. A short README that is entirely true beats a thorough
+one padded to look complete.
+
+- Emit a section only when it has verified content. No section, no heading.
+- Every sentence must carry a fact the reader cannot get from the command right
+  next to it. Delete anything that only announces what follows.
+- Prefer showing the command over describing it. A code block usually replaces
+  its own introduction.
+- Say a thing once. When two sections would repeat it, keep it in the earlier
+  one and link.
+- No filler adjectives, no "powerful", "seamless", "simply", "just".
+- Cap the intro at two or three sentences.
+- If a bullet list runs past six items, the section is doing someone else's job —
+  cut it or move the detail to the documentation it belongs to.
 
 ## Header block
 
@@ -102,10 +126,6 @@ Beyond the table, let language conventions decide what a reader needs:
 
 <One short paragraph: what the project does, who it is for, why it is useful.>
 
-## What it does
-
-<!-- optional: short list of the main capabilities -->
-
 ## Requirements
 
 <!-- verified runtimes, tools and system requirements only -->
@@ -125,6 +145,10 @@ Beyond the table, let language conventions decide what a reader needs:
 ## Configuration
 
 <!-- existing config keys and env var names only; never real secrets -->
+
+## What it does
+
+<!-- optional: capability list, only when the intro cannot carry it -->
 
 ## Documentation
 
