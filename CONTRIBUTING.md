@@ -5,7 +5,8 @@ Thanks for considering a contribution.
 ## The canonical skill lives in one place
 
 `skills/github-readme-generator/` is the only copy of the skill. Everything else
-— the plugin manifests, `install.sh` — points at it. Never add a second copy for
+— the Claude Code and Codex plugin manifests, the two marketplace catalogs,
+`install.sh` — points at it. Never add a second copy for
 another host; the whole distribution model depends on there being exactly one.
 
 ## Making a change
@@ -41,8 +42,9 @@ type prefix: `Order Configuration before Quick start`, not `fix: reorder`.
 
 ## Releasing
 
-Maintainers only. Bump `version` in both `.claude-plugin/plugin.json` and the
-plugin entry in `.claude-plugin/marketplace.json`, then:
+Maintainers only. Bump `version` in all three places — `.claude-plugin/plugin.json`,
+the plugin entry in `.claude-plugin/marketplace.json`, and `.codex-plugin/plugin.json`
+— then:
 
 ```text
 claude plugin tag --push -m "Release %s"

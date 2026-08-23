@@ -22,18 +22,29 @@ has no dependencies; the `install.sh` route needs Bash.
 ```
 
 Restart the session afterwards so the skill loads. The same two steps work from
-the shell as `claude plugin marketplace add` and `claude plugin install`. Do not
-also run `install.sh` for Claude Code, or the skill loads twice.
+the shell as `claude plugin marketplace add` and `claude plugin install`.
 
-### Codex and Cursor
+### Codex
+
+```text
+codex plugin marketplace add pekral/github-readme-generator
+```
+
+Then restart the ChatGPT desktop app, open the Plugins Directory, pick the
+`pekral` marketplace, and install the plugin from there. Codex resolves the
+catalog from [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json)
+and the plugin itself from [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json).
+
+### Cursor
 
 ```text
 ./install.sh
 ```
 
 This copies `skills/github-readme-generator/` into `.agents/skills/` — the
-directory both hosts read — and into `.claude/skills/`, for the current project.
-Re-running it replaces the installed copy rather than merging into it.
+directory Cursor reads — and into `.claude/skills/`, for the current project.
+Re-running it replaces the installed copy rather than merging into it. It also
+works for Codex if you would rather not use the plugin.
 
 ## Configuration
 
@@ -47,7 +58,7 @@ claude plugin enable github-readme-generator
 Both write to `enabledPlugins` in `~/.claude/settings.json`, so the setting is
 user-wide.
 
-For Codex and Cursor, the install target is an argument — any number of skills
+For the script route, the install target is an argument — any number of skills
 directories, including user-wide ones:
 
 ```text
@@ -90,7 +101,14 @@ claude plugin marketplace update pekral
 claude plugin update github-readme-generator
 ```
 
-Codex and Cursor copies are static — pull and reinstall:
+Codex refreshes its marketplace snapshot, then reinstalls from the Plugins
+Directory:
+
+```text
+codex plugin marketplace upgrade pekral
+```
+
+Copies made by `install.sh` are static — pull and reinstall:
 
 ```text
 git pull && ./install.sh

@@ -5,6 +5,15 @@ All notable changes to `github-readme-generator` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+- Codex plugin packaging — `.codex-plugin/plugin.json` and a repo marketplace at
+  `.agents/plugins/marketplace.json`, installable with
+  `codex plugin marketplace add pekral/github-readme-generator`.
+- `.gitignore` for the local skill copies `install.sh` writes.
+
 ## 1.0.0 - 2026-08-23
 
 First release.

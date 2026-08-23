@@ -1,0 +1,6 @@
+{
+  "name": "github-readme-generator",
+  "version": "1.0.0",
+  "description": "Create or update a repository-root README.md from verified code, manifests, scripts, tests and workflows — no invented commands, badges or claims",
+  "skills": "./skills/"
+}

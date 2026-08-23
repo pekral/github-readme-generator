@@ -1,0 +1,3 @@
+# Local installs made by ./install.sh — the canonical skill lives in skills/
+.agents/skills/
+.claude/skills/
