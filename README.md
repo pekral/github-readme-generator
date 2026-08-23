@@ -12,6 +12,16 @@ single canonical skill definition.
   single sentence.
 - Omits any command, badge, version, config key, link, or license claim it
   cannot trace to a file in the repository.
+- Builds the header block for you: a `<picture>` wrapper with light/dark assets
+  and an explicit `<h1>` when the project owns a logo, a plain Markdown heading
+  when it does not.
+- Assembles the badge row from templates — package version, license, CI,
+  downloads — filling the slug from the manifest, the SPDX identifier from the
+  license file, and the workflow path from the workflow's own `name:`.
+- Knows what each ecosystem keeps where, so a PHP package documents Composer and
+  Packagist while a Rust crate documents Cargo and crates.io.
+- Derives the quick start from the call the package exists to make, then grows
+  the same API across a couple of examples instead of listing unrelated features.
 - Emits sections conditionally, so the result has no empty headings and no
   `TODO` placeholders unless you ask for a skeleton.
 - Supports three modes: create a new README, update an existing one while
@@ -70,9 +80,11 @@ The skill keeps its detail in references that load on demand:
 - [`SKILL.md`](skills/github-readme-generator/SKILL.md) — purpose, workflow, and
   core constraints.
 - [`references/readme-structure.md`](skills/github-readme-generator/references/readme-structure.md)
-  — section order, adaptive template, per-project-type rules, language and style.
+  — header block, section order, adaptive template, per-ecosystem rules, keeping
+  examples true to the package's own domain, and style.
 - [`references/evidence-policy.md`](skills/github-readme-generator/references/evidence-policy.md)
-  — what counts as evidence, plus badge, security, and change-scope rules.
+  — what counts as evidence, the badge templates and the proof each one needs,
+  plus security and change-scope rules.
 - [`references/validation-checklist.md`](skills/github-readme-generator/references/validation-checklist.md)
   — pre-handover checks and the handover summary shape.
 
