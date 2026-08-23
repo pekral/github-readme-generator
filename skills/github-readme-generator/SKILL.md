@@ -26,7 +26,8 @@ to production code, configuration, or tests.
 ## Core constraints
 
 1. **Repository first, prose second.** Never write a sentence before reading the
-   sources that back it.
+   sources that back it. The examples must be this package's own domain — the
+   call it exists to make — not filler that would fit any project.
 2. **Zero invention.** Any command, flag, env var, config key, public symbol,
    version, badge, link, author, license, or support claim that cannot be traced
    to the repository is omitted — not guessed. See `references/evidence-policy.md`.
@@ -105,8 +106,9 @@ explicitly ordered.
 
 Load on demand, not up front:
 
-- `references/readme-structure.md` — section order, adaptive template, per-project-type
-  rules, language and style. Read before drafting.
+- `references/readme-structure.md` — header block, section order, adaptive
+  template, ecosystem specifics, matching the project's own logic, and style.
+  Read before drafting.
 - `references/evidence-policy.md` — what counts as evidence, commands and examples,
   badges and visual header, security and change scope. Read while scanning and
   whenever a claim feels unsupported.

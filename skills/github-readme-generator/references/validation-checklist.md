@@ -9,7 +9,9 @@ becomes a line in the handover summary.
 2. Every public symbol used in an example exists in the current code or tests.
 3. Every relative path and referenced root file exists.
 4. Every badge matches a real package, workflow, license, or service of this
-   project, and points at the current branch.
+   project, and points at the current branch. A license badge names the SPDX
+   identifier the repository actually states and links to the real license
+   filename; a published package and a CI workflow each carry their badge.
 5. Stated runtime and framework versions agree with the manifests and CI.
 6. No duplicated sections and no inconsistent heading levels.
 7. No placeholders, unless the user explicitly requested a `TODO` skeleton.

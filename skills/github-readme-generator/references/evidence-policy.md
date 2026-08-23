@@ -64,6 +64,51 @@ from a trustworthy source you actually read.
   generate a new one unless asked.
 - When light and dark variants exist, use an accessible `<picture>` block.
 
+### Badge templates
+
+Use these shapes rather than inventing markup. Angle brackets mark values you
+must read out of the repository — never leave one unresolved, and never emit a
+badge whose evidence row is missing.
+
+**License — add whenever a license file exists.**
+
+Evidence: a `LICENSE*` file, plus the `license` field of the manifest.
+
+```markdown
+[![<SPDX> Licensed](https://img.shields.io/badge/license-<SPDX>-brightgreen.svg?style=flat-square)](<license file>)
+```
+
+`<SPDX>` is the identifier the manifest and license file actually state (`MIT`,
+`Apache-2.0`, `GPL-3.0`, …) — never assume MIT. `<license file>` is the real
+filename, which may be `LICENSE`, `LICENSE.md`, or `LICENSE.txt`.
+
+**PHP package published on Packagist.**
+
+Evidence: the `name` field of `composer.json`, and the package existing on
+Packagist. Without published-package evidence, use no registry badge.
+
+```markdown
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/<vendor>/<package>.svg?style=flat-square)](https://packagist.org/packages/<vendor>/<package>)
+[![Total Downloads](https://img.shields.io/packagist/dt/<vendor>/<package>.svg?style=flat-square)](https://packagist.org/packages/<vendor>/<package>)
+```
+
+**GitHub Actions workflow.**
+
+Evidence: a workflow file under `.github/workflows/`. The badge path uses the
+workflow's `name:` value, not the filename, and the repository slug must match
+the real remote.
+
+```markdown
+![<Workflow name>](https://github.com/<owner>/<repo>/workflows/<Workflow name>/badge.svg)
+```
+
+For other ecosystems use the registry's own equivalent (npm, PyPI, crates.io,
+pkg.go.dev) under the same rule: the package must be published, and the slug
+must match the manifest.
+
+A published PHP package with CI and a license therefore lands on exactly four
+badges — version, license, tests, downloads — which is the intended ceiling.
+
 ## Security and change scope
 
 - Only the root `README.md` may change, or a file the user explicitly named.

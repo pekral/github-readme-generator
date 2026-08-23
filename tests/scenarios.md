@@ -12,13 +12,16 @@ correctness, structure, and the absence of hallucination — not exact wording.
 
 ## 1. PHP library with external documentation
 
-*Setup:* a package with a banner asset, a `composer.json`, and a documentation
-site linked from the existing README.
+*Setup:* a package with a banner asset, a `composer.json`, a `LICENSE.md`, a
+`Tests` workflow, and a documentation site linked from the existing README.
 
-Invariants: the banner is preserved; the intro is one short paragraph; install
-commands come from `composer.json`; installation and usage delegate to the docs
-link instead of duplicating them; no Spatie-specific section (support,
-postcardware, alternatives) appears.
+Invariants: the badge row is exactly version, license, tests, and downloads,
+with the Packagist slug taken from `composer.json` and the workflow badge built
+from the workflow's `name:`; the license badge states the manifest's SPDX
+identifier and links to `LICENSE.md`; the banner is preserved; the intro is one
+short paragraph; install commands come from `composer.json`; installation and
+usage delegate to the docs link instead of duplicating them; no project-specific
+section (support, postcardware, alternatives) is carried over.
 
 ## 2. Node application without a README
 
@@ -58,9 +61,9 @@ diff touches nothing but `README.md`.
 *Setup:* a repository with source code but no manifest, no license file, and no
 tests.
 
-Invariants: no installation command and no license claim are produced; the
-missing information is named precisely in the handover summary; no `TODO` appears
-unless a skeleton was requested.
+Invariants: no installation command, no license claim, and no license or
+registry badge are produced; the missing information is named precisely in the
+handover summary; no `TODO` appears unless a skeleton was requested.
 
 ## 7. Audit-only request
 
