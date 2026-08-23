@@ -9,6 +9,10 @@ Thanks for considering a contribution.
 points at it. Never add a second copy for
 another host; the whole distribution model depends on there being exactly one.
 
+`skills/github-readme-generator/LICENSE.md` is a deliberate copy of the root
+`LICENSE.md`. Installers copy only the skill directory, and MIT requires the
+copyright notice to travel with every copy — so when one changes, change both.
+
 ## Making a change
 
 1. Fork the repository and branch off `master`.
@@ -23,11 +27,13 @@ another host; the whole distribution model depends on there being exactly one.
 ```text
 claude plugin validate .
 npx skills add . --list
+diff LICENSE.md skills/github-readme-generator/LICENSE.md
 ```
 
 The first validates the Claude Code plugin and marketplace manifests. The second
 confirms the skill is still discoverable and prints the description agents match
-against — the frontmatter that decides whether the skill ever activates.
+against — the frontmatter that decides whether the skill ever activates. The
+third must print nothing.
 
 Changes to the skill's behaviour should also be exercised against
 [`tests/scenarios.md`](tests/scenarios.md). Run the affected scenario in a clean

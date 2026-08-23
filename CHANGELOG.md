@@ -14,6 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `codex plugin marketplace add pekral/github-readme-generator`.
 - `.gitignore` for the local skill copies an installer writes.
 
+### Fixed
+
+- Installed copies now carry the MIT notice. Installers copy only
+  `skills/github-readme-generator/`, which had no license file, so a copy did not
+  meet the one condition MIT sets.
+- `.codex-plugin/plugin.json` now declares `license`, `author`, `homepage`,
+  `repository`, and `keywords`, matching the Claude Code manifest.
+
 ### Removed
 
 - `install.sh`. Installing is now `npx skills add pekral/github-readme-generator`,
