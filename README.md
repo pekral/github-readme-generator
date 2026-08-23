@@ -1,5 +1,7 @@
 # A portable Agent Skill for writing READMEs that don't lie
 
+[![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+
 `github-readme-generator` teaches a coding agent to write or refresh a
 repository's root `README.md` from what the project actually contains — its
 code, manifests, scripts, tests, workflows, and existing docs — instead of from
@@ -31,28 +33,52 @@ single canonical skill definition.
 
 ## Requirements
 
-An agent host that loads Agent Skills — Codex, Claude Code, or Cursor. The skill
-itself has no dependencies; `install.sh` needs Bash.
+An agent host that loads Agent Skills — Claude Code, Codex, or Cursor. The skill
+itself has no dependencies; the `install.sh` route needs Bash.
 
 ## Installation
 
-The canonical skill lives in `skills/github-readme-generator/`. Installing means
-copying that directory into a skills directory your host reads.
+### Claude Code — plugin marketplace
 
-Install into the current project, for both `.agents/skills` (Codex, Cursor) and
-`.claude/skills` (Claude Code):
+```text
+/plugin marketplace add pekral/github-readme-generator
+/plugin install github-readme-generator@pekral
+```
+
+The same two steps work from the shell as `claude plugin marketplace add` and
+`claude plugin install`. Restart the session afterwards so the skill loads. This
+route needs nothing else — do not also run `install.sh` for Claude Code, or the
+skill ends up loaded twice.
+
+### Codex and Cursor — skills directory
+
+Both read Agent Skills from a skills directory, so installing means copying
+`skills/github-readme-generator/` into one. The bundled script does that, and is
+safe to re-run — it replaces the installed copy rather than merging into it:
 
 ```text
 ./install.sh
 ```
 
-Install into a different skills directory — for example user-wide Claude Code:
+That writes into `.agents/skills/` for the current project, which is the
+directory Codex and Cursor both read, plus `.claude/skills/`.
+
+Pass one or more directories to install elsewhere — a user-wide Cursor install,
+for example:
 
 ```text
-./install.sh ~/.claude/skills
+./install.sh ~/.cursor/skills
 ```
 
-Copying the directory by hand works just as well; the skill has no build step.
+To confirm an installed copy still matches the canonical source:
+
+```text
+./install.sh --check ~/.cursor/skills
+```
+
+It exits non-zero when a copy is missing or has drifted, so it works as a CI
+step. Run `./install.sh --help` for the full usage. Copying the directory by
+hand works just as well; the skill has no build step.
 
 ## Quick start
 
@@ -94,8 +120,13 @@ The skill keeps its detail in references that load on demand:
 documented PHP package to a monorepo to a secrets-handling case — each with
 activation and output invariants, plus a host coverage log to fill in.
 
-To verify an installed copy still matches the canonical source:
+`install.sh --check` doubles as an installation test; see Installation above.
 
-```text
-./install.sh --check .claude/skills
-```
+## Credits
+
+- [Petr Král](https://pekral.cz) — [@kral_petr_88](https://x.com/kral_petr_88)
+- [All contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

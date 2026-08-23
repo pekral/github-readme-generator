@@ -1,0 +1,21 @@
+{
+  "name": "github-readme-generator",
+  "displayName": "GitHub README Generator",
+  "description": "Create or update a repository-root README.md from verified code, manifests, scripts, tests and workflows — no invented commands, badges or claims",
+  "version": "1.0.0",
+  "author": {
+    "name": "Petr Král",
+    "email": "kral.petr.88@gmail.com",
+    "url": "https://pekral.cz"
+  },
+  "homepage": "https://pekral.cz",
+  "repository": "https://github.com/pekral/github-readme-generator",
+  "license": "MIT",
+  "keywords": [
+    "readme",
+    "documentation",
+    "agent-skill",
+    "codex",
+    "cursor"
+  ]
+}

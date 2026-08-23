@@ -1,0 +1,23 @@
+{
+  "name": "pekral",
+  "description": "Agent skills by Petr Král — practical, evidence-first tooling for real repositories",
+  "owner": {
+    "name": "Petr Král",
+    "email": "kral.petr.88@gmail.com",
+    "url": "https://pekral.cz"
+  },
+  "plugins": [
+    {
+      "name": "github-readme-generator",
+      "source": "./",
+      "description": "Write or refresh a repository README from what the project actually contains",
+      "version": "1.0.0",
+      "category": "documentation",
+      "tags": [
+        "readme",
+        "documentation",
+        "agent-skill"
+      ]
+    }
+  ]
+}
