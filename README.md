@@ -129,6 +129,18 @@ git pull && ./install.sh
 documented PHP package to a monorepo to a secrets-handling case — each with
 activation and output invariants, plus a host coverage log to fill in.
 
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md).
+
+## Contributing
+
+See [CONTRIBUTING](CONTRIBUTING.md).
+
+## Security
+
+See [the security policy](SECURITY.md).
+
 ## Credits
 
 - [Petr Král](https://pekral.cz) — [@kral_petr_88](https://x.com/kral_petr_88)
