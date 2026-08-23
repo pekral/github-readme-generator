@@ -18,7 +18,7 @@ becomes a line in the handover summary.
 8. No example contains a real secret or personal data taken from the local
    environment.
 9. The document reads in order: identity → first successful use → contributor
-   information, with Requirements, Installation, Quick start and Configuration
+   information, with Requirements, Installation, Configuration and Quick start
    consecutive and unbroken.
 10. No sentence merely announces the block below it, and nothing is stated twice
     in two sections.

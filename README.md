@@ -35,24 +35,6 @@ This copies `skills/github-readme-generator/` into `.agents/skills/` — the
 directory both hosts read — and into `.claude/skills/`, for the current project.
 Re-running it replaces the installed copy rather than merging into it.
 
-## Quick start
-
-Ask for README work in the repository you want documented:
-
-```text
-Write a README for this repository.
-```
-
-The skill scans the repository, picks create / update / audit, drafts against
-its structure reference, and ends with a summary of what it verified and what it
-could not prove.
-
-To get findings without touching a file:
-
-```text
-Audit this README and tell me what's wrong.
-```
-
 ## Configuration
 
 Turn the Claude Code plugin off and on without uninstalling it:
@@ -80,6 +62,24 @@ Verify an installed copy still matches the source:
 
 It exits non-zero when a copy is missing or has drifted, which makes it usable
 as a CI step. `./install.sh --help` lists the full usage.
+
+## Quick start
+
+Ask for README work in the repository you want documented:
+
+```text
+Write a README for this repository.
+```
+
+The skill scans the repository, picks create / update / audit, drafts against
+its structure reference, and ends with a summary of what it verified and what it
+could not prove.
+
+To get findings without touching a file:
+
+```text
+Audit this README and tell me what's wrong.
+```
 
 ## Updating
 

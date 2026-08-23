@@ -6,15 +6,17 @@ evidence.
 
 ## Default order
 
-The reader installs, runs, and only then explores. Keep that path unbroken — no
-section may sit between two steps of it.
+The reader installs, configures, runs, and only then explores. Keep that path
+unbroken — no section may sit between two steps of it. Configuration comes
+before the first example because an example that needs unset configuration to
+work is not a quick start.
 
 1. header block — optional logo or light/dark banner, title, badges (see below)
 2. one paragraph: what it does, for whom, why it helps
 3. `Requirements` — verified runtimes, tools, system prerequisites
 4. `Installation` — verified install command
-5. `Quick start` — smallest verified example with a useful result
-6. `Configuration` — existing config keys and env var names, never real secrets
+5. `Configuration` — existing config keys and env var names, never real secrets
+6. `Quick start` — smallest verified example with a useful result
 7. `What it does` — capability list, only when the intro genuinely cannot carry it
 8. `Documentation` — link to separate docs, when they exist
 9. `Testing` — verified test command
@@ -136,15 +138,15 @@ Beyond the table, let language conventions decide what a reader needs:
 <verified install command>
 ```
 
+## Configuration
+
+<!-- existing config keys and env var names only; never real secrets -->
+
 ## Quick start
 
 ```<language>
 <smallest verified example that produces a useful result>
 ```
-
-## Configuration
-
-<!-- existing config keys and env var names only; never real secrets -->
 
 ## What it does
 

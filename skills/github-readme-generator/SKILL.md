@@ -36,8 +36,8 @@ to production code, configuration, or tests.
    explicitly asks for a skeleton). Every sentence must carry a fact; delete any
    that only announces what follows. Short and wholly true beats thorough and
    padded.
-4. **Install path first.** Requirements → Installation → Quick start →
-   Configuration run in that order, unbroken, so the reader never scrolls back.
+4. **Install path first.** Requirements → Installation → Configuration → Quick
+   start run in that order, unbroken, so the reader never scrolls back.
 5. **Documentation-only diff.** Modify only the root `README.md`, or another file
    the user names. Never edit code, tests, manifests, workflows, or config to
    "match the README".
