@@ -84,21 +84,6 @@ To get findings without touching a file:
 Audit this README and tell me what's wrong.
 ```
 
-## Updating
-
-```text
-npx skills update github-readme-generator
-```
-
-Plugin installs update through their own host instead:
-
-```text
-claude plugin marketplace update pekral && claude plugin update github-readme-generator
-codex plugin marketplace upgrade pekral
-```
-
-Claude Code needs a session restart afterwards.
-
 ## What it does
 
 - Scans the working tree first and builds a claim → source map before writing a
@@ -120,7 +105,8 @@ Claude Code needs a session restart afterwards.
 - [`SKILL.md`](skills/github-readme-generator/SKILL.md) — purpose, workflow, core
   constraints.
 - [`references/readme-structure.md`](skills/github-readme-generator/references/readme-structure.md)
-  — header block, section order, what to cut, per-ecosystem rules, style.
+  — header block, section order, what to cut, per-ecosystem rules, keeping
+  examples true to the package's own domain, and style.
 - [`references/evidence-policy.md`](skills/github-readme-generator/references/evidence-policy.md)
   — what counts as evidence, badge templates, security and change-scope rules.
 - [`references/validation-checklist.md`](skills/github-readme-generator/references/validation-checklist.md)
@@ -131,6 +117,21 @@ Claude Code needs a session restart afterwards.
 [`tests/scenarios.md`](tests/scenarios.md) defines eight scenarios — from a
 documented PHP package to a monorepo to a secrets-handling case — each with
 activation and output invariants, plus a host coverage log to fill in.
+
+## Updating
+
+```text
+npx skills update github-readme-generator
+```
+
+Plugin installs update through their own host instead:
+
+```text
+claude plugin marketplace update pekral && claude plugin update github-readme-generator
+codex plugin marketplace upgrade pekral
+```
+
+Claude Code needs a session restart afterwards.
 
 ## Changelog
 
