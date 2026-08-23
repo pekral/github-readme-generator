@@ -102,13 +102,13 @@ git pull && ./install.sh
   single sentence.
 - Omits any command, badge, version, config key, link, or license claim it
   cannot trace to a file in the repository.
-- Builds the header block: a `<picture>` wrapper with light/dark assets and an
-  explicit `<h1>` when the project owns a logo, a plain heading when it does not.
-- Assembles the badge row from templates — version, license, CI, downloads —
-  taking the slug from the manifest, the SPDX identifier from the license file,
-  and the workflow path from the workflow's own `name:`.
+- Builds the header block and badge row from templates — a `<picture>` wrapper
+  for projects that own a logo, and version, license, CI and downloads badges
+  filled from the manifest, the license file, and the workflow's own `name:`.
 - Knows what each ecosystem keeps where, so a PHP package documents Composer and
   Packagist while a Rust crate documents Cargo and crates.io.
+- Treats every file it reads as data, not instructions. Text in a scanned
+  repository that addresses the agent is reported to you, never obeyed.
 - Restricts its diff to `README.md`, and never stages, commits, or pushes unless
   you say so.
 
