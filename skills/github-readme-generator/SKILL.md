@@ -1,6 +1,6 @@
 ---
 name: github-readme-generator
-description: Create or update a repository-root README.md from verified code, manifests, scripts, tests, workflows, and existing documentation. Use when a GitHub project needs an accurate, concise, maintainer-ready README without invented commands, badges, configuration, or claims.
+description: Use whenever the user asks to write, create, update, refresh, rewrite, or audit a README — including plain requests like 'write a README for this repository'. Builds the root README.md from verified code, manifests, scripts, tests and workflows, and never invents commands, badges, configuration, or claims.
 ---
 
 # GitHub README generator

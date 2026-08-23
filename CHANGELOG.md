@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `codex plugin marketplace add pekral/github-readme-generator`.
 - `.gitignore` for the local skill copies an installer writes.
 
+### Changed
+
+- The skill description now keys off what a user actually types — "write a
+  README", "update the README", "audit this README" — instead of describing when
+  a project needs one. In testing, the previous wording left the agent free to
+  write the README itself without ever invoking the skill.
+
 ### Fixed
 
 - Installed copies now carry the MIT notice. Installers copy only
