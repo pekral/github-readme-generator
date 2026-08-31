@@ -1,6 +1,7 @@
 # A portable Agent Skill for writing READMEs that don't lie
 
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+![Tests](https://github.com/pekral/github-readme-generator/workflows/Tests/badge.svg)
 
 `github-readme-generator` teaches a coding agent to write or refresh a
 repository's root `README.md` from what the project actually contains — its
