@@ -25,6 +25,7 @@ paying for generation again.
 node tests/evals/run.mjs --dry-run
 node tests/evals/run.mjs --agent claude-code --scenario php-package
 node tests/evals/report.mjs <run id>
+node tests/evals/readme-section.mjs <run id> --write
 ```
 
 `run.mjs --help` lists every option. The full matrix is three agents × two modes ×
@@ -194,7 +195,21 @@ not in it.
 
 ## Publishing results
 
-The root README may cite benchmark numbers **only** from a run recorded under
-`results/`, and must name the run id. No number goes into the README from a run that
-was not committed — that is the same evidence rule the skill itself enforces, applied
-to the project's own claims about itself.
+The root README's `Benchmark` section is **generated, never typed**:
+
+```text
+node tests/evals/readme-section.mjs <run id> --write   # rewrite it from that run
+node tests/evals/readme-section.mjs --check            # fail if the two have drifted
+```
+
+`readme-section.mjs` renders the section from the run's `summary.json` between the
+`<!-- benchmark:start run=… -->` and `<!-- benchmark:end -->` markers, stamping the run
+id it came from. `--check` runs in CI, so a hand-edited number, or a number left behind
+by a rescored run, fails the build. Updating results is one command and touches one
+block; no other section of the README knows about the benchmark.
+
+What the section is allowed to say is a property of the generator, not of whoever last
+edited the README. It states a percentage only when the baseline had something to
+improve on, says plainly when a run measured no difference, reports a regression as a
+regression, and names every configured agent the run did not cover. All of that is
+covered by `readme-section.test.mjs`.

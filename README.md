@@ -108,6 +108,40 @@ read the repository's metadata — as text for you to apply.
 - Restricts its diff to `README.md`, and never stages, commits, or pushes unless
   you say so.
 
+<!-- benchmark:start run=2026-08-31-claude-code-subset -->
+
+## Benchmark
+
+Run `2026-08-31-claude-code-subset` gave 1 agent — Claude Code — the same
+plain prompt against 2 fixture repositories, once without
+the skill and once with it, and scored both with the same offline checker.
+
+| Metric | Baseline | With skill | Difference |
+| --- | ---: | ---: | ---: |
+| Unsupported claims | 0 | 0 | — |
+| Invalid commands | 0 | 0 | — |
+| Invalid badges | 0 | 0 | — |
+| Broken links | 0 | 0 | — |
+| Missing information | 0 | 0 | — |
+| **Total findings** | **0** | **0** | **—** |
+
+Both modes came out clean on this sample: the baseline invented nothing the fixtures
+contradict, and neither did the skill. The run therefore measures no difference — it is
+evidence that the harness works, not evidence that the skill helps.
+
+Not measured in this run: Codex, Cursor. The benchmark supports
+3 agents; a run covers whichever of them the machine it runs on
+has installed and authenticated.
+
+- Methodology, scoring rules, and how to add a scenario: [`tests/evals/README.md`](tests/evals/README.md)
+- Raw results for this run, including every generated README and its findings: [`tests/evals/results/2026-08-31-claude-code-subset/`](tests/evals/results/2026-08-31-claude-code-subset)
+- Prompt, agent version, model, and skill commit for every invocation: the `meta.json` beside each result
+
+The numbers above are rendered from `summary.json` by `tests/evals/readme-section.mjs`, and CI
+fails if they stop matching the committed data.
+
+<!-- benchmark:end -->
+
 ## Documentation
 
 - [`SKILL.md`](skills/github-readme-generator/SKILL.md) — purpose, workflow, core
@@ -143,14 +177,7 @@ node --test tests/evals/*.test.mjs
 
 The scorer and every fixture's ground truth run in CI on Node.js 20 and 22. The
 agent invocations never do — they cost money and need credentials CI has no
-business holding.
-
-One run is recorded so far:
-[`2026-08-31-claude-code-subset`](tests/evals/results/2026-08-31-claude-code-subset/summary.md)
-— Claude Code, both modes, two of the ten scenarios. Both modes scored zero
-findings. It shows the harness works end to end; two scenarios on one agent is
-far too small to support a claim about the skill either way, so this README makes
-none.
+business holding. Recorded results are in [Benchmark](#benchmark) above.
 
 ## Updating
 

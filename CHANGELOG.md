@@ -28,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A `Tests` workflow running the scorer, the ground-truth sweep, and the
   licence-copy check on Node.js 20 and 22, for every push to `master` and every
   pull request. The repository had no CI before this.
+- A `Benchmark` section in the README, generated from committed results by
+  `tests/evals/readme-section.mjs` rather than written by hand. It states a
+  percentage only when the baseline had something to improve on, says so plainly
+  when a run measured no difference, and names every agent a run did not cover.
+  CI fails when the section and the data drift apart, so no benchmark number can
+  enter the README except from a recorded run.
 
 - Badge liveness. A CI badge is emitted only when the workflow's triggers put
   runs on the default branch — the branch a badge reports on. A `pull_request`-only

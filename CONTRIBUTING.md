@@ -29,6 +29,7 @@ claude plugin validate .
 npx skills add . --list
 diff LICENSE.md skills/github-readme-generator/LICENSE.md
 node --test tests/evals/*.test.mjs
+node tests/evals/readme-section.mjs --check
 ```
 
 The first validates the Claude Code plugin and marketplace manifests. The second
@@ -37,8 +38,14 @@ against — the frontmatter that decides whether the skill ever activates. The
 third must print nothing. The fourth checks the benchmark scorer and every
 fixture's ground truth; it needs Node.js 20 or newer and no network.
 
-CI runs the last two on every push and pull request, across Node.js 20 and 22.
+CI runs the last three on every push and pull request, across Node.js 20 and 22.
 The first two need tooling a runner does not have, so they stay local.
+
+The README's `Benchmark` section is generated, never typed. After recording a run,
+`node tests/evals/readme-section.mjs --write` rewrites it between the
+`benchmark:start` / `benchmark:end` markers from that run's `summary.json`, and the
+`--check` above fails when the two drift apart. That is the only route by which a
+benchmark number may enter the README.
 
 Changes to the skill's behaviour should also be exercised against
 [`tests/scenarios.md`](tests/scenarios.md). Run the affected scenario in a clean

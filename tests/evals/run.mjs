@@ -11,6 +11,10 @@ const REPO_ROOT = resolve(EVALS_DIR, '..', '..');
 const FIXTURES_DIR = join(EVALS_DIR, 'fixtures');
 const RESULTS_DIR = join(EVALS_DIR, 'results');
 const MODES = ['baseline', 'skill'];
+// An agent that retries a failing API call ignores SIGTERM and keeps going, so the
+// deadline has to be enforced with a signal it cannot catch. One invocation once ran
+// for 45 minutes past a 20-minute SIGTERM before giving up on a 502.
+const INVOCATION_TIMEOUT_MS = 10 * 60 * 1000;
 
 function parseArgs(argv) {
   const args = { agent: 'all', mode: 'both', scenario: 'all', model: null, runId: null, dryRun: false };
@@ -128,7 +132,11 @@ function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun 
 
   const startedAt = new Date().toISOString();
   const result = spawnSync(command[0], command.slice(1), {
-    cwd: workspace, encoding: 'utf8', stdio: 'pipe', timeout: 20 * 60 * 1000,
+    cwd: workspace,
+    encoding: 'utf8',
+    stdio: 'pipe',
+    timeout: INVOCATION_TIMEOUT_MS,
+    killSignal: 'SIGKILL',
   });
   const finishedAt = new Date().toISOString();
 
@@ -150,11 +158,13 @@ function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun 
     startedAt,
     finishedAt,
     exitCode: result.status,
+    timedOut: result.signal === 'SIGKILL',
     producedReadme: produced,
   }, null, 2)}\n`);
   writeFileSync(join(caseDir, 'agent-output.txt'), `${result.stdout ?? ''}\n${result.stderr ?? ''}`);
 
-  console.log(`${agentId}/${mode}/${scenario}: exit ${result.status}, README ${produced ? 'written' : 'MISSING'}`);
+  const outcome = result.signal === 'SIGKILL' ? `timed out after ${INVOCATION_TIMEOUT_MS / 60000} minutes` : `exit ${result.status}`;
+  console.log(`${agentId}/${mode}/${scenario}: ${outcome}, README ${produced ? 'written' : 'MISSING'}`);
   return produced;
 }
 

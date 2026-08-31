@@ -31,3 +31,6 @@ jobs:
 
       - name: The skill ships its own copy of the licence
         run: diff LICENSE.md skills/github-readme-generator/LICENSE.md
+
+      - name: The README benchmark section still matches the committed results
+        run: node tests/evals/readme-section.mjs --check
