@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - One recorded run, `2026-08-31-claude-code-subset`: Claude Code, both modes,
   two of the ten scenarios, zero findings on each. It shows the harness works;
   it is far too small to say anything about the skill, and the README says so.
+- A `Tests` workflow running the scorer, the ground-truth sweep, and the
+  licence-copy check on Node.js 20 and 22, for every push to `master` and every
+  pull request. The repository had no CI before this.
 
 - Badge liveness. A CI badge is emitted only when the workflow's triggers put
   runs on the default branch — the branch a badge reports on. A `pull_request`-only

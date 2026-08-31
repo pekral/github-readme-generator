@@ -102,7 +102,16 @@ function isExternal(target) {
 }
 
 function resolvesInsideRepo(repoDir, target) {
-  const path = decodeURI(target.split('#')[0].split('?')[0]);
+  const raw = target.split('#')[0].split('?')[0];
+
+  let path;
+  try {
+    path = decodeURI(raw);
+  } catch {
+    // A malformed percent-escape names no file, and must not take the run down with it.
+    return false;
+  }
+
   if (path === '') return true;
   const absolute = resolve(repoDir, normalize(path));
   if (!absolute.startsWith(resolve(repoDir))) return false;

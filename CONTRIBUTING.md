@@ -37,6 +37,9 @@ against — the frontmatter that decides whether the skill ever activates. The
 third must print nothing. The fourth checks the benchmark scorer and every
 fixture's ground truth; it needs Node.js 20 or newer and no network.
 
+CI runs the last two on every push and pull request, across Node.js 20 and 22.
+The first two need tooling a runner does not have, so they stay local.
+
 Changes to the skill's behaviour should also be exercised against
 [`tests/scenarios.md`](tests/scenarios.md). Run the affected scenario in a clean
 session and check both halves: that the skill activated at the right moment, and

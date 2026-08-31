@@ -140,6 +140,10 @@ node tests/evals/run.mjs --dry-run
 node --test tests/evals/*.test.mjs
 ```
 
+The scorer and every fixture's ground truth run in CI on Node.js 20 and 22. The
+agent invocations never do — they cost money and need credentials CI has no
+business holding.
+
 One run is recorded so far:
 [`2026-08-31-claude-code-subset`](tests/evals/results/2026-08-31-claude-code-subset/summary.md)
 — Claude Code, both modes, two of the ten scenarios. Both modes scored zero

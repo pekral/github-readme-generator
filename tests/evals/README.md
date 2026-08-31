@@ -129,6 +129,8 @@ manifest states the constraint: the benchmark measures invention, not house styl
 node --test tests/evals/*.test.mjs
 ```
 
+This is what CI runs, on Node.js 20 and 22. Generation is never run in CI.
+
 Crafted READMEs with known defects, a sweep asserting every fixture has a loadable
 ground truth whose `required` checks all fire on an empty README, and the aggregation
 rules — including that a case which produced no README counts as a repository but does

@@ -45,6 +45,15 @@ test('a project layout is not read as a list of commands', () => {
   );
 });
 
+test('a malformed link is a finding, not a crash', () => {
+  const truth = loadTruth(join(FIXTURES_DIR, 'node-package'));
+  const repo = join(FIXTURES_DIR, 'node-package', 'repo');
+
+  const result = score('[bad](docs/%zz.md)\n', truth, repo);
+
+  assert.equal(result.counts.brokenLink, 1, 'a target that decodes to nothing resolves to no file');
+});
+
 test('a badge allow-list ignores the case of the label', () => {
   const truth = loadTruth(join(FIXTURES_DIR, 'node-package'));
   const withCapitalLabel = '![License](https://img.shields.io/badge/License-MIT-blue.svg)\n';

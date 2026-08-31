@@ -21,7 +21,7 @@
       "label": "Cursor",
       "skillsAgentId": "cursor",
       "versionCommand": ["cursor-agent", "--version"],
-      "command": ["cursor-agent", "-p", "{{prompt}}", "--force", "--trust", "--workspace", "{{workspace}}"],
+      "command": ["cursor-agent", "-p", "{{prompt}}", "--force", "--sandbox", "enabled", "--trust", "--workspace", "{{workspace}}"],
       "modelFlag": ["--model", "{{model}}"],
       "runsInWorkspace": true
     }

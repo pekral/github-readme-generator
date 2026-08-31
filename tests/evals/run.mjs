@@ -89,6 +89,18 @@ function gitSha() {
   }
 }
 
+/**
+ * The runner copies the working tree, not the commit. A dirty tree means the recorded
+ * SHA does not describe what actually ran, so the record has to say so.
+ */
+function workingTreeClean() {
+  try {
+    return execFileSync('git', ['status', '--porcelain'], { cwd: REPO_ROOT, encoding: 'utf8' }).trim() === '';
+  } catch {
+    return null;
+  }
+}
+
 function installSkill(workspace, skillsAgentId) {
   const result = spawnSync(
     'npx',
@@ -134,6 +146,7 @@ function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun 
     prompt,
     command,
     skillCommit: gitSha(),
+    skillCommitIsExact: workingTreeClean(),
     startedAt,
     finishedAt,
     exitCode: result.status,
@@ -165,7 +178,7 @@ export function main(argv) {
     mkdirSync(runDir, { recursive: true });
     writeFileSync(join(runDir, 'run.json'), `${JSON.stringify({
       runId, startedAt: new Date().toISOString(), prompt, model: args.model ?? 'agent default',
-      agents: agentIds, modes, scenarios, skillCommit: gitSha(),
+      agents: agentIds, modes, scenarios, skillCommit: gitSha(), skillCommitIsExact: workingTreeClean(),
     }, null, 2)}\n`);
   }
 
