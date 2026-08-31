@@ -28,12 +28,14 @@ copyright notice to travel with every copy — so when one changes, change both.
 claude plugin validate .
 npx skills add . --list
 diff LICENSE.md skills/github-readme-generator/LICENSE.md
+node --test tests/evals/*.test.mjs
 ```
 
 The first validates the Claude Code plugin and marketplace manifests. The second
 confirms the skill is still discoverable and prints the description agents match
 against — the frontmatter that decides whether the skill ever activates. The
-third must print nothing.
+third must print nothing. The fourth checks the benchmark scorer and every
+fixture's ground truth; it needs Node.js 20 or newer and no network.
 
 Changes to the skill's behaviour should also be exercised against
 [`tests/scenarios.md`](tests/scenarios.md). Run the affected scenario in a clean
@@ -41,6 +43,12 @@ session and check both halves: that the skill activated at the right moment, and
 that its output satisfies the invariants. Record which host you used — the
 scenarios expect Claude Code, Codex, and Cursor, and noting an unavailable host
 is more useful than leaving the cell blank.
+
+A change meant to make the skill *more accurate*, rather than merely different,
+belongs in the benchmark: [`tests/evals/README.md`](tests/evals/README.md)
+explains how to run it, how the scoring works, and how to add a scenario. Its one
+publishing rule is that the root README may cite a number only from a run
+recorded under `tests/evals/results/`, naming the run id.
 
 ## Commit messages
 

@@ -1,0 +1,14 @@
+{
+  "name": "@acme/notes",
+  "version": "0.2.0",
+  "description": "Append-only notes stored as plain Markdown files.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

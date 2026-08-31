@@ -122,9 +122,27 @@ read the repository's metadata — as text for you to apply.
 
 ## Testing
 
-[`tests/scenarios.md`](tests/scenarios.md) defines ten scenarios — from a
-documented PHP package to a monorepo to a secrets-handling case — each with
-activation and output invariants, plus a host coverage log to fill in.
+Two suites answering two different questions.
+
+[`tests/scenarios.md`](tests/scenarios.md) asks whether the skill behaves: ten
+manual scenarios — from a documented PHP package to a monorepo to a
+secrets-handling case — each with activation and output invariants, plus a host
+coverage log to fill in.
+
+[`tests/evals/`](tests/evals/README.md) asks whether it helps: the same plain
+prompt against the same ten fixture repositories, with and without the skill, on
+Claude Code, Codex and Cursor, scored by a deterministic checker that counts
+unsupported claims, invalid commands, invalid badges, broken links and missing
+information.
+
+```text
+node tests/evals/run.mjs --dry-run
+node --test tests/evals/*.test.mjs
+```
+
+No benchmark numbers appear here yet. `tests/evals/results/` holds no recorded
+run, and a claim about this skill's accuracy without one would be exactly the
+kind of unsupported statement the skill exists to prevent.
 
 ## Updating
 

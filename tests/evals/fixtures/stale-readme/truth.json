@@ -1,0 +1,77 @@
+{
+  "scenario": "stale-readme",
+  "type": "Repository with an outdated README",
+  "summary": "Real logo and hand-written prose worth keeping, wrapped around a stale version, a dead link, a dead script, a CommonJS example, and a wrong runtime.",
+  "commands": {
+    "allowed": [
+      "npm install @acme/palette",
+      "npm i @acme/palette",
+      "npm install",
+      "npm ci",
+      "npm test",
+      "npm run build",
+      "node --test"
+    ],
+    "allowedPatterns": [
+      "^import \\{ palette \\}",
+      "^palette\\(",
+      "^console\\.log",
+      "^const \\[.*\\] = palette"
+    ]
+  },
+  "badges": {
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/npm/v/@acme/palette",
+      "^https://img\\.shields\\.io/npm/d[mt]/@acme/palette",
+      "^https://img\\.shields\\.io/badge/license-MIT"
+    ]
+  },
+  "links": {
+    "allowedExternalPatterns": [
+      "^https://www\\.npmjs\\.com/package/@acme/palette$"
+    ]
+  },
+  "required": [
+    {
+      "id": "logo-preserved",
+      "pattern": "assets/logo\\.svg",
+      "note": "The project logo was dropped instead of preserved."
+    },
+    {
+      "id": "authored-prose",
+      "pattern": "design-system audit|drift",
+      "note": "The hand-written explanation of why the package exists was discarded."
+    },
+    {
+      "id": "esm-example",
+      "pattern": "import \\{ palette \\}",
+      "note": "The example still has to be updated to the ESM API the package actually ships."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "stale-version",
+      "pattern": "@acme/palette@1|\\bv?1\\.2\\b",
+      "kind": "unsupportedClaim",
+      "note": "Version the manifest contradicts (package.json says 3.0.0)."
+    },
+    {
+      "id": "stale-runtime",
+      "pattern": "Node(?:\\.js)?\\s*(?:>=\\s*)?1[468]\\b",
+      "kind": "unsupportedClaim",
+      "note": "Runtime claim the engines field contradicts."
+    },
+    {
+      "id": "dead-script",
+      "pattern": "npm run serve",
+      "kind": "invalidCommand",
+      "note": "Script package.json does not define."
+    },
+    {
+      "id": "commonjs-example",
+      "pattern": "require\\('@acme/palette'\\)",
+      "kind": "unsupportedClaim",
+      "note": "CommonJS usage of a package published as ESM only."
+    }
+  ]
+}

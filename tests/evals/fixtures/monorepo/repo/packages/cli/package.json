@@ -1,0 +1,15 @@
+{
+  "name": "@acme/cli",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "acme": "./bin/acme.js"
+  },
+  "dependencies": {
+    "@acme/core": "1.0.0"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

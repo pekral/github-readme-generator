@@ -1,0 +1,16 @@
+{
+  "name": "@acme/slugify-cli",
+  "version": "1.4.2",
+  "description": "Slugify text from the command line.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "slugify": "./bin/slugify.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

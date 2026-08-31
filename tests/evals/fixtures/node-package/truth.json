@@ -1,0 +1,72 @@
+{
+  "scenario": "node-package",
+  "type": "Node.js package",
+  "summary": "npm library with scripts, an engines field, and an npm lock file.",
+  "commands": {
+    "allowed": [
+      "npm install @acme/slugify",
+      "npm i @acme/slugify",
+      "npm ci",
+      "npm install",
+      "npm test",
+      "npm run build",
+      "npm run lint",
+      "node --test"
+    ],
+    "allowedPatterns": [
+      "^import \\{ slugify \\}",
+      "^slugify\\(",
+      "^console\\.log"
+    ]
+  },
+  "badges": {
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/npm/v/@acme/slugify",
+      "^https://img\\.shields\\.io/npm/d[mt]/@acme/slugify",
+      "^https://img\\.shields\\.io/badge/license-MIT"
+    ]
+  },
+  "links": {
+    "allowedExternalPatterns": [
+      "^https://www\\.npmjs\\.com/package/@acme/slugify$",
+      "^https://nodejs\\.org"
+    ]
+  },
+  "required": [
+    {
+      "id": "install-command",
+      "pattern": "npm i(?:nstall)? @acme/slugify",
+      "note": "The install command the manifest proves is missing."
+    },
+    {
+      "id": "node-engine",
+      "pattern": "(?:Node(?:\\.js)?\\s*)(?:>=\\s*)?20",
+      "note": "The engines constraint of Node.js >= 20 is missing."
+    },
+    {
+      "id": "public-api",
+      "pattern": "slugify\\(",
+      "note": "The exported function is never shown."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "wrong-package-manager",
+      "pattern": "yarn add|pnpm add|bun add",
+      "kind": "invalidCommand",
+      "note": "Package manager the lock file contradicts."
+    },
+    {
+      "id": "invented-script",
+      "pattern": "npm run (?:dev|start|watch|coverage)",
+      "kind": "invalidCommand",
+      "note": "npm script that package.json does not define."
+    },
+    {
+      "id": "older-node",
+      "pattern": "Node(?:\\.js)?\\s*(?:>=\\s*)?1[468]\\b",
+      "kind": "unsupportedClaim",
+      "note": "Claims a Node version below the engines constraint."
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "scenario": "cli-app",
+  "type": "CLI application",
+  "summary": "Command-line tool whose only workflow file sits outside .github/workflows/, so no CI badge is earned.",
+  "commands": {
+    "allowed": [
+      "npm install -g @acme/slugify-cli",
+      "npm i -g @acme/slugify-cli",
+      "npm test",
+      "node --test",
+      "slugify --help",
+      "slugify -h",
+      "slugify \"Hello, World!\"",
+      "slugify Hello World",
+      "slugify --sep _ \"Hello, World!\"",
+      "slugify --upper \"Hello, World!\"",
+      "npx @acme/slugify-cli --help"
+    ]
+  },
+  "badges": {
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/npm/v/@acme/slugify-cli",
+      "^https://img\\.shields\\.io/npm/d[mt]/@acme/slugify-cli",
+      "^https://img\\.shields\\.io/badge/license-MIT"
+    ]
+  },
+  "links": {
+    "allowedExternalPatterns": [
+      "^https://www\\.npmjs\\.com/package/@acme/slugify-cli$"
+    ]
+  },
+  "required": [
+    {
+      "id": "install-command",
+      "pattern": "npm i(?:nstall)? -g @acme/slugify-cli",
+      "note": "The global install command the bin field proves is missing."
+    },
+    {
+      "id": "help-pointer",
+      "pattern": "--help|-h\\b",
+      "note": "The help flag is never mentioned, so the reader cannot find the full option list."
+    },
+    {
+      "id": "smallest-invocation",
+      "pattern": "slugify\\s+(?:--\\w+\\s+\\S+\\s+)?[\"']?Hello",
+      "note": "The smallest working invocation, covered by the tests, is missing."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "invented-flag",
+      "pattern": "--(?:watch|json|verbose|config|output)\\b",
+      "kind": "invalidCommand",
+      "note": "CLI flag the binary does not implement."
+    },
+    {
+      "id": "invented-subcommand",
+      "pattern": "slugify (?:init|batch|serve)\\b",
+      "kind": "invalidCommand",
+      "note": "Subcommand the binary does not implement."
+    }
+  ]
+}

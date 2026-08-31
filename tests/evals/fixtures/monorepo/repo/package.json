@@ -1,0 +1,16 @@
+{
+  "name": "acme-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/cli"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test packages/*/test/*.test.js"
+  }
+}
