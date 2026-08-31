@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Badge liveness. A CI badge is emitted only when its workflow can produce a run
-  on the default branch, so a workflow triggered solely by `pull_request`,
-  `workflow_dispatch`, or `schedule` — or a workflow file left outside
-  `.github/workflows/` — yields no permanently blank badge. The omission is named
-  in the handover summary.
+- Badge liveness. A CI badge is emitted only when the workflow's triggers put
+  runs on the default branch — the branch a badge reports on. A `pull_request`-only
+  workflow, a `workflow_dispatch`-only workflow, and a workflow file left outside
+  `.github/workflows/` therefore get no badge, while a scheduled workflow keeps
+  one. The omission is named in the handover summary.
 - Manifest claim check. The manifest `description` is read as a claim as well as
   evidence: when it names a capability the repository does not contain, the
   contradiction is reported with both sources. The manifest itself stays

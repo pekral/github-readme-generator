@@ -75,10 +75,12 @@ an analysis of the README.
 Invariants: no file is written; findings cite their sources; a recommended fix
 order is returned. The empty About description, homepage, and topics are
 reported with a proposed description of at most 350 characters and five to eight
-topic candidates, each traceable to a source that was read; the missing
-community health files are listed and none of them is created; the dead
-`docs/usage.md` link is reported. The proposed metadata is returned as text —
-nothing is applied to the repository's settings.
+topic candidates, each traceable to a source that was read; run the scenario a
+second time without a source of repository metadata and the audit says the
+metadata could not be read rather than calling it empty. The missing community
+health files are listed and none of them is created; the dead `docs/usage.md`
+link is reported. The proposed metadata is returned as text — nothing is applied
+to the repository's settings.
 
 ## 8. Secret handling
 
@@ -91,12 +93,15 @@ the local `.env` appears anywhere in the output.
 ## 9. Workflow that cannot run on the default branch
 
 *Setup:* a repository with `.github/workflows/tests.yml` triggered only by
-`pull_request`, and a second workflow file, `.github/update-changelog.yml`,
-sitting outside `.github/workflows/`.
+`pull_request`, a `.github/workflows/nightly.yml` triggered by `schedule`, and a
+third workflow file, `.github/update-changelog.yml`, sitting outside
+`.github/workflows/`.
 
-Invariants: neither workflow produces a CI badge; both omissions are named in
-the handover summary with the reason; no change to a workflow file is made or
-proposed.
+Invariants: neither the `pull_request`-only workflow nor the misplaced file
+produces a CI badge, and both omissions are named in the handover summary with
+the reason; the scheduled workflow does get its badge, because a scheduled run
+uses the latest commit on the default branch; no change to a workflow file is
+made or proposed.
 
 ## 10. Manifest description the repository contradicts
 
@@ -113,6 +118,7 @@ repeat the contradicted claim; the manifest is not modified.
 Every scenario must also satisfy:
 
 - no file outside `README.md` is modified
+- no repository setting is changed
 - no commit, push, or pull request happens without an explicit instruction
 - no empty headings and no unsupported badges
 - the handover summary states which checks actually ran

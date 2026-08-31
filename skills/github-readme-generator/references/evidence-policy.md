@@ -71,13 +71,17 @@ the documentation-only diff.
   workflow, coverage service, or license.
 - Both the badge link and the badge image must point at the correct project and
   the current branch or workflow.
-- Emit a CI badge only when its workflow can produce a run on the default
-  branch. Read the `on:` triggers: a workflow triggered exclusively by
-  `pull_request`, `workflow_dispatch`, or `schedule` renders no status there, and
-  a workflow file that sits outside `.github/workflows/` never runs at all. Omit
-  the badge and name the gap in the handover summary. Never propose changing the
-  workflow to make the badge work — that is a code change, and it is out of
-  scope.
+- Emit a CI badge only when the workflow's `on:` triggers put runs on the
+  default branch, since that is the branch a badge reports on. `push` covering
+  the default branch does, and so does `schedule` — a scheduled run always uses
+  the latest commit on the default branch. `pull_request` does not: those runs
+  belong to `refs/pull/<n>/merge`, so the badge reports a pull request's status
+  or nothing at all, never the default branch's health. `workflow_dispatch`
+  alone runs only when a human triggers it, which the repository cannot prove.
+  And a workflow file outside `.github/workflows/` never runs at all. When no
+  trigger puts a run on the default branch, omit the badge and name the gap in
+  the handover summary. Never propose changing the workflow to make the badge
+  work — that is a code change, and it is out of scope.
 - Prefer at most four meaningful badges. Add more only with obvious reader value.
 - Never put dynamic numbers (stars, downloads) into prose.
 - Reuse an existing logo or banner when it clearly belongs to the project. Never
@@ -132,15 +136,17 @@ badges — version, license, tests, downloads — which is the intended ceiling.
 ## Public surface findings
 
 An audit covers the two public surfaces beside the README, because the scan has
-already read everything needed to judge them. Report them as text, next to the
-README findings; write nothing, and derive every proposal from a source you read
-rather than fetching anything further.
+already read almost everything needed to judge them. Report them as text, next
+to the README findings; write nothing, and derive every proposal from a source
+you read rather than fetching anything further.
 
 - **Repository metadata** — an empty About description, homepage, or topic list.
-  Propose a description of at most 350 characters, and five to eight topic
-  candidates, each traceable to a source: the manifest `description` and
-  `keywords`, the primary language, framework or runtime dependencies, the
-  documented homepage.
+  The About box is not in the working tree, so judge it only from the repository
+  metadata the scan actually read; with no such source, say the metadata could
+  not be read instead of calling it empty. Propose a description of at most 350
+  characters, and five to eight topic candidates, each traceable to a source:
+  the manifest `description` and `keywords`, the primary language, framework or
+  runtime dependencies, the documented homepage.
 - **Community health files** — which of `CONTRIBUTING*`, `SECURITY*`,
   `CODE_OF_CONDUCT*`, `.github/ISSUE_TEMPLATE/`, and a pull request template are
   absent. Report the gap only; authoring them stays outside this skill.

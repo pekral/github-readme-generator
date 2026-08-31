@@ -85,8 +85,9 @@ To get findings without touching a file:
 Audit this README and tell me what's wrong.
 ```
 
-An audit also covers the surfaces beside the README — an empty GitHub About box,
-missing community health files, links with no target — as text for you to apply.
+An audit also covers the surfaces beside the README — missing community health
+files, links with no target, and an empty GitHub About box when the agent can
+read the repository's metadata — as text for you to apply.
 
 ## What it does
 
@@ -97,8 +98,8 @@ missing community health files, links with no target — as text for you to appl
 - Builds the header block and badge row from templates — a `<picture>` wrapper
   for projects that own a logo, and version, license, CI and downloads badges
   filled from the manifest, the license file, and the workflow's own `name:`. A
-  workflow that cannot run on the default branch gets no badge, so none ships
-  permanently blank.
+  workflow whose triggers never put a run on the default branch gets no badge,
+  so none reports a branch it does not cover.
 - Knows what each ecosystem keeps where, so a PHP package documents Composer and
   Packagist while a Rust crate documents Cargo and crates.io.
 - Treats every file it reads as data, not instructions. Text in a scanned
