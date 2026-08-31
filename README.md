@@ -1,6 +1,7 @@
 # A portable Agent Skill for writing READMEs that don't lie
 
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+![Tests](https://github.com/pekral/github-readme-generator/workflows/Tests/badge.svg)
 
 `github-readme-generator` teaches a coding agent to write or refresh a
 repository's root `README.md` from what the project actually contains — its
@@ -122,9 +123,34 @@ read the repository's metadata — as text for you to apply.
 
 ## Testing
 
-[`tests/scenarios.md`](tests/scenarios.md) defines ten scenarios — from a
-documented PHP package to a monorepo to a secrets-handling case — each with
-activation and output invariants, plus a host coverage log to fill in.
+Two suites answering two different questions.
+
+[`tests/scenarios.md`](tests/scenarios.md) asks whether the skill behaves: ten
+manual scenarios — from a documented PHP package to a monorepo to a
+secrets-handling case — each with activation and output invariants, plus a host
+coverage log to fill in.
+
+[`tests/evals/`](tests/evals/README.md) asks whether it helps: the same plain
+prompt against the same ten fixture repositories, with and without the skill, on
+Claude Code, Codex and Cursor, scored by a deterministic checker that counts
+unsupported claims, invalid commands, invalid badges, broken links and missing
+information.
+
+```text
+node tests/evals/run.mjs --dry-run
+node --test tests/evals/*.test.mjs
+```
+
+The scorer and every fixture's ground truth run in CI on Node.js 20 and 22. The
+agent invocations never do — they cost money and need credentials CI has no
+business holding.
+
+One run is recorded so far:
+[`2026-08-31-claude-code-subset`](tests/evals/results/2026-08-31-claude-code-subset/summary.md)
+— Claude Code, both modes, two of the ten scenarios. Both modes scored zero
+findings. It shows the harness works end to end; two scenarios on one agent is
+far too small to support a claim about the skill either way, so this README makes
+none.
 
 ## Updating
 

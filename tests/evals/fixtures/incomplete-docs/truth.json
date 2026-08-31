@@ -1,0 +1,65 @@
+{
+  "scenario": "incomplete-docs",
+  "type": "Repository with incomplete documentation",
+  "summary": "Three exported symbols, documentation for one. The README must carry what the docs do not, and link only to pages that exist.",
+  "commands": {
+    "allowed": [
+      "npm install @acme/retry",
+      "npm i @acme/retry",
+      "npm test",
+      "node --test"
+    ],
+    "allowedPatterns": [
+      "^import \\{ .*\\} from '@acme/retry'",
+      "^await retry\\(",
+      "^const token = new CancellationToken",
+      "^console\\.log",
+      "^backoff\\("
+    ]
+  },
+  "badges": {
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/npm/v/@acme/retry",
+      "^https://img\\.shields\\.io/npm/d[mt]/@acme/retry",
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "^https://img\\.shields\\.io/badge/node-"
+    ]
+  },
+  "links": {
+    "allowedExternalPatterns": [
+      "^https://www\\.npmjs\\.com/package/@acme/retry$",
+      "^https://example\\.com"
+    ]
+  },
+  "required": [
+    {
+      "id": "documents-backoff",
+      "pattern": "backoff",
+      "note": "backoff() is exported but the README never mentions it, and the docs do not cover it either."
+    },
+    {
+      "id": "documents-cancellation",
+      "pattern": "CancellationToken|cancel",
+      "note": "Cancellation is exported but the README never mentions it, and the docs do not cover it either."
+    },
+    {
+      "id": "links-existing-docs",
+      "pattern": "docs/(?:index|installation|retry)\\.md",
+      "note": "The documentation that does exist is never linked."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "invented-export",
+      "pattern": "\\b(?:retryAsync|withRetry|RetryPolicy|retrySync)\\b",
+      "kind": "unsupportedClaim",
+      "note": "Export the package does not have."
+    },
+    {
+      "id": "invented-option",
+      "pattern": "\\b(?:jitter|timeout|maxDelay|onRetry)\\s*:",
+      "kind": "unsupportedClaim",
+      "note": "Option no function in the package accepts."
+    }
+  ]
+}

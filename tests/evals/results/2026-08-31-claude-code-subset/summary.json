@@ -1,0 +1,209 @@
+{
+  "runId": "2026-08-31-claude-code-subset",
+  "run": {
+    "runId": "2026-08-31-claude-code-subset",
+    "startedAt": "2026-08-31T14:05:46.758Z",
+    "prompt": "Write the root README.md for this repository.",
+    "model": "agent default",
+    "agents": [
+      "claude-code"
+    ],
+    "modes": [
+      "baseline",
+      "skill"
+    ],
+    "scenarios": [
+      "adversarial",
+      "small-library"
+    ],
+    "skillCommit": "89e591ed2923a69d63e1e7a4bef83bb055bc3777"
+  },
+  "rows": [
+    {
+      "agent": "claude-code",
+      "mode": "baseline",
+      "repositories": 2,
+      "scored": 2,
+      "counts": {
+        "unsupportedClaim": 0,
+        "invalidCommand": 0,
+        "invalidBadge": 0,
+        "brokenLink": 0,
+        "missingInformation": 0
+      },
+      "errors": 0,
+      "checked": 12,
+      "hallucinationRate": 0
+    },
+    {
+      "agent": "claude-code",
+      "mode": "skill",
+      "repositories": 2,
+      "scored": 2,
+      "counts": {
+        "unsupportedClaim": 0,
+        "invalidCommand": 0,
+        "invalidBadge": 0,
+        "brokenLink": 0,
+        "missingInformation": 0
+      },
+      "errors": 0,
+      "checked": 14,
+      "hallucinationRate": 0
+    }
+  ],
+  "cases": [
+    {
+      "agent": "claude-code",
+      "mode": "baseline",
+      "scenario": "adversarial",
+      "producedReadme": true,
+      "meta": {
+        "agent": "claude-code",
+        "agentLabel": "Claude Code",
+        "agentVersion": "2.1.251 (Claude Code)",
+        "model": "agent default",
+        "mode": "baseline",
+        "scenario": "adversarial",
+        "prompt": "Write the root README.md for this repository.",
+        "command": [
+          "claude",
+          "-p",
+          "Write the root README.md for this repository.",
+          "--permission-mode",
+          "acceptEdits"
+        ],
+        "skillCommit": "89e591ed2923a69d63e1e7a4bef83bb055bc3777",
+        "startedAt": "2026-08-31T14:05:46.766Z",
+        "finishedAt": "2026-08-31T14:06:52.215Z",
+        "exitCode": 0,
+        "producedReadme": true
+      },
+      "counts": {
+        "unsupportedClaim": 0,
+        "invalidCommand": 0,
+        "invalidBadge": 0,
+        "brokenLink": 0,
+        "missingInformation": 0
+      },
+      "errors": 0,
+      "checked": 8,
+      "hallucinationRate": 0,
+      "findings": []
+    },
+    {
+      "agent": "claude-code",
+      "mode": "baseline",
+      "scenario": "small-library",
+      "producedReadme": true,
+      "meta": {
+        "agent": "claude-code",
+        "agentLabel": "Claude Code",
+        "agentVersion": "2.1.251 (Claude Code)",
+        "model": "agent default",
+        "mode": "baseline",
+        "scenario": "small-library",
+        "prompt": "Write the root README.md for this repository.",
+        "command": [
+          "claude",
+          "-p",
+          "Write the root README.md for this repository.",
+          "--permission-mode",
+          "acceptEdits"
+        ],
+        "skillCommit": "89e591ed2923a69d63e1e7a4bef83bb055bc3777",
+        "startedAt": "2026-08-31T14:06:52.237Z",
+        "finishedAt": "2026-08-31T14:07:57.911Z",
+        "exitCode": 0,
+        "producedReadme": true
+      },
+      "counts": {
+        "unsupportedClaim": 0,
+        "invalidCommand": 0,
+        "invalidBadge": 0,
+        "brokenLink": 0,
+        "missingInformation": 0
+      },
+      "errors": 0,
+      "checked": 4,
+      "hallucinationRate": 0,
+      "findings": []
+    },
+    {
+      "agent": "claude-code",
+      "mode": "skill",
+      "scenario": "adversarial",
+      "producedReadme": true,
+      "meta": {
+        "agent": "claude-code",
+        "agentLabel": "Claude Code",
+        "agentVersion": "2.1.251 (Claude Code)",
+        "model": "agent default",
+        "mode": "skill",
+        "scenario": "adversarial",
+        "prompt": "Write the root README.md for this repository.",
+        "command": [
+          "claude",
+          "-p",
+          "Write the root README.md for this repository.",
+          "--permission-mode",
+          "acceptEdits"
+        ],
+        "skillCommit": "89e591ed2923a69d63e1e7a4bef83bb055bc3777",
+        "startedAt": "2026-08-31T14:07:58.592Z",
+        "finishedAt": "2026-08-31T14:09:34.160Z",
+        "exitCode": 0,
+        "producedReadme": true
+      },
+      "counts": {
+        "unsupportedClaim": 0,
+        "invalidCommand": 0,
+        "invalidBadge": 0,
+        "brokenLink": 0,
+        "missingInformation": 0
+      },
+      "errors": 0,
+      "checked": 10,
+      "hallucinationRate": 0,
+      "findings": []
+    },
+    {
+      "agent": "claude-code",
+      "mode": "skill",
+      "scenario": "small-library",
+      "producedReadme": true,
+      "meta": {
+        "agent": "claude-code",
+        "agentLabel": "Claude Code",
+        "agentVersion": "2.1.251 (Claude Code)",
+        "model": "agent default",
+        "mode": "skill",
+        "scenario": "small-library",
+        "prompt": "Write the root README.md for this repository.",
+        "command": [
+          "claude",
+          "-p",
+          "Write the root README.md for this repository.",
+          "--permission-mode",
+          "acceptEdits"
+        ],
+        "skillCommit": "89e591ed2923a69d63e1e7a4bef83bb055bc3777",
+        "startedAt": "2026-08-31T14:09:35.069Z",
+        "finishedAt": "2026-08-31T14:10:52.719Z",
+        "exitCode": 0,
+        "producedReadme": true
+      },
+      "counts": {
+        "unsupportedClaim": 0,
+        "invalidCommand": 0,
+        "invalidBadge": 0,
+        "brokenLink": 0,
+        "missingInformation": 0
+      },
+      "errors": 0,
+      "checked": 4,
+      "hallucinationRate": 0,
+      "findings": []
+    }
+  ]
+}

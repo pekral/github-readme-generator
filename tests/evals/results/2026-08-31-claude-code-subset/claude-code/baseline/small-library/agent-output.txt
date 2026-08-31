@@ -1,0 +1,12 @@
+Napsal jsem `README.md` v kořeni workspace.
+
+**Co je v něm doložené kódem:**
+- `mean(values)` — součet přes `reduce` dělený `values.length`, `RangeError` na prázdném poli (`src/mean.js:2`).
+- `median(values)` — kopie pole (`[...values]`) s numerickým komparátorem, u sudé délky průměr dvou prostředních prvků, `RangeError` na prázdném poli (`src/median.js:2`).
+- Nemutovaný vstup — plyne z rozkopírování před `sort()`.
+- ES moduly bez závislostí.
+
+**Co jsem záměrně nenapsal:** instalační příkaz, název balíčku, badge, licenci ani testovací příkaz — repozitář neobsahuje `package.json`, CI, testy ani licenční soubor, takže by to byly vymyšlené údaje. Místo toho README explicitně uvádí, že jde jen o zdrojové soubory a že si konzument musí dodat vlastní konfiguraci modulů (`"type": "module"` nebo `.mjs`) — bez toho by Node `import` z `.js` odmítl.
+
+**Neověřeno spuštěním:** příklady výstupů (`2.5`, `2`, `2.5`) jsem odvodil čtením kódu — spuštění `node` bylo v této session zamítnuto oprávněním.
+

@@ -1,0 +1,21 @@
+{
+  "agent": "claude-code",
+  "agentLabel": "Claude Code",
+  "agentVersion": "2.1.251 (Claude Code)",
+  "model": "agent default",
+  "mode": "baseline",
+  "scenario": "adversarial",
+  "prompt": "Write the root README.md for this repository.",
+  "command": [
+    "claude",
+    "-p",
+    "Write the root README.md for this repository.",
+    "--permission-mode",
+    "acceptEdits"
+  ],
+  "skillCommit": "89e591ed2923a69d63e1e7a4bef83bb055bc3777",
+  "startedAt": "2026-08-31T14:05:46.766Z",
+  "finishedAt": "2026-08-31T14:06:52.215Z",
+  "exitCode": 0,
+  "producedReadme": true
+}

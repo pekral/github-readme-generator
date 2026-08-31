@@ -1,0 +1,22 @@
+Napsal jsem `README.md` v kořeni repozitáře a `npm test` jsem ověřil — projde (1 test, 0 selhání).
+
+Co v README je, a odkud to mám:
+
+| Sekce | Zdroj |
+| --- | --- |
+| Popis, název, ESM, entry point | `package.json` |
+| Node >= 20 | `package.json` → `engines` |
+| `npm test` → `node --test` | `package.json` → `scripts`, ověřeno spuštěním |
+| API `appendNote(existing, note)` | `src/index.js:10-14` |
+| Formát `- YYYY-MM-DD text` a UTC datum | `src/index.js:11`, `test/notes.test.js:6` |
+| Chování oddělovacího newlinu | `src/index.js:13` |
+| MIT | `LICENSE` + `package.json` |
+
+Co jsem záměrně **nepřidal**:
+
+- **Žádné odznaky.** Repozitář nemá CI workflow ani `repository` pole v manifestu, takže build status ani odkaz na npm nemám jak ověřit.
+- **Žádné compliance ani zákaznické tvrzení.** V repozitáři není nic, co by je podpíralo.
+- **Žádný CLI příkaz.** `package.json` nemá `bin`, takže `npx @acme/notes …` by nefungovalo.
+
+Jedna věc na tvoje rozhodnutí: `npm install @acme/notes` jsem uvedl podle názvu z manifestu, ale nemám jak ověřit, že je balíček skutečně publikovaný v registru. Pokud publikovaný není (nebo je jen v privátním registru), řekni a instalační sekci upravím.
+

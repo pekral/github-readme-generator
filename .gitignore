@@ -1,3 +1,7 @@
 # Local installs made by `npx skills add` — the canonical skill lives in skills/
 .agents/skills/
 .claude/skills/
+
+# Benchmark workspaces: throwaway fixture copies with an installed skill. The
+# generated README, its meta.json and its findings.json are committed instead.
+tests/evals/results/*/*/*/*/workspace/

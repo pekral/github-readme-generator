@@ -1,0 +1,29 @@
+{
+  "$comment": "Invocation templates. {{prompt}} and {{workspace}} are substituted; {{model}} is dropped when --model is not passed. Every flag here was read from the tool's own --help or its published reference — see README.md, 'Where these commands come from'.",
+  "agents": {
+    "claude-code": {
+      "label": "Claude Code",
+      "skillsAgentId": "claude-code",
+      "versionCommand": ["claude", "--version"],
+      "command": ["claude", "-p", "{{prompt}}", "--permission-mode", "acceptEdits"],
+      "modelFlag": ["--model", "{{model}}"],
+      "runsInWorkspace": true
+    },
+    "codex": {
+      "label": "Codex",
+      "skillsAgentId": "codex",
+      "versionCommand": ["codex", "--version"],
+      "command": ["codex", "exec", "--sandbox", "workspace-write", "-C", "{{workspace}}", "{{prompt}}"],
+      "modelFlag": ["--model", "{{model}}"],
+      "runsInWorkspace": true
+    },
+    "cursor": {
+      "label": "Cursor",
+      "skillsAgentId": "cursor",
+      "versionCommand": ["cursor-agent", "--version"],
+      "command": ["cursor-agent", "-p", "{{prompt}}", "--force", "--sandbox", "enabled", "--trust", "--workspace", "{{workspace}}"],
+      "modelFlag": ["--model", "{{model}}"],
+      "runsInWorkspace": true
+    }
+  }
+}

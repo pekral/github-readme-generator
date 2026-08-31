@@ -1,0 +1,12 @@
+# NOTE: this file is deliberately outside .github/workflows/, so GitHub never runs it.
+name: PR checks
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm test

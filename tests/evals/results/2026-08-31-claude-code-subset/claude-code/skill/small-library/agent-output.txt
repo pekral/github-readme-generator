@@ -1,0 +1,20 @@
+Napsal jsem `README.md` v kořeni pracovního adresáře.
+
+## Co jsem prošel
+`src/mean.js`, `src/median.js`, `skills-lock.json`, `.claude/` a kořenový výpis souborů. Repozitář neobsahuje žádný manifest (`package.json`), testy, CI workflow, licenční soubor ani dokumentaci — jediné, co existuje, jsou dva ES moduly.
+
+## Co je ověřeno
+- Symboly `mean(values)` a `median(values)` a jejich `export` z uvedených cest odpovídají zdroji.
+- Hodnoty v příkladu jsem odvodil přímo z kódu: `mean([2,4,9])` = 15/3 = 5; `median([7,1,3])` → seřazeno `[1,3,7]`, prostřední = 3; `median([4,1,3,2])` → seřazeno `[1,2,3,4]`, sudý počet → (2+3)/2 = 2.5.
+- `RangeError` u prázdného pole a kopie vstupu přes `[...values]` v `median` jsou doslova ve zdroji.
+
+## Co jsem vynechal a proč
+- **Requirements, Installation, Testing, Configuration, Changelog, Contributing, Security, Credits, License, odznaky** — pro nic z toho není v repozitáři doklad. Bez manifestu neexistuje jméno balíčku, install ani test příkaz; není licenční soubor ani workflow, takže žádný odznak.
+- Konkrétní verzi Node.js netvrdím — `engines` ani CI matrix neexistují. Místo toho README říká jen to, co je jisté: jsou to ES moduly a importují se cestou.
+- `LICENSE.md` pod `.claude/skills/github-readme-generator/` patří té skillu, ne této knihovně, takže z ní licenci neodvozuji.
+
+## Spuštěné kontroly
+Ověření příkladu přes `node` bylo zamítnuto oprávněními (dvakrát), takže jsem hodnoty odvodil čtením zdroje — viz výše, aritmetika je triviální a jednoznačná. Žádný Markdown ani link-checker v prostředí není, takže neproběhl. Ruční průchod checklistu: žádné duplicitní sekce, žádné placeholdery, žádné `TODO`, žádná tajemství, relativní cesty `./src/mean.js` a `./src/median.js` existují.
+
+Nic jsem nestageoval, necommitoval ani nepushoval; změněn je pouze nově vytvořený `README.md`.
+

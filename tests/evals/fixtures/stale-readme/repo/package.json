@@ -1,0 +1,15 @@
+{
+  "name": "@acme/palette",
+  "version": "3.0.0",
+  "description": "Accessible colour palettes generated from a single base colour.",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build.js"
+  }
+}

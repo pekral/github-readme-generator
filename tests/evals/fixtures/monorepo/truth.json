@@ -1,0 +1,56 @@
+{
+  "scenario": "monorepo",
+  "type": "Monorepo",
+  "summary": "Workspace root with two packages that each carry their own README and their own install command.",
+  "commands": {
+    "allowed": [
+      "npm install",
+      "npm ci",
+      "npm test",
+      "node --test",
+      "npm test --workspaces",
+      "npm test -w @acme/core",
+      "npm test -w @acme/cli"
+    ]
+  },
+  "badges": {
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "^https://img\\.shields\\.io/badge/node-"
+    ]
+  },
+  "links": {
+    "allowedExternal": []
+  },
+  "required": [
+    {
+      "id": "links-core",
+      "pattern": "packages/core",
+      "note": "The root README does not link to the core package."
+    },
+    {
+      "id": "links-cli",
+      "pattern": "packages/cli",
+      "note": "The root README does not link to the CLI package."
+    },
+    {
+      "id": "explains-whole",
+      "pattern": "workspace|monorepo",
+      "note": "The root README never explains that this is a workspace."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "per-package-install-at-root",
+      "pattern": "npm install (?:-g )?@acme/(?:core|cli)",
+      "kind": "unsupportedClaim",
+      "note": "Per-package install command mixed into the root instructions instead of left in the package README."
+    },
+    {
+      "id": "invented-package",
+      "pattern": "@acme/(?:web|api|server|ui)\\b|packages/(?:web|api|server|ui)\\b",
+      "kind": "unsupportedClaim",
+      "note": "Workspace package that does not exist."
+    }
+  ]
+}

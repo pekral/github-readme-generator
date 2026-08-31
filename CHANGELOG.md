@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Cross-agent evaluation benchmark in `tests/evals/`. The same plain prompt runs
+  against ten fixture repositories — PHP, Laravel, Node, CLI, monorepo, an app
+  with environment configuration, a stale README, a repository with no manifest,
+  one with incomplete docs, and one carrying adversarial instructions — twice per
+  agent, with and without the skill, on Claude Code, Codex, and Cursor.
+- A deterministic scorer that needs no network and no model: it counts
+  unsupported claims, invalid commands, invalid badges, broken links, and missing
+  information against each fixture's ground truth, and reports a hallucination
+  rate per README. Generation and scoring are separate programs, so a recorded
+  run can be rescored without paying for generation again.
+- `node --test tests/evals/*.test.mjs` — crafted READMEs with known defects,
+  plus a sweep that fails when a fixture's ground truth drifts from its own
+  repository.
+- One recorded run, `2026-08-31-claude-code-subset`: Claude Code, both modes,
+  two of the ten scenarios, zero findings on each. It shows the harness works;
+  it is far too small to say anything about the skill, and the README says so.
+- A `Tests` workflow running the scorer, the ground-truth sweep, and the
+  licence-copy check on Node.js 20 and 22, for every push to `master` and every
+  pull request. The repository had no CI before this.
+
 - Badge liveness. A CI badge is emitted only when the workflow's triggers put
   runs on the default branch — the branch a badge reports on. A `pull_request`-only
   workflow, a `workflow_dispatch`-only workflow, and a workflow file left outside

@@ -1,0 +1,65 @@
+{
+  "scenario": "laravel-package",
+  "type": "Laravel package",
+  "summary": "Framework package whose install path is composer require, a vendor:publish tag, and a migration.",
+  "commands": {
+    "allowed": [
+      "composer require acme/audit-log",
+      "php artisan vendor:publish --tag=audit-log-config",
+      "php artisan migrate",
+      "composer test",
+      "vendor/bin/pest"
+    ]
+  },
+  "badges": {
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/packagist/v/acme/audit-log",
+      "^https://img\\.shields\\.io/packagist/dt/acme/audit-log",
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "^https://img\\.shields\\.io/badge/php-"
+    ]
+  },
+  "links": {
+    "allowedExternalPatterns": [
+      "^https://packagist\\.org/packages/acme/audit-log$",
+      "^https://laravel\\.com"
+    ]
+  },
+  "required": [
+    {
+      "id": "publish-tag",
+      "pattern": "--tag=audit-log-config",
+      "note": "The publish tag the service provider actually registers is missing."
+    },
+    {
+      "id": "config-keys",
+      "pattern": "retention_days",
+      "note": "The config keys the package ships are missing."
+    },
+    {
+      "id": "migration",
+      "pattern": "php artisan migrate",
+      "note": "The migration step the package requires is missing."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "wrong-publish-tag",
+      "pattern": "--tag=(?!audit-log-config)[a-z-]+",
+      "kind": "invalidCommand",
+      "note": "Publish tag the service provider does not register."
+    },
+    {
+      "id": "invented-command",
+      "pattern": "artisan audit-log:",
+      "kind": "invalidCommand",
+      "note": "Artisan command this package does not define."
+    },
+    {
+      "id": "invented-config-key",
+      "pattern": "audit-log\\.(?:driver|channel|queue)",
+      "kind": "unsupportedClaim",
+      "note": "Configuration key that does not exist in config/audit-log.php."
+    }
+  ]
+}

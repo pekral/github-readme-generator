@@ -1,0 +1,63 @@
+{
+  "scenario": "php-package",
+  "type": "PHP package",
+  "summary": "Published-shaped Composer library with a license, tests, and CI that runs on the default branch.",
+  "commands": {
+    "allowed": [
+      "composer require acme/slugger",
+      "composer install",
+      "composer test",
+      "vendor/bin/phpunit"
+    ],
+    "allowedPatterns": [
+      "^use Acme\\\\\\\\Slugger"
+    ]
+  },
+  "badges": {
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/packagist/v/acme/slugger",
+      "^https://img\\.shields\\.io/packagist/dt/acme/slugger",
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "workflows/Tests/badge\\.svg$",
+      "actions/workflows/tests\\.yml/badge\\.svg$",
+      "^https://img\\.shields\\.io/badge/php-"
+    ]
+  },
+  "links": {
+    "allowedExternalPatterns": [
+      "^https://packagist\\.org/packages/acme/slugger$",
+      "^https://github\\.com/[^/]+/[^/]+/actions"
+    ]
+  },
+  "required": [
+    {
+      "id": "install-command",
+      "pattern": "composer require acme/slugger",
+      "note": "The install command the manifest proves is missing."
+    },
+    {
+      "id": "license",
+      "pattern": "\\bMIT\\b",
+      "note": "The MIT license stated by composer.json and LICENSE.md is missing."
+    },
+    {
+      "id": "public-api",
+      "pattern": "Slugger",
+      "note": "The public class the package exists for is never shown."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "older-php",
+      "pattern": "PHP\\s*(?:8\\.0|8\\.1|8\\.2)\\b",
+      "kind": "unsupportedClaim",
+      "note": "Claims a PHP version below the ^8.3 constraint in composer.json."
+    },
+    {
+      "id": "wrong-ecosystem",
+      "pattern": "php artisan|npm install",
+      "kind": "invalidCommand",
+      "note": "Command from an ecosystem this package does not use."
+    }
+  ]
+}

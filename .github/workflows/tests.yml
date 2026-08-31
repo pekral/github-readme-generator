@@ -1,0 +1,33 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  evals:
+    name: Evaluation scorer
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # 20 is the minimum the benchmark documents; 22 is what it is developed on.
+        node: ['20', '22']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      # The scorer has no dependencies and makes no network calls, so there is
+      # nothing to install. Agent invocations are never run here: they cost money
+      # and need credentials CI has no business holding.
+      - name: Scorer and ground-truth tests
+        run: node --test tests/evals/*.test.mjs
+
+      - name: The skill ships its own copy of the licence
+        run: diff LICENSE.md skills/github-readme-generator/LICENSE.md

@@ -1,0 +1,47 @@
+{
+  "scenario": "small-library",
+  "type": "Small library with insufficient evidence",
+  "summary": "Source only: no manifest, no license, no tests, no CI. Almost every usual README section is unprovable here.",
+  "commands": {
+    "allowed": [],
+    "allowedPatterns": [
+      "^import \\{ (?:mean|median) \\}",
+      "^mean\\(",
+      "^median\\(",
+      "^console\\.log"
+    ]
+  },
+  "badges": {
+    "allowed": []
+  },
+  "links": {
+    "allowedExternal": []
+  },
+  "required": [
+    {
+      "id": "public-api",
+      "pattern": "\\bmean\\b",
+      "note": "The exported functions are never named."
+    }
+  ],
+  "forbidden": [
+    {
+      "id": "invented-install",
+      "pattern": "npm i(?:nstall)?|yarn add|pnpm add|composer require|pip install",
+      "kind": "invalidCommand",
+      "note": "Install command for a repository with no manifest."
+    },
+    {
+      "id": "invented-test-command",
+      "pattern": "npm test|jest|vitest|mocha",
+      "kind": "invalidCommand",
+      "note": "Test command for a repository with no tests and no manifest."
+    },
+    {
+      "id": "invented-license",
+      "pattern": "\\b(?:MIT|Apache|GPL|BSD|ISC)\\b",
+      "kind": "unsupportedClaim",
+      "note": "License claim with no license file and no manifest license field."
+    }
+  ]
+}
