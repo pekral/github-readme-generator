@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `docs/examples/` — three before/after README pairs (Composer library,
+  unpublished CLI, stale README), each carrying the full text of both outputs,
+  the provenance of the run that produced them, and a comparison of what actually
+  differs. The index reports the headline finding rather than burying it: across
+  the ten repositories recorded, the baseline agent invented nothing, and in one
+  pair the skill did worse than the baseline by discarding hand-written prose its
+  own rules tell it to keep.
+
 - Cross-agent evaluation benchmark in `tests/evals/`. The same plain prompt runs
   against ten fixture repositories — PHP, Laravel, Node, CLI, monorepo, an app
   with environment configuration, a stale README, a repository with no manifest,
