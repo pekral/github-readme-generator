@@ -3,7 +3,7 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { renderSection, spliceIntoReadme, runIdInReadme } from './readme-section.mjs';
+import { renderSection, spliceIntoReadme, runIdInReadme, provenance } from './readme-section.mjs';
 
 const AGENTS = { 'claude-code': 'Claude Code', codex: 'Codex', cursor: 'Cursor' };
 
@@ -19,7 +19,7 @@ const row = (agent, mode, repositories, counts) => ({
   checked: 100,
 });
 
-const summary = (rows, runId = 'a-run', cases = []) => ({ runId, run: {}, rows, cases });
+const summary = (rows, runId = 'a-run', cases = [], run = {}) => ({ runId, run, rows, cases });
 
 test('a run where neither mode erred claims no improvement', () => {
   const section = renderSection(summary([
@@ -110,6 +110,38 @@ test('a run where everything produced a README says nothing about failures', () 
   ), AGENTS);
 
   assert.doesNotMatch(section, /produced no README/);
+});
+
+test('a number is dated and attributed to the skill it measured', () => {
+  const line = provenance('a-run', {
+    startedAt: '2026-08-31T14:05:46.758Z', skillCommit: '89e591ed2923a69d63e1e7a4bef83bb055bc3777', skillCommitIsExact: true,
+  });
+
+  assert.match(line, /Recorded on 2026-08-31/);
+  assert.match(line, /skill commit `89e591e`/);
+  assert.doesNotMatch(line, /approximate/);
+  assert.match(line, /not a live measurement/);
+});
+
+test('an inexact commit is declared as inexact', () => {
+  const line = provenance('a-run', { startedAt: '2026-08-31T00:00:00Z', skillCommit: 'abcdef1234567', skillCommitIsExact: false });
+
+  assert.match(line, /uncommitted changes when this ran, so that commit is approximate/);
+});
+
+test('a run missing its provenance says so rather than inventing it', () => {
+  const line = provenance('a-run', {});
+
+  assert.match(line, /an unrecorded date/);
+  assert.match(line, /an unrecorded commit/);
+});
+
+test('the provenance line reaches the rendered section', () => {
+  const section = renderSection(summary(
+    [row('claude-code', 'baseline', 1, {})], 'a-run', [], { startedAt: '2026-08-31T00:00:00Z', skillCommit: 'deadbeefcafe', skillCommitIsExact: true },
+  ), AGENTS);
+
+  assert.match(section, /Recorded on 2026-08-31, against skill commit `deadbee`/);
 });
 
 test('the section links its own raw results', () => {

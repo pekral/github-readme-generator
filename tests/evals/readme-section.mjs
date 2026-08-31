@@ -59,7 +59,7 @@ function plural(count, singular, pluralForm = `${singular}s`) {
  * @param configured  agent id -> human label, from agents.json
  */
 export function renderSection(summary, configured) {
-  const { runId, rows, cases = [] } = summary;
+  const { runId, run = {}, rows, cases = [] } = summary;
   const covered = [...new Set(rows.map((row) => row.agent))].sort();
   const label = (id) => configured[id] ?? id;
   const baseline = totals(rows, 'baseline');
@@ -119,6 +119,10 @@ export function renderSection(summary, configured) {
     lines.push('');
   }
 
+  // A benchmark number is a snapshot. Saying when it was taken, and of what, is the
+  // difference between a reader judging its age and a reader assuming it is current.
+  lines.push(provenance(runId, run), '');
+
   lines.push(
     `- Methodology, scoring rules, and how to add a scenario: [\`tests/evals/README.md\`](tests/evals/README.md)`,
     `- Raw results for this run, including every generated README and its findings: [\`tests/evals/results/${runId}/\`](tests/evals/results/${runId})`,
@@ -129,6 +133,18 @@ export function renderSection(summary, configured) {
   );
 
   return lines.join('\n');
+}
+
+export function provenance(runId, run) {
+  const when = run.startedAt ? run.startedAt.slice(0, 10) : 'an unrecorded date';
+  const commit = run.skillCommit ? `\`${run.skillCommit.slice(0, 7)}\`` : 'an unrecorded commit';
+  const caveat = run.skillCommitIsExact === false
+    ? ' The skill directory had uncommitted changes when this ran, so that commit is approximate.'
+    : '';
+
+  return `Recorded on ${when}, against skill commit ${commit}.${caveat} A benchmark number is a`
+    + ' snapshot of the skill as it was that day, not a live measurement — re-record it with'
+    + ' `node tests/evals/run.mjs` when the skill changes in a way meant to affect accuracy.';
 }
 
 export function loadSummary(runId) {
