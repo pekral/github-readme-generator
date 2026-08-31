@@ -140,9 +140,12 @@ node tests/evals/run.mjs --dry-run
 node --test tests/evals/*.test.mjs
 ```
 
-No benchmark numbers appear here yet. `tests/evals/results/` holds no recorded
-run, and a claim about this skill's accuracy without one would be exactly the
-kind of unsupported statement the skill exists to prevent.
+One run is recorded so far:
+[`2026-08-31-claude-code-subset`](tests/evals/results/2026-08-31-claude-code-subset/summary.md)
+— Claude Code, both modes, two of the ten scenarios. Both modes scored zero
+findings. It shows the harness works end to end; two scenarios on one agent is
+far too small to support a claim about the skill either way, so this README makes
+none.
 
 ## Updating
 

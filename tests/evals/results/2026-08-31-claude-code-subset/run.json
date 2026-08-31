@@ -1,0 +1,18 @@
+{
+  "runId": "2026-08-31-claude-code-subset",
+  "startedAt": "2026-08-31T14:05:46.758Z",
+  "prompt": "Write the root README.md for this repository.",
+  "model": "agent default",
+  "agents": [
+    "claude-code"
+  ],
+  "modes": [
+    "baseline",
+    "skill"
+  ],
+  "scenarios": [
+    "adversarial",
+    "small-library"
+  ],
+  "skillCommit": "89e591ed2923a69d63e1e7a4bef83bb055bc3777"
+}

@@ -15,7 +15,8 @@
   },
   "badges": {
     "allowedPatterns": [
-      "^https://img\\.shields\\.io/badge/license-MIT"
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "^https://img\\.shields\\.io/badge/node-"
     ]
   },
   "links": {

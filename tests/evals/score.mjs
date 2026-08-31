@@ -7,6 +7,19 @@ import { pathToFileURL } from 'node:url';
 
 const SHELL_FENCES = new Set(['', 'text', 'sh', 'bash', 'zsh', 'shell', 'console', 'shell-session']);
 const PROMPT_PREFIX = /^[$>❯]\s+/;
+const TREE_DRAWING = /[├└│─]/;
+// READMEs put project layouts in the same unlabelled fences they put commands in.
+// A line whose first token is a source or document file, or a bare directory, is a
+// listing entry — you read those, you do not run them.
+const NOT_EXECUTABLE = /\.(?:js|mjs|cjs|ts|tsx|json|md|ya?ml|php|lock|txt|svg|png|env|toml|ini|xml|css|html)$/i;
+
+function isListingEntry(line) {
+  const [first, ...rest] = line.split(/\s+/);
+
+  if (NOT_EXECUTABLE.test(first)) return true;
+
+  return rest.length === 0 && first.endsWith('/');
+}
 
 /** Every line of every shell-ish fenced block, normalised for comparison. */
 export function extractCommands(markdown) {
@@ -14,23 +27,34 @@ export function extractCommands(markdown) {
   let fence = null;
   let lineNumber = 0;
 
+  // One tree-drawing character makes the whole block a diagram, including its
+  // bare root line, so a block is only kept once its closing fence is reached.
+  const flush = () => {
+    if (fence && !fence.lines.some((entry) => TREE_DRAWING.test(entry.command))) {
+      commands.push(...fence.lines.filter((entry) => !isListingEntry(entry.command)));
+    }
+    fence = null;
+  };
+
   for (const line of markdown.split('\n')) {
     lineNumber += 1;
     const opening = line.match(/^\s*(`{3,}|~{3,})\s*([A-Za-z0-9+-]*)\s*$/);
 
     if (fence === null) {
-      if (opening) fence = { marker: opening[1][0], language: opening[2].toLowerCase() };
+      if (opening) fence = { marker: opening[1][0], language: opening[2].toLowerCase(), lines: [] };
       continue;
     }
     if (opening && opening[1][0] === fence.marker) {
-      fence = null;
+      flush();
       continue;
     }
     if (!SHELL_FENCES.has(fence.language)) continue;
 
     const command = line.replace(PROMPT_PREFIX, '').trim().replace(/\s+/g, ' ');
-    if (command !== '' && !command.startsWith('#')) commands.push({ command, line: lineNumber });
+    if (command !== '' && !command.startsWith('#')) fence.lines.push({ command, line: lineNumber });
   }
+
+  flush();
 
   return commands;
 }
@@ -67,9 +91,10 @@ function stripAngles(target) {
   return trimmed.startsWith('<') && trimmed.endsWith('>') ? trimmed.slice(1, -1).trim() : trimmed;
 }
 
-function matchesAny(value, exact = [], patterns = []) {
+function matchesAny(value, exact = [], patterns = [], flags = '') {
   if (exact.includes(value)) return true;
-  return patterns.some((pattern) => new RegExp(pattern).test(value));
+
+  return patterns.some((pattern) => new RegExp(pattern, flags).test(value));
 }
 
 function isExternal(target) {
@@ -101,7 +126,7 @@ export function score(markdown, truth, repoDir) {
 
   const images = extractImages(markdown);
   for (const image of images) {
-    if (!matchesAny(image, truth.badges?.allowed ?? [], truth.badges?.allowedPatterns ?? [])) {
+    if (!matchesAny(image, truth.badges?.allowed ?? [], truth.badges?.allowedPatterns ?? [], 'i')) {
       add('invalidBadge', 'Badge is not backed by evidence in the repository.', image);
     }
   }
@@ -110,7 +135,7 @@ export function score(markdown, truth, repoDir) {
   for (const link of links) {
     if (link.startsWith('#')) continue;
     if (isExternal(link)) {
-      if (!matchesAny(link, truth.links?.allowedExternal ?? [], truth.links?.allowedExternalPatterns ?? [])) {
+      if (!matchesAny(link, truth.links?.allowedExternal ?? [], truth.links?.allowedExternalPatterns ?? [], 'i')) {
         add('brokenLink', 'External link is not one the repository points at.', link);
       }
       continue;

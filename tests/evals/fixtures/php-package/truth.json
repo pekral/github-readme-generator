@@ -19,7 +19,8 @@
       "^https://img\\.shields\\.io/packagist/dt/acme/slugger",
       "^https://img\\.shields\\.io/badge/license-MIT",
       "workflows/Tests/badge\\.svg$",
-      "actions/workflows/tests\\.yml/badge\\.svg$"
+      "actions/workflows/tests\\.yml/badge\\.svg$",
+      "^https://img\\.shields\\.io/badge/php-"
     ]
   },
   "links": {

@@ -14,7 +14,10 @@
     ]
   },
   "badges": {
-    "allowed": []
+    "allowed": [],
+    "allowedPatterns": [
+      "^https://img\\.shields\\.io/badge/node-"
+    ]
   },
   "links": {
     "allowedExternal": []

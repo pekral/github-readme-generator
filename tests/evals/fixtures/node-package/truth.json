@@ -23,7 +23,8 @@
     "allowedPatterns": [
       "^https://img\\.shields\\.io/npm/v/@acme/slugify",
       "^https://img\\.shields\\.io/npm/d[mt]/@acme/slugify",
-      "^https://img\\.shields\\.io/badge/license-MIT"
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "^https://img\\.shields\\.io/badge/node-"
     ]
   },
   "links": {

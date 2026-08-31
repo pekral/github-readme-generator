@@ -29,6 +29,40 @@ test('extractCommands reads shell fences and skips language fences', () => {
   assert.deepEqual(extractCommands(markdown).map((entry) => entry.command), ['npm test', 'npm run build']);
 });
 
+test('a project layout is not read as a list of commands', () => {
+  const annotated = ['```', 'src/index.js        the implementation', 'docs/NOTES.md       internal notes', '```'].join('\n');
+  const bare = ['```text', 'src/', '  mean.js', '  median.js', '```'].join('\n');
+  const tree = ['```text', 'src', '├── index.js', '└── util.js', '```'].join('\n');
+
+  for (const listing of [annotated, bare, tree]) {
+    assert.deepEqual(extractCommands(listing), [], `read as commands:\n${listing}`);
+  }
+
+  // A path that really is the command still counts.
+  assert.deepEqual(
+    extractCommands(['```text', 'vendor/bin/phpunit', '```'].join('\n')).map((entry) => entry.command),
+    ['vendor/bin/phpunit'],
+  );
+});
+
+test('a badge allow-list ignores the case of the label', () => {
+  const truth = loadTruth(join(FIXTURES_DIR, 'node-package'));
+  const withCapitalLabel = '![License](https://img.shields.io/badge/License-MIT-blue.svg)\n';
+
+  const result = score(withCapitalLabel, truth, join(FIXTURES_DIR, 'node-package', 'repo'));
+
+  assert.equal(result.counts.invalidBadge, 0, 'badge/License-MIT is the same evidence as badge/license-MIT');
+});
+
+test('a runtime badge is earned by a manifest that states the constraint', () => {
+  const truth = loadTruth(join(FIXTURES_DIR, 'node-package'));
+  const engines = '![node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)\n';
+
+  const result = score(engines, truth, join(FIXTURES_DIR, 'node-package', 'repo'));
+
+  assert.equal(result.counts.invalidBadge, 0, 'package.json engines proves node >= 20');
+});
+
 test('extractImages and extractLinks separate badges from links', () => {
   const markdown = '[![Version](https://example.com/badge.png)](https://example.com/pkg)\n[Docs](docs/index.md)\n';
 

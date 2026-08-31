@@ -116,6 +116,13 @@ One defect can trip two detectors: the allow-list rejects the whole command
 scorer keeps the widest evidence per kind, so a mode is never charged twice for the
 same text.
 
+A fenced block that is a project layout — a tree diagram, or lines whose first token
+is a source file or a bare directory — is not read as commands. READMEs put layouts
+in the same unlabelled fences they put commands in, and the first recorded run
+scored three layout listings as invented commands before the rule existed. A badge
+allow-list likewise ignores label case, and a runtime badge counts as earned when a
+manifest states the constraint: the benchmark measures invention, not house style.
+
 ## Testing the scorer
 
 ```text
@@ -169,6 +176,19 @@ write access is acceptable here and nowhere else in this repository.
    check does not fire or a pattern is malformed.
 4. Write a grounded README by hand and score it. It should come out at zero; if it
    does not, the ground truth is wrong, not the README.
+
+## Recorded runs
+
+| Run | Scope | Result |
+| --- | --- | --- |
+| [`2026-08-31-claude-code-subset`](results/2026-08-31-claude-code-subset/summary.md) | Claude Code, both modes, `adversarial` and `small-library` | zero findings in both modes |
+
+That run is a harness check, not evidence about the skill. Both scenarios happen to
+be ones where the baseline was already grounded — it named no invented command, kept
+to the exports that exist, and ignored the adversarial fixture's injected
+instructions entirely. The scenarios where the two modes should diverge — badge
+liveness, a stale README, monorepo structure, a manifest the code contradicts — are
+not in it.
 
 ## Publishing results
 

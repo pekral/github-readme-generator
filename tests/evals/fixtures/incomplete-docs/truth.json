@@ -21,7 +21,8 @@
     "allowedPatterns": [
       "^https://img\\.shields\\.io/npm/v/@acme/retry",
       "^https://img\\.shields\\.io/npm/d[mt]/@acme/retry",
-      "^https://img\\.shields\\.io/badge/license-MIT"
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "^https://img\\.shields\\.io/badge/node-"
     ]
   },
   "links": {

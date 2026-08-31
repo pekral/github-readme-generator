@@ -15,7 +15,8 @@
     "allowedPatterns": [
       "^https://img\\.shields\\.io/packagist/v/acme/audit-log",
       "^https://img\\.shields\\.io/packagist/dt/acme/audit-log",
-      "^https://img\\.shields\\.io/badge/license-MIT"
+      "^https://img\\.shields\\.io/badge/license-MIT",
+      "^https://img\\.shields\\.io/badge/php-"
     ]
   },
   "links": {

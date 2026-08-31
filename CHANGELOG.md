@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `node --test tests/evals/*.test.mjs` — crafted READMEs with known defects,
   plus a sweep that fails when a fixture's ground truth drifts from its own
   repository.
+- One recorded run, `2026-08-31-claude-code-subset`: Claude Code, both modes,
+  two of the ten scenarios, zero findings on each. It shows the harness works;
+  it is far too small to say anything about the skill, and the README says so.
 
 - Badge liveness. A CI badge is emitted only when the workflow's triggers put
   runs on the default branch — the branch a badge reports on. A `pull_request`-only

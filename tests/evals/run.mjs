@@ -34,9 +34,9 @@ function parseArgs(argv) {
 
 const HELP = `Usage: node tests/evals/run.mjs [options]
 
-  --agent <id|all>       claude-code, codex, cursor (default: all)
+  --agent <id|all>       claude-code, codex, cursor; comma-separated (default: all)
   --mode <mode|both>     baseline, skill (default: both)
-  --scenario <id|all>    a directory name under tests/evals/fixtures (default: all)
+  --scenario <id|all>    directory names under tests/evals/fixtures; comma-separated (default: all)
   --model <name>         passed through to the agent CLI; recorded in meta.json
   --run-id <id>          results directory name (default: the current UTC timestamp)
   --dry-run              print what would run, invoke no agent, spend nothing
@@ -56,8 +56,11 @@ function listScenarios(selection) {
     .map((entry) => entry.name)
     .sort();
   if (selection === 'all') return all;
-  if (!all.includes(selection)) throw new Error(`Unknown scenario: ${selection}`);
-  return [selection];
+
+  const chosen = selection.split(',').map((name) => name.trim()).filter(Boolean);
+  for (const name of chosen) if (!all.includes(name)) throw new Error(`Unknown scenario: ${name}`);
+
+  return chosen;
 }
 
 function buildCommand(agent, { prompt, workspace, model }) {
@@ -147,7 +150,7 @@ export function main(argv) {
   if (args.help) { console.log(HELP); return 0; }
 
   const { agents } = JSON.parse(readFileSync(join(EVALS_DIR, 'agents.json'), 'utf8'));
-  const agentIds = args.agent === 'all' ? Object.keys(agents) : [args.agent];
+  const agentIds = args.agent === 'all' ? Object.keys(agents) : args.agent.split(',').map((id) => id.trim());
   for (const id of agentIds) if (!agents[id]) throw new Error(`Unknown agent: ${id}`);
 
   const modes = args.mode === 'both' ? MODES : [args.mode];
