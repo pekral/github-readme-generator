@@ -59,13 +59,16 @@ function plural(count, singular, pluralForm = `${singular}s`) {
  * @param configured  agent id -> human label, from agents.json
  */
 export function renderSection(summary, configured) {
-  const { runId, rows } = summary;
+  const { runId, rows, cases = [] } = summary;
   const covered = [...new Set(rows.map((row) => row.agent))].sort();
   const label = (id) => configured[id] ?? id;
   const baseline = totals(rows, 'baseline');
   const skill = totals(rows, 'skill');
   const scenarios = Math.max(baseline.scenarios, skill.scenarios);
   const missingAgents = Object.keys(configured).filter((id) => !covered.includes(id)).sort();
+  // An invocation can fail or time out. Counting it as a clean result would flatter
+  // whichever mode it fell in, so the section says how many produced nothing.
+  const unproduced = cases.filter((item) => item.producedReadme === false).length;
 
   const lines = [
     '## Benchmark',
@@ -101,6 +104,13 @@ export function renderSection(summary, configured) {
   }
 
   lines.push('');
+
+  if (unproduced > 0) {
+    lines.push(`${plural(unproduced, 'invocation')} produced no README at all — an agent error or a`,
+      'timeout, not a scoring result. Those are counted in the run and scored as nothing; the',
+      "run's `summary.md` names them.");
+    lines.push('');
+  }
 
   if (missingAgents.length > 0) {
     lines.push(`Not measured in this run: ${missingAgents.map(label).join(', ')}. The benchmark supports`,

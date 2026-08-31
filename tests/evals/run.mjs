@@ -2,7 +2,7 @@
 // Generation is the only step that costs money and is non-deterministic; scoring is separate.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, cpSync, readdirSync } from 'node:fs';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -11,10 +11,43 @@ const REPO_ROOT = resolve(EVALS_DIR, '..', '..');
 const FIXTURES_DIR = join(EVALS_DIR, 'fixtures');
 const RESULTS_DIR = join(EVALS_DIR, 'results');
 const MODES = ['baseline', 'skill'];
-// An agent that retries a failing API call ignores SIGTERM and keeps going, so the
-// deadline has to be enforced with a signal it cannot catch. One invocation once ran
-// for 45 minutes past a 20-minute SIGTERM before giving up on a 502.
+// spawnSync's own `timeout` did not stop an agent that retried a 502 for 45 minutes,
+// and neither did switching its kill signal: the deadline has to be held by a timer
+// this process owns. The child runs in its own process group so the kill takes any
+// subprocess it started with it.
 const INVOCATION_TIMEOUT_MS = 10 * 60 * 1000;
+
+function invoke(command, workspace) {
+  return new Promise((resolve) => {
+    const child = spawn(command[0], command.slice(1), {
+      cwd: workspace, stdio: ['ignore', 'pipe', 'pipe'], detached: true,
+    });
+
+    let stdout = '';
+    let stderr = '';
+    let timedOut = false;
+
+    child.stdout.on('data', (chunk) => { stdout += chunk; });
+    child.stderr.on('data', (chunk) => { stderr += chunk; });
+
+    const deadline = setTimeout(() => {
+      timedOut = true;
+      try {
+        process.kill(-child.pid, 'SIGKILL');
+      } catch {
+        child.kill('SIGKILL');
+      }
+    }, INVOCATION_TIMEOUT_MS);
+
+    const finish = (status, signal, error) => {
+      clearTimeout(deadline);
+      resolve({ status, signal, stdout, stderr: error ? `${stderr}${error.message}\n` : stderr, timedOut });
+    };
+
+    child.on('close', (status, signal) => finish(status, signal));
+    child.on('error', (error) => finish(null, null, error));
+  });
+}
 
 function parseArgs(argv) {
   const args = { agent: 'all', mode: 'both', scenario: 'all', model: null, runId: null, dryRun: false };
@@ -116,7 +149,7 @@ function installSkill(workspace, skillsAgentId) {
   }
 }
 
-function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun }) {
+async function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun }) {
   const caseDir = join(runDir, agentId, mode, scenario);
   const workspace = join(caseDir, 'workspace');
   const command = buildCommand(agent, { prompt, workspace, model });
@@ -131,14 +164,9 @@ function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun 
   if (mode === 'skill') installSkill(workspace, agent.skillsAgentId);
 
   const startedAt = new Date().toISOString();
-  const result = spawnSync(command[0], command.slice(1), {
-    cwd: workspace,
-    encoding: 'utf8',
-    stdio: 'pipe',
-    timeout: INVOCATION_TIMEOUT_MS,
-    killSignal: 'SIGKILL',
-  });
+  const result = await invoke(command, workspace);
   const finishedAt = new Date().toISOString();
+  const seconds = Math.round((Date.parse(finishedAt) - Date.parse(startedAt)) / 1000);
 
   const generated = join(workspace, 'README.md');
   const produced = existsSync(generated);
@@ -158,17 +186,21 @@ function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun 
     startedAt,
     finishedAt,
     exitCode: result.status,
-    timedOut: result.signal === 'SIGKILL',
+    signal: result.signal,
+    timedOut: result.timedOut,
+    seconds,
     producedReadme: produced,
   }, null, 2)}\n`);
   writeFileSync(join(caseDir, 'agent-output.txt'), `${result.stdout ?? ''}\n${result.stderr ?? ''}`);
 
-  const outcome = result.signal === 'SIGKILL' ? `timed out after ${INVOCATION_TIMEOUT_MS / 60000} minutes` : `exit ${result.status}`;
-  console.log(`${agentId}/${mode}/${scenario}: ${outcome}, README ${produced ? 'written' : 'MISSING'}`);
+  const outcome = result.timedOut ? `timed out after ${INVOCATION_TIMEOUT_MS / 60000} minutes`
+    : result.signal ? `killed by ${result.signal}`
+      : `exit ${result.status}`;
+  console.log(`${agentId}/${mode}/${scenario}: ${outcome} in ${seconds}s, README ${produced ? 'written' : 'MISSING'}`);
   return produced;
 }
 
-export function main(argv) {
+export async function main(argv) {
   const args = parseArgs(argv);
   if (args.help) { console.log(HELP); return 0; }
 
@@ -195,7 +227,7 @@ export function main(argv) {
   for (const agentId of agentIds) {
     for (const mode of modes) {
       for (const scenario of scenarios) {
-        runOne({ agentId, agent: agents[agentId], mode, scenario, prompt, model: args.model, runDir, dryRun: args.dryRun });
+        await runOne({ agentId, agent: agents[agentId], mode, scenario, prompt, model: args.model, runDir, dryRun: args.dryRun });
       }
     }
   }
@@ -208,7 +240,7 @@ export function main(argv) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    process.exit(main(process.argv.slice(2)));
+    process.exit(await main(process.argv.slice(2)));
   } catch (error) {
     console.error(error.message);
     process.exit(1);

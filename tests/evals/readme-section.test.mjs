@@ -19,7 +19,7 @@ const row = (agent, mode, repositories, counts) => ({
   checked: 100,
 });
 
-const summary = (rows, runId = 'a-run') => ({ runId, run: {}, rows });
+const summary = (rows, runId = 'a-run', cases = []) => ({ runId, run: {}, rows, cases });
 
 test('a run where neither mode erred claims no improvement', () => {
   const section = renderSection(summary([
@@ -89,6 +89,27 @@ test('markers in the wrong order are refused', () => {
   const inverted = '<!-- benchmark:end -->\ntext\n<!-- benchmark:start run=x -->\n';
 
   assert.throws(() => spliceIntoReadme(inverted, 'x', 'y'), /wrong way round/);
+});
+
+test('invocations that produced no README are declared, not silently counted as clean', () => {
+  const section = renderSection(summary(
+    [row('claude-code', 'baseline', 10, {}), row('claude-code', 'skill', 10, {})],
+    'a-run',
+    [{ producedReadme: false }, { producedReadme: true }],
+  ), AGENTS);
+
+  assert.match(section, /1 invocation produced no README at all/);
+  assert.match(section, /not a scoring result/);
+});
+
+test('a run where everything produced a README says nothing about failures', () => {
+  const section = renderSection(summary(
+    [row('claude-code', 'baseline', 1, {}), row('claude-code', 'skill', 1, {})],
+    'a-run',
+    [{ producedReadme: true }, { producedReadme: true }],
+  ), AGENTS);
+
+  assert.doesNotMatch(section, /produced no README/);
 });
 
 test('the section links its own raw results', () => {
