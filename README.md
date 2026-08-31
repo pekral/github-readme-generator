@@ -4,13 +4,14 @@
 
 `github-readme-generator` teaches a coding agent to write or refresh a
 repository's root `README.md` from what the project actually contains — its
-code, manifests, scripts, tests, workflows, and existing docs. It runs in Claude
-Code, Codex, and Cursor from a single canonical skill definition.
+code, manifests, scripts, tests, workflows, and existing docs. One canonical
+skill definition serves every host; Claude Code, Codex, and Cursor are the three
+it is packaged and tested against.
 
 ## Requirements
 
-An agent host that loads Agent Skills — Claude Code, Codex, or Cursor. The skill
-itself has no dependencies; installing with `npx` needs Node.js.
+An agent host that loads Agent Skills. The skill itself has no dependencies;
+installing with `npx` needs Node.js.
 
 ## Installation
 
@@ -152,4 +153,7 @@ See [the security policy](SECURITY.md).
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more
+information. The skill directory carries
+[its own copy](skills/github-readme-generator/LICENSE.md) of the notice, so an
+installed copy stays licensed even though installers take that directory alone.
