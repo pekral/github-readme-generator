@@ -11,7 +11,9 @@ becomes a line in the handover summary.
 4. Every badge matches a real package, workflow, license, or service of this
    project, and points at the current branch. A license badge names the SPDX
    identifier the repository actually states and links to the real license
-   filename; a published package and a CI workflow each carry their badge.
+   filename; a published package carries its badge, and so does a CI workflow
+   whose `on:` triggers can produce a run on the default branch — a workflow that
+   cannot is left without one.
 5. Stated runtime and framework versions agree with the manifests and CI.
 6. No duplicated sections and no inconsistent heading levels.
 7. No placeholders, unless the user explicitly requested a `TODO` skeleton.
@@ -35,7 +37,10 @@ Report, briefly:
   file list)
 - which commands and examples were verified, and against what
 - which checks were actually run
-- which information could not be proven, and what was therefore omitted
+- which information could not be proven, and what was therefore omitted —
+  including any badge dropped because its workflow cannot run on the default
+  branch, and any manifest description the repository contradicts, quoted
+  alongside the source that refutes it
 - whether any `TODO` remains
 - that nothing was staged, committed, or pushed — unless the user ordered it
 

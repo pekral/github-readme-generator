@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Badge liveness. A CI badge is emitted only when its workflow can produce a run
+  on the default branch, so a workflow triggered solely by `pull_request`,
+  `workflow_dispatch`, or `schedule` — or a workflow file left outside
+  `.github/workflows/` — yields no permanently blank badge. The omission is named
+  in the handover summary.
+- Manifest claim check. The manifest `description` is read as a claim as well as
+  evidence: when it names a capability the repository does not contain, the
+  contradiction is reported with both sources. The manifest itself stays
+  unmodified.
+- Public surface findings in audit mode — empty About description, homepage or
+  topics with a proposed description and topic candidates traced to sources
+  already read, missing community health files, and README links with no target.
+  Reported as text; nothing is written and no repository setting is applied.
+- Two test scenarios: a workflow that cannot run on the default branch, and a
+  manifest description the repository contradicts.
 - Codex plugin packaging — `.codex-plugin/plugin.json` and a repo marketplace at
   `.agents/plugins/marketplace.json`, installable with
   `codex plugin marketplace add pekral/github-readme-generator`.

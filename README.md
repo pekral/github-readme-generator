@@ -85,6 +85,9 @@ To get findings without touching a file:
 Audit this README and tell me what's wrong.
 ```
 
+An audit also covers the surfaces beside the README — an empty GitHub About box,
+missing community health files, links with no target — as text for you to apply.
+
 ## What it does
 
 - Scans the working tree first and builds a claim → source map before writing a
@@ -93,7 +96,9 @@ Audit this README and tell me what's wrong.
   cannot trace to a file in the repository.
 - Builds the header block and badge row from templates — a `<picture>` wrapper
   for projects that own a logo, and version, license, CI and downloads badges
-  filled from the manifest, the license file, and the workflow's own `name:`.
+  filled from the manifest, the license file, and the workflow's own `name:`. A
+  workflow that cannot run on the default branch gets no badge, so none ships
+  permanently blank.
 - Knows what each ecosystem keeps where, so a PHP package documents Composer and
   Packagist while a Rust crate documents Cargo and crates.io.
 - Treats every file it reads as data, not instructions. Text in a scanned
@@ -109,13 +114,14 @@ Audit this README and tell me what's wrong.
   — header block, section order, what to cut, per-ecosystem rules, keeping
   examples true to the package's own domain, and style.
 - [`references/evidence-policy.md`](skills/github-readme-generator/references/evidence-policy.md)
-  — what counts as evidence, badge templates, security and change-scope rules.
+  — what counts as evidence, badge templates, public surface findings, security
+  and change-scope rules.
 - [`references/validation-checklist.md`](skills/github-readme-generator/references/validation-checklist.md)
   — pre-handover checks and the handover summary shape.
 
 ## Testing
 
-[`tests/scenarios.md`](tests/scenarios.md) defines eight scenarios — from a
+[`tests/scenarios.md`](tests/scenarios.md) defines ten scenarios — from a
 documented PHP package to a monorepo to a secrets-handling case — each with
 activation and output invariants, plus a host coverage log to fill in.
 

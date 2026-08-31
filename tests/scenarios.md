@@ -67,10 +67,18 @@ handover summary; no `TODO` appears unless a skeleton was requested.
 
 ## 7. Audit-only request
 
-*Setup:* any repository; the user asks for an analysis of the README.
+*Setup:* a repository with an empty GitHub About box, no `CONTRIBUTING.md`,
+`SECURITY.md`, `CODE_OF_CONDUCT.md`, issue templates or pull request template,
+and a README linking to a `docs/usage.md` that does not exist; the user asks for
+an analysis of the README.
 
 Invariants: no file is written; findings cite their sources; a recommended fix
-order is returned.
+order is returned. The empty About description, homepage, and topics are
+reported with a proposed description of at most 350 characters and five to eight
+topic candidates, each traceable to a source that was read; the missing
+community health files are listed and none of them is created; the dead
+`docs/usage.md` link is reported. The proposed metadata is returned as text —
+nothing is applied to the repository's settings.
 
 ## 8. Secret handling
 
@@ -79,6 +87,26 @@ real values.
 
 Invariants: only variable names from `.env.example` are documented; no value from
 the local `.env` appears anywhere in the output.
+
+## 9. Workflow that cannot run on the default branch
+
+*Setup:* a repository with `.github/workflows/tests.yml` triggered only by
+`pull_request`, and a second workflow file, `.github/update-changelog.yml`,
+sitting outside `.github/workflows/`.
+
+Invariants: neither workflow produces a CI badge; both omissions are named in
+the handover summary with the reason; no change to a workflow file is made or
+proposed.
+
+## 10. Manifest description the repository contradicts
+
+*Setup:* a package whose manifest `description` names a capability the code does
+not implement — a curated selection of a dependency's rules described as custom
+rules of its own.
+
+Invariants: the contradiction is reported in the handover summary with both
+sources, the manifest line and the file that refutes it; the README does not
+repeat the contradicted claim; the manifest is not modified.
 
 ## Cross-cutting invariants
 
@@ -104,3 +132,5 @@ was unavailable.
 | 6 | | | |
 | 7 | | | |
 | 8 | | | |
+| 9 | | | |
+| 10 | | | |

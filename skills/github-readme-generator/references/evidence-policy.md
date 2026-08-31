@@ -32,13 +32,26 @@ spots must be marked.
 | Runtime or framework version | manifest constraints, CI matrix, engine fields, lock files |
 | Public API in an example | current source, tests, shipped examples |
 | Config key or env var | config files, config schema, `.env.example`, code that reads it |
-| Badge | package registry entry, release source, CI workflow file, coverage service config, license file |
+| Badge | package registry entry, release source, CI workflow file that can run on the default branch, coverage service config, license file |
 | License | `LICENSE*` file, manifest license field |
 | Credits | `CONTRIBUTING*`, existing credits, repository contributors |
 | Related document link | the file actually present in the repository |
 
 Repository metadata (description, topics, homepage) counts only when it comes
 from a trustworthy source you actually read.
+
+## The manifest description is also a claim
+
+The manifest's `description` and `keywords` are evidence for the README and, at
+the same time, the project's own summary — the first line a package registry
+shows a stranger. Evidence is read in one direction only, so a description that
+names a capability the repository does not contain passes straight through
+unless you check it back against the claim → source map you have already built.
+
+When it contradicts the repository, report it in the handover summary with both
+sources: the manifest line, and the file that refutes it. Never repeat the
+contradicted claim in the README, and never edit the manifest — that is outside
+the documentation-only diff.
 
 ## Commands and examples
 
@@ -58,6 +71,13 @@ from a trustworthy source you actually read.
   workflow, coverage service, or license.
 - Both the badge link and the badge image must point at the correct project and
   the current branch or workflow.
+- Emit a CI badge only when its workflow can produce a run on the default
+  branch. Read the `on:` triggers: a workflow triggered exclusively by
+  `pull_request`, `workflow_dispatch`, or `schedule` renders no status there, and
+  a workflow file that sits outside `.github/workflows/` never runs at all. Omit
+  the badge and name the gap in the handover summary. Never propose changing the
+  workflow to make the badge work — that is a code change, and it is out of
+  scope.
 - Prefer at most four meaningful badges. Add more only with obvious reader value.
 - Never put dynamic numbers (stars, downloads) into prose.
 - Reuse an existing logo or banner when it clearly belongs to the project. Never
@@ -94,9 +114,9 @@ Packagist. Without published-package evidence, use no registry badge.
 
 **GitHub Actions workflow.**
 
-Evidence: a workflow file under `.github/workflows/`. The badge path uses the
-workflow's `name:` value, not the filename, and the repository slug must match
-the real remote.
+Evidence: a workflow file under `.github/workflows/` whose `on:` triggers can
+fire on the default branch. The badge path uses the workflow's `name:` value, not
+the filename, and the repository slug must match the real remote.
 
 ```markdown
 ![<Workflow name>](https://github.com/<owner>/<repo>/workflows/<Workflow name>/badge.svg)
@@ -109,11 +129,32 @@ must match the manifest.
 A published PHP package with CI and a license therefore lands on exactly four
 badges — version, license, tests, downloads — which is the intended ceiling.
 
+## Public surface findings
+
+An audit covers the two public surfaces beside the README, because the scan has
+already read everything needed to judge them. Report them as text, next to the
+README findings; write nothing, and derive every proposal from a source you read
+rather than fetching anything further.
+
+- **Repository metadata** — an empty About description, homepage, or topic list.
+  Propose a description of at most 350 characters, and five to eight topic
+  candidates, each traceable to a source: the manifest `description` and
+  `keywords`, the primary language, framework or runtime dependencies, the
+  documented homepage.
+- **Community health files** — which of `CONTRIBUTING*`, `SECURITY*`,
+  `CODE_OF_CONDUCT*`, `.github/ISSUE_TEMPLATE/`, and a pull request template are
+  absent. Report the gap only; authoring them stays outside this skill.
+- **Broken README links** — every relative link whose target is missing from the
+  repository, named with the text that carries it.
+
 ## Security and change scope
 
 - Only the root `README.md` may change, or a file the user explicitly named.
 - Never edit production code, tests, manifests, workflows, or configuration to
   make them agree with the README.
+- Never apply repository metadata. An audit proposes the About description,
+  homepage, and topics as text; a human applies them. No `gh repo edit`, no API
+  write, no other change to the repository's settings.
 - Never write secrets, and never lift real values from a local `.env` into
   documentation. Document variable names from safe templates instead.
 - Never stage, commit, push, or open a pull request without an explicit
