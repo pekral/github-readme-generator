@@ -92,7 +92,11 @@ and state it in the handover summary.
   branding, useful hand-written explanation, and working links. Fix only what is
   outdated, unsupported, duplicated, or badly ordered.
 - **Audit** — analysis only. Write nothing. Return findings with sources and a
-  recommended fix order. An audit never authorises a file change on its own.
+  recommended fix order. Cover the README, and the two public surfaces beside it
+  — repository metadata, and the community health files a README links to — as
+  described in `references/evidence-policy.md` § *Public surface findings*. An
+  audit never authorises a file change on its own, and never applies the metadata
+  it proposes.
 
 ### 4. Write
 
@@ -118,7 +122,7 @@ Load on demand, not up front:
   template, ecosystem specifics, matching the project's own logic, and style.
   Read before drafting.
 - `references/evidence-policy.md` — what counts as evidence, commands and examples,
-  badges and visual header, security and change scope. Read while scanning and
-  whenever a claim feels unsupported.
+  badges and visual header, public surface findings, security and change scope.
+  Read while scanning and whenever a claim feels unsupported.
 - `references/validation-checklist.md` — pre-handover checks and the handover
   summary shape. Read before finishing.
