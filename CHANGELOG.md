@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `tests/repository.test.mjs` — the repository checked against its own claims:
+  the files the skill declares, its licence copy matching the root one, every
+  relative documentation link resolving, a host coverage row per test scenario, a
+  repository and a ground truth per benchmark fixture, and one version agreed by
+  the three manifests, the changelog and the git tags. It runs in CI, so a broken
+  local link or a manifest that drifts out of step fails the build.
+
 - `docs/examples/` — three before/after README pairs (Composer library,
   unpublished CLI, stale README), each carrying the full text of both outputs,
   the provenance of the run that produced them, and a comparison of what actually

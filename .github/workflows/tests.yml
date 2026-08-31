@@ -6,8 +6,8 @@ on:
   pull_request:
 
 jobs:
-  evals:
-    name: Evaluation scorer
+  checks:
+    name: Checks
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,16 +18,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Tags, so the release-consistency check has something to compare against.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
-      # The scorer has no dependencies and makes no network calls, so there is
-      # nothing to install. Agent invocations are never run here: they cost money
-      # and need credentials CI has no business holding.
-      - name: Scorer and ground-truth tests
-        run: node --test tests/evals/*.test.mjs
+      # Nothing to install: the tests have no dependencies and make no network
+      # calls. Agent invocations are never run here — they cost money and need
+      # credentials CI has no business holding.
+      - name: Repository structure, documentation links and version metadata
+        run: node --test tests/repository.test.mjs
 
-      - name: The skill ships its own copy of the licence
-        run: diff LICENSE.md skills/github-readme-generator/LICENSE.md
+      - name: Benchmark scorer and ground truth
+        run: node --test tests/evals/*.test.mjs

@@ -27,18 +27,31 @@ copyright notice to travel with every copy — so when one changes, change both.
 ```text
 claude plugin validate .
 npx skills add . --list
-diff LICENSE.md skills/github-readme-generator/LICENSE.md
+node --test tests/repository.test.mjs
 node --test tests/evals/*.test.mjs
 ```
 
 The first validates the Claude Code plugin and marketplace manifests. The second
 confirms the skill is still discoverable and prints the description agents match
-against — the frontmatter that decides whether the skill ever activates. The
-third must print nothing. The fourth checks the benchmark scorer and every
-fixture's ground truth; it needs Node.js 20 or newer and no network.
+against — the frontmatter that decides whether the skill ever activates.
+
+The third checks the repository against its own claims: that the skill ships every
+file it declares, that its licence copy still matches the root one, that every
+relative link in the documentation resolves, that each test scenario has a host
+coverage row, that each benchmark fixture has a repository and a ground truth, and
+that the three manifests, the changelog and the git tags agree on one version. The
+fourth checks the benchmark scorer and every fixture's ground truth.
 
 CI runs the last two on every push and pull request, across Node.js 20 and 22.
-The first two need tooling a runner does not have, so they stay local.
+Both need Node.js 20 or newer and no network. The first two need tooling a runner
+does not have, so they stay local.
+
+### Releasing a version
+
+A released version must exist in three places that agree: the `version` field of
+the three manifests, a dated section in `CHANGELOG.md`, and a `v`-prefixed git
+tag. `tests/repository.test.mjs` fails when a tag has no changelog section, so a
+tag pushed without its entry breaks the build rather than passing quietly.
 
 Changes to the skill's behaviour should also be exercised against
 [`tests/scenarios.md`](tests/scenarios.md). Run the affected scenario in a clean
