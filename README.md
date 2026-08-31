@@ -133,6 +133,8 @@ Not measured in this run: Codex, Cursor. The benchmark supports
 3 agents; a run covers whichever of them the machine it runs on
 has installed and authenticated.
 
+Recorded on 2026-08-31, against skill commit `89e591e`. A benchmark number is a snapshot of the skill as it was that day, not a live measurement — re-record it with `node tests/evals/run.mjs` when the skill changes in a way meant to affect accuracy.
+
 - Methodology, scoring rules, and how to add a scenario: [`tests/evals/README.md`](tests/evals/README.md)
 - Raw results for this run, including every generated README and its findings: [`tests/evals/results/2026-08-31-claude-code-subset/`](tests/evals/results/2026-08-31-claude-code-subset)
 - Prompt, agent version, model, and skill commit for every invocation: the `meta.json` beside each result

@@ -1,0 +1,30 @@
+{
+  "scenario": "stale-readme",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 1,
+    "invalidBadge": 1,
+    "brokenLink": 0,
+    "missingInformation": 1
+  },
+  "errors": 3,
+  "checked": 12,
+  "hallucinationRate": 0.25,
+  "findings": [
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "npm test # run the test suite with node --test"
+    },
+    {
+      "kind": "invalidBadge",
+      "detail": "Badge is not backed by evidence in the repository.",
+      "evidence": "assets/logo.svg"
+    },
+    {
+      "kind": "missingInformation",
+      "detail": "The hand-written explanation of why the package exists was discarded.",
+      "evidence": "authored-prose"
+    }
+  ]
+}

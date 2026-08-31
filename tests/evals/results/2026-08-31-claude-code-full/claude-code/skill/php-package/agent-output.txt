@@ -1,0 +1,25 @@
+Hotovo — `README.md` vytvořen v kořeni pracovního adresáře.
+
+## Předání
+
+**Co jsem prozkoumal:** `composer.json`, zdrojový kód (`src/Slugger.php`), testy (`tests/SluggerTest.php`), CI workflow (`.github/workflows/tests.yml`), `LICENSE.md` a git remote.
+
+**Ověřené příkazy a příklady:**
+- `composer require acme/slugger` — z pole `name` v `composer.json` (typ `library`).
+- `composer test` — z `scripts.test` (`vendor/bin/phpunit`), shoduje se i s krokem v CI.
+- Oba příklady v Quick startu jsou převzaté doslova z `tests/SluggerTest.php` včetně očekávaných výstupů `hello-world` a `hello_world`.
+- Popis chování `slug()` odpovídá řádkům `src/Slugger.php:15-18`.
+- Požadavek PHP 8.3+ pochází z `require.php: "^8.3"`.
+
+**Co jsem vynechal a proč:**
+- **Packagist badge** (verze, stažení) — v repozitáři není žádný důkaz, že je balíček publikovaný (žádný lock file, odkaz ani registry metadata). Bez toho by odkaz mířil do prázdna.
+- **CI badge** — workflow `Tests` sice běží na `push` do `main`, takže by badge technicky dával smysl, ale jediný remote je `git@github.com:pekral/github-readme-generator.git`, což je jiný projekt než `acme/slugger`. Skutečný slug tohoto balíčku se z repozitáře zjistit nedá, takže badge s cizím slugem by byl nepravdivý.
+- **Sekce Configuration** — knihovna nemá žádné konfigurační soubory ani proměnné prostředí; separátor je argument konstruktoru a je ukázaný v Quick startu.
+- **Changelog / Contributing / Security / Credits** — příslušné soubory v repozitáři neexistují.
+
+**Spuštěné kontroly:** prošel jsem validační checklist ručně (existence příkazů, veřejných symbolů, relativních cest, badge, verzí, pořadí sekcí). **Testy jsem nespustil** — `vendor/` není nainstalované a `composer install` by repozitář mutoval, což je mimo rozsah. PHP interpret jsem také nespouštěl (příkaz nebyl schválen). Repozitář neobsahuje žádný markdown ani link checker, takže žádný automatický nástroj neproběhl.
+
+**Drobná nesrovnalost k vědomí:** `composer.json` deklaruje `scripts.test` jako `vendor/bin/phpunit`, ale v repozitáři není `phpunit.xml` ani `phpunit.xml.dist`. PHPUnit tak bez konfigurace nebo argumentu s cestou nemusí adresář `tests/` najít. Příkaz jsem zdokumentoval přesně tak, jak ho zdroj definuje, a manifest jsem needitoval — oprava je na vás.
+
+Žádné `TODO` v README nezůstalo. Nic jsem nestageoval, necommitoval ani nepushoval; změnil jsem jediný soubor — `README.md`.
+

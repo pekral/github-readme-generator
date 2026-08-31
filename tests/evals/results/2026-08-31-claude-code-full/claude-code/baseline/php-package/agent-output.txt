@@ -1,0 +1,26 @@
+Napsal jsem `README.md` v kořeni workspace.
+
+**Co jsem prošel:** `composer.json`, `src/Slugger.php`, `tests/SluggerTest.php`, `.github/workflows/tests.yml`, `LICENSE.md` — to je celý obsah repozitáře.
+
+**Odkud pochází jednotlivá tvrzení:**
+
+| Tvrzení | Zdroj |
+|---|---|
+| Popis „Turns arbitrary text into URL-safe slugs.“ | `composer.json` `description` |
+| PHP `^8.3` | `composer.json` `require` |
+| `composer require acme/slugger` | název balíčku v `composer.json` |
+| Chování `slug()` (transliterace do ASCII, lowercase, náhrada nealfanumerických skupin, trim) | `src/Slugger.php:13-19` |
+| Výstupy `hello-world` a `hello_world` | doslova z `tests/SluggerTest.php:14,19` |
+| Výchozí separátor `-`, nastavitelný v konstruktoru | `src/Slugger.php:9` |
+| `composer test` | `composer.json` `scripts.test` |
+| Popis CI workflow | `.github/workflows/tests.yml` |
+| MIT | `composer.json` `license` + `LICENSE.md` |
+
+**Co jsem vynechal, protože to není doložitelné:** badge (repozitář nemá remote, neznám owner/slug pro URL CI badge), sekce Configuration (jediná konfigurace je separátor, ten je v Usage), Contributing/Security/Changelog (tyto soubory neexistují), autor a odkazy na dokumentaci.
+
+**Dvě věci k ověření z vaší strany:**
+- Repozitář neobsahuje `phpunit.xml` ani `phpunit.xml.dist`. `composer test` i CI krok volají `vendor/bin/phpunit` bez argumentů — bez konfigurace PHPUnit sám adresář `tests/` nenajde. To je vada balíčku, ne README; nechal jsem v README příkaz tak, jak je deklarovaný v manifestu.
+- Neověřil jsem, že `acme/slugger` je publikován na Packagistu — instalační příkaz je odvozen z názvu v manifestu.
+
+**Provedené kontroly:** žádná. Spuštění příkladu přes `php -r` mi bylo zamítnuto oprávněním a `composer test` nelze spustit (chybí `vendor/`), takže výstupy v README stojí na assertions v testech, ne na běhu. Nic jsem nestageoval ani necommitoval; jediný změněný soubor je nově vytvořený `README.md`.
+

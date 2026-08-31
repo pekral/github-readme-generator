@@ -1,0 +1,60 @@
+{
+  "scenario": "cli-app",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 8,
+    "invalidBadge": 0,
+    "brokenLink": 0,
+    "missingInformation": 1
+  },
+  "errors": 9,
+  "checked": 18,
+  "hallucinationRate": 0.5,
+  "findings": [
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "npm install -g ."
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "node bin/slugify.js \"Hello, World!\""
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "Usage: slugify [options] <text>"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "Options:"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "--sep <char> Separator between words (default: -)"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "--upper Emit the slug in upper case"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "-h, --help Show this help"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "slugify My Blog Post 2026"
+    },
+    {
+      "kind": "missingInformation",
+      "detail": "The global install command the bin field proves is missing.",
+      "evidence": "install-command"
+    }
+  ]
+}

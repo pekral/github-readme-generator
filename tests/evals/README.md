@@ -182,16 +182,49 @@ write access is acceptable here and nowhere else in this repository.
 
 ## Recorded runs
 
-| Run | Scope | Result |
-| --- | --- | --- |
-| [`2026-08-31-claude-code-subset`](results/2026-08-31-claude-code-subset/summary.md) | Claude Code, both modes, `adversarial` and `small-library` | zero findings in both modes |
+| Run | Scope | Result | Published |
+| --- | --- | --- | --- |
+| [`2026-08-31-claude-code-subset`](results/2026-08-31-claude-code-subset/summary.md) | Claude Code, both modes, `adversarial` and `small-library` | zero findings in both modes | yes |
+| [`2026-08-31-claude-code-full`](results/2026-08-31-claude-code-full/summary.md) | Claude Code, both modes, all ten scenarios | 21 findings baseline, 18 with the skill | **no — see below** |
 
-That run is a harness check, not evidence about the skill. Both scenarios happen to
-be ones where the baseline was already grounded — it named no invented command, kept
-to the exports that exist, and ignored the adversarial fixture's injected
-instructions entirely. The scenarios where the two modes should diverge — badge
-liveness, a stale README, monorepo structure, a manifest the code contradicts — are
-not in it.
+The subset run is a harness check, not evidence about the skill. Both scenarios happen
+to be ones where the baseline was already grounded — it named no invented command, kept
+to the exports that exist, and ignored the adversarial fixture's injected instructions
+entirely.
+
+### Why the full run is not published
+
+Its numbers look like a 14% improvement. Reading all 39 findings one by one, almost none
+of them is an agent error:
+
+- **Help text and command output scored as commands** (8 baseline, 7 skill). A README
+  that shows `slugify --help` output puts `Usage:`, `Options:` and each flag description
+  inside a fenced block, and the scorer compares every line of a shell block against the
+  allow-list. Command output — `hello-world`, `Missing configuration: DATABASE_URL` — has
+  the same problem.
+- **A logo scored as a badge** (1 each). `stale-readme` owns `assets/logo.svg`, its ground
+  truth *requires* the logo be preserved, and the badge allow-list then rejects it. The
+  scorer demands and forbids the same file.
+- **A trailing comment breaking an exact match** (1 baseline, 2 skill).
+  `npm test # runs the node:test suite` does not equal `npm test`.
+- **Legitimate commands missing from the ground truth** (~10 baseline, ~6 skill):
+  `npm install -g .`, `node bin/slugify.js`, `git clone`, `curl http://localhost:3000`,
+  `npm test --workspace @acme/core` (the allow-list has only the `-w` short form),
+  `export APP_URL=…` taken from `.env.example`.
+
+One finding survives: the skill dropped the hand-written prose in `stale-readme` that its
+own rules tell it to keep.
+
+A difference of 21 against 18 is noise from two broken detectors, so no number from this
+run reaches the README. Tuning the ground truth after seeing the results would be fitting
+the metric to the outcome, so the fix is a detector that can tell a command from its own
+output — tracked separately. The raw results are committed because they are the evidence
+that work needs.
+
+Its `run.json` records `skillCommitIsExact: false`. That came from the earlier
+whole-repository cleanliness check and refers to uncommitted changes in the benchmark
+harness; `skills/` was untouched for the whole run, which `git diff master...HEAD -- skills/`
+still shows. The recorded value is left exactly as it was written.
 
 ## Publishing results
 

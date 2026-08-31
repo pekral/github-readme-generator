@@ -1,0 +1,24 @@
+README.md je hotový v rootu workspace.
+
+## Co jsem prošel
+
+Kořenový `package.json` (npm workspaces, `engines.node >= 20`, skript `test`), oba manifesty balíčků, `LICENSE`, `skills-lock.json`, zdroj `packages/core/src/index.js`, spustitelný soubor `packages/cli/bin/acme.js`, oba testy a obě README balíčků. Žádné CI workflow, `.env.example`, konfigurační schéma ani `CONTRIBUTING`/`SECURITY`/`CHANGELOG` v repozitáři nejsou.
+
+## Co je ověřené
+
+- **`npm test`** — spuštěno. Test `@acme/core` (`titleCase('hello world') === 'Hello World'`) prošel; test `@acme/cli` selhal na `ERR_MODULE_NOT_FOUND: Cannot find package '@acme/core'`, protože chybí propojení workspace. To je přesně stav před `npm install`, ne vada kódu — a je to důvod, proč README uvádí instalaci před quick startem.
+- **`npm install`** — jako instalační krok doložen polem `workspaces` v rootu a závislostí `@acme/core: 1.0.0` v `@acme/cli`; správce balíčků `npm` doložen příkazy v obou README balíčků. Sám jsem ho **nespustil** (vytváří `node_modules` a `package-lock.json`, což je mimo dokumentační diff).
+- **Quick start** `node packages/cli/bin/acme.js hello world` → `Hello World` — odvozen ze zdroje (`bin/acme.js` zapíše `titleCase` spojených argumentů) plus prošlého testu jádra. Neproveden, protože vyžaduje předchozí instalaci.
+- **Node.js 20+** z `engines` v kořenovém manifestu.
+- **Licenční odznak** MIT — doložen souborem `LICENSE` a polem `license` obou balíčků, odkazuje na skutečný název souboru.
+
+## Co jsem vynechal a proč
+
+- **Odznak npm verze** — nic v repozitáři nedokládá, že jsou balíčky publikované (root je `private`, chybí `repository`, `homepage` i `publishConfig`).
+- **Odznak CI** — v `.github/workflows/` není žádné workflow.
+- **Sekce Configuration** — žádné konfigurační klíče ani proměnné prostředí v kódu nejsou.
+- **Changelog / Contributing / Security / Credits** — odpovídající soubory neexistují.
+- **Per-package instalační příkazy** (`npm install -g @acme/cli` apod.) — v rootu monorepa nepatří; README na ně odkazuje přes tabulku balíčků.
+
+Kontroly: spuštěn testovací skript (viz výše) a ověřena existence všech relativních cílů odkazů (`LICENSE`, `packages/core/README.md`, `packages/cli/README.md`). Markdown linter ani kontrolu odkazů prostředí nenabízí — neproběhly. Žádné `TODO` v souboru nezůstalo. Změněn byl pouze `README.md`; nic jsem nestagoval, necommitoval ani nepushoval.
+

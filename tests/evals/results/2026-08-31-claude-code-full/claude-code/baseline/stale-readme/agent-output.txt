@@ -1,0 +1,20 @@
+README.md je přepsané. Šlo o **update** — původní text obsahoval čtyři tvrzení, která repozitář nepodporuje.
+
+**Co jsem opravil**
+
+| Původní tvrzení | Skutečnost podle repozitáře |
+| --- | --- |
+| `npm install @acme/palette@1.2` | `package.json` je na verzi `3.0.0`; pin na 1.2 jsem odstranil |
+| `require('@acme/palette')` + volání `palette(...)` | balíček je `"type": "module"` a `src/index.js` má **pojmenovaný** export `palette` — `require` i default import by selhaly |
+| `npm run serve` | ve `scripts` existují jen `test` a `build` |
+| odkaz na `docs/GUIDE.md` | adresář `docs/` v repozitáři není |
+| „Requires Node.js 14 or newer" | `engines.node` říká `>=20` |
+
+**Co jsem přidal z ověřených zdrojů:** podpis `palette(baseColour, { steps = 5 })` a chování při chybném vstupu (`TypeError`, regex `/^#[0-9a-f]{6}$/i`) ze `src/index.js`, sekci Development ze `scripts` v manifestu, a MIT licenci z `LICENSE`. Úvodní odstavec o design-system auditu jsem ponechal — je to autorský text, netvrdí nic o API.
+
+**Co jsem vědomě nepřidal:** badge (žádné CI workflow v repozitáři, publikace balíčku na npm neověřená), sekci Configuration (žádný `.env.example` ani konfigurační schéma), odkazy na CONTRIBUTING/SECURITY/CHANGELOG (soubory neexistují).
+
+**Ověření:** `npm test` prošel (1 test), `npm run build` prošel. Výstupní hexy v příkladech jsem **neověřil spuštěním** — prostředí zde povolilo jen npm skripty, ne přímé `node -e`, takže hodnoty jsou odvozené ručně z funkce `shade()`. Doporučuji je při první příležitosti proklepnout spuštěním snippetu. Markdown/link checker v repozitáři není, žádný jsem tedy nespouštěl.
+
+Změněn byl pouze `README.md`; nic jsem nestageoval ani necommitoval.
+

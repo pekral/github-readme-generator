@@ -1,0 +1,39 @@
+Napsal jsem `README.md` v kořeni balíčku.
+
+## Co bylo prozkoumáno
+
+Celý pracovní strom — je malý, takže jsem přečetl **všechny** soubory: `composer.json`, `src/AuditLogServiceProvider.php`, `config/audit-log.php`, migraci `2026_01_01_000000_create_audit_logs_table.php` a `LICENSE.md`. Žádné CI workflows, `.env.example`, testy ani další dokumentace v repozitáři nejsou.
+
+## Ověřená fakta v README
+
+| Tvrzení | Zdroj |
+|---|---|
+| PHP `^8.3`, Laravel `^12.0` | `composer.json:7-8` |
+| `composer require acme/audit-log` | `composer.json:2` (název balíčku) |
+| Auto-discovery providera | `composer.json:15-20` (`extra.laravel.providers`) |
+| `php artisan migrate` vytvoří tabulku | `AuditLogServiceProvider.php:17` (`loadMigrationsFrom`) |
+| Publish tag `audit-log-config` | `AuditLogServiceProvider.php:13-15` |
+| Klíče a env proměnné | `config/audit-log.php:6-7` |
+| Schéma tabulky `audit_logs` | migrace, řádky 13-18 |
+| MIT licence | `LICENSE.md:1` |
+
+## Podstatné zjištění — proto ten „Status" odstavec
+
+`composer.json` balíček popisuje jako *„Records model changes to an audit trail"*, ale **žádný kód tuto funkci neimplementuje**. Grep přes `src/`, `config/` i `database/` nenašel jediný trait, observer, event listener ani čtení konfigurace — `enabled` a `retention_days` nikde nikdo nečte. Jediná třída v `src/` je service provider, který publikuje config a načítá migrace.
+
+Napsat běžnou sekci *Usage* s `use Auditable;` na modelu by znamenalo vymyslet si API, které neexistuje. Místo toho README explicitně uvádí, co balíček dnes doopravdy dodává. Pokud ta vrstva existuje jinde (jiná větev, nezveřejněný commit), řekněte mi to a Usage doplním z reálného kódu.
+
+## Co jsem záměrně vynechal
+
+- **Sekci Testing.** `composer.json:23` deklaruje `"test": "vendor/bin/pest"`, ale Pest **není** v `require-dev` a v repozitáři nejsou žádné testy — příkaz by selhal. Nechtěl jsem publikovat nefunkční příkaz. Doporučuji buď doplnit `pestphp/pest` do `require-dev`, nebo skript odstranit.
+- **Badges.** Není CI workflow ani ověřitelný záznam na Packagistu.
+- **Odkazy na repozitář / issues.** `composer.json` nemá `homepage` ani `support`; git metadata v tomto adresáři patří nadřazenému repozitáři, ne balíčku.
+
+## Další nálezy (README neřeší, jen hlásím)
+
+`LICENSE.md` je **zkrácený** text MIT — chybí odstavec s podmínkou o zachování copyright notice a celá klauzule o vyloučení záruk. Právně to není plné znění MIT; stojí za doplnění kanonického textu.
+
+## Kontroly
+
+Markdown linter ani link-checker v tomto prostředí k dispozici nebyly, takže **žádná automatická kontrola neproběhla** — relativní odkaz na `LICENSE.md` jsem ověřil ručně proti výpisu souborů. Změněn byl pouze nově vytvořený `README.md`; nic jsem nestageoval, necommitoval ani nepushoval.
+

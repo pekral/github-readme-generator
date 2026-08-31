@@ -1,0 +1,19 @@
+Vytvořil jsem `README.md` v kořeni workspace. Napsal jsem ho anglicky, aby odpovídal jazyku kódu a manifestu (identifikátory, chybové hlášky) — pokud chcete českou verzi, přepíšu ji.
+
+**Co je podložené čím:**
+- Requirements — `engines.node: ">=20"` z `package.json`
+- Konfigurační tabulka — `src/config.js:1` (povinné proměnné) a `:11` (default `120` pro `SESSION_TTL_MINUTES`)
+- Port 3000 a tvar odpovědi — `src/server.js:7-8`, uvedeno jako natvrdo zadané, protože konfigurovatelné není
+- `npm start` / `npm test` — skripty z `package.json`
+- Příklad `loadConfig()` s explicitním objektem — signatura `loadConfig(env = process.env)`, stejný vzor jako `test/config.test.js`
+
+**Ověřeno spuštěním:** `npm test` — 1 test prošel. Start serveru jsem nespouštěl (příkaz nebyl schválen), takže chování popisuji z kódu.
+
+**Na co upozorňuji:**
+- Aplikace `.env` sama nenačítá — není tu žádný `dotenv` a `loadConfig` čte jen `process.env`. To v README výslovně píšu a nabízím `node --env-file=.env src/server.js` (Node 20.6+) jako cestu, jak s dodaným `.env.example` skutečně nastartovat.
+- Lokální `.env` jsem nečetl ani z něj nekopíroval hodnoty; tabulka uvádí jen názvy proměnných a příklady pochází z `.env.example`.
+- Placeholder `<repository-url>` v klonování: `git remote` v tomto adresáři ukazuje na obalující repozitář `github-readme-generator`, ne na `acme-invoices` (workspace je uvnitř něj netrackovaný), takže URL jsem nedosazoval.
+- Vynechal jsem badge, licenci a CI sekci — v repozitáři není `LICENSE` ani žádný workflow, `package.json` má `private: true`, takže ani instalace z npm neplatí.
+
+Nic jsem nestageoval ani necommitoval a žádný jiný soubor jsem neupravoval.
+

@@ -1,0 +1,20 @@
+Napsal jsem `README.md` v kořeni workspace.
+
+**Co jsem prošel:** `package.json`, `bin/slugify.js`, `test/cli.test.js`, `LICENSE`, `.github/pr-checks.yml`.
+
+**Odkud pochází jednotlivá tvrzení:**
+- Název, popis, licence, `engines.node >= 20`, `bin.slugify`, skript `test: node --test` — `package.json`
+- Text nápovědy a přepínače `--sep` / `--upper` / `-h, --help` — doslovně z konstanty `HELP` v `bin/slugify.js:2`
+- Popis chování (lowercase, nahrazení nealfanumerických skupin separátorem, oříznutí krajních separátorů) — `bin/slugify.js:23-26`
+- Spojování více argumentů mezerou — `bin/slugify.js:20,24`
+- Výstupy `hello-world` a `hello_world` — potvrzené asercemi v `test/cli.test.js:10,14`; `HELLO-WORLD` a `my-blog-post-2026` odvozené průchodem stejnou funkcí
+
+**Co jsem záměrně vynechal:**
+- **Badge a CI sekci.** `.github/pr-checks.yml` leží mimo `.github/workflows/` a v komentáři na prvním řádku výslovně říká, že ho GitHub nikdy nespustí — tvrdit funkční CI by bylo nepravdivé.
+- **Instalaci z npm registru.** Manifest nemá `repository` ani `publishConfig`, takže publikaci balíčku nemám čím doložit. Instalace je popsaná z lokálního checkoutu; z toho důvodu není v README ani `git clone` URL.
+- **Library API.** `run()` je sice exportovaná, ale `package.json` nemá `main` ani `exports`, takže import podle jména balíčku není podporovaný a nedokumentuji ho.
+
+**Omezení proof kroku:** session je neinteraktivní, spuštění `node` a `npm test` i čtení referenčních souborů skillu bylo zablokované schvalováním oprávnění. Příklady jsou tedy ověřené statickým průchodem kódu a existujícími testy, ne skutečným během. Doporučuji lokálně projet `npm test` a tři příklady ze sekce Examples.
+
+Nic jsem nestageoval ani necommitoval; změněný je jen nový `README.md`.
+

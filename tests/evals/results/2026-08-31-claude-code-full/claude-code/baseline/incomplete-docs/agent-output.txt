@@ -1,0 +1,32 @@
+Napsal jsem `README.md` v kořeni workspace.
+
+## Co bylo prozkoumáno
+
+Celý pracovní strom (9 souborů): `package.json`, `LICENSE`, `src/index.js`, `src/retry.js`, `src/backoff.js`, `src/cancellation.js`, `test/retry.test.js` a všechny tři soubory v `docs/`. Žádné CI workflow, `.env.example`, `CONTRIBUTING` ani repository metadata v manifestu neexistují.
+
+## Co je ověřeno
+
+| Tvrzení | Zdroj |
+|---|---|
+| Node.js ≥ 20, MIT, ESM, verze 0.4.0 | `package.json` |
+| `npm install @acme/retry` | `docs/installation.md` |
+| Exporty `retry`, `backoff`, `CancellationToken` | `src/index.js:1-3` |
+| `attempts = 3`, kontrola tokenu před každým pokusem, rethrow poslední chyby | `src/retry.js:3-16` |
+| `min(cap, base * 2 ** attempt)`, `base = 100`, `cap = 5000` | `src/backoff.js:1-2` |
+| `Error('Operation cancelled.')` | `src/cancellation.js:9` |
+| `npm test` → `node --test` | `package.json`, spuštěno — 3 testy prošly |
+
+Jedna netriviální věc z kódu, kterou README explicitně uvádí: `retry()` volá `backoff(attempt)` bez options (`src/retry.js:12`), takže `base` a `cap` se uplatní jen při přímém volání `backoff()` — přes `retry()` je schedule nekonfigurovatelný.
+
+## Co jsem vynechal
+
+- **Badges** — v manifestu není `repository` field ani žádný odkaz na GitHub/npm, takže by každý badge URL byl hádaný.
+- **Contributing / Security sekce** — příslušné soubory v repu nejsou.
+- Chybějící dokumentace backoffu a cancellation v `docs/` je v README pojmenovaná, ne zamlčená — sekce API slouží jako reference.
+
+## Poznámky
+
+- Reference soubor skillu `references/readme-structure.md` se nepodařilo načíst (chybějící oprávnění k `~/.claude/skills/`); postupoval jsem podle core constraints, které se načetly.
+- Změněn pouze `README.md`. Nic nebylo stageováno, commitnuto ani pushnuto. Žádné `TODO` v souboru nezůstalo.
+- Markdown/link checker v prostředí není — odkazy jsem ověřil proti existujícím souborům ručně, automatická kontrola neproběhla.
+

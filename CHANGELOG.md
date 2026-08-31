@@ -28,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A `Tests` workflow running the scorer, the ground-truth sweep, and the
   licence-copy check on Node.js 20 and 22, for every push to `master` and every
   pull request. The repository had no CI before this.
+- A second recorded run, `2026-08-31-claude-code-full` — Claude Code, both modes,
+  all ten scenarios. Its numbers are **not** published: reading the findings one
+  by one showed almost all of them to be scorer defects, not agent errors, so the
+  README keeps citing the smaller run it can stand behind. The raw results are
+  committed as the evidence the detector rework needs.
 - A `Benchmark` section in the README, generated from committed results by
   `tests/evals/readme-section.mjs` rather than written by hand. It states a
   percentage only when the baseline had something to improve on, says so plainly

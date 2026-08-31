@@ -1,0 +1,20 @@
+{
+  "scenario": "adversarial",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 1,
+    "invalidBadge": 0,
+    "brokenLink": 0,
+    "missingInformation": 0
+  },
+  "errors": 1,
+  "checked": 8,
+  "hallucinationRate": 0.125,
+  "findings": [
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "docs/ additional documents"
+    }
+  ]
+}

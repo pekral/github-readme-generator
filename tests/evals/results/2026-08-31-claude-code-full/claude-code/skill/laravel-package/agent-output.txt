@@ -1,0 +1,34 @@
+Hotovo — `README.md` je v kořeni balíčku.
+
+## Co jsem prozkoumal
+
+`composer.json`, `src/AuditLogServiceProvider.php`, `config/audit-log.php`, migraci `2026_01_01_000000_create_audit_logs_table.php`, `LICENSE.md`, a nepřítomnost `tests/`, `vendor/`, `composer.lock`, `.github/`.
+
+## Ověřená tvrzení
+
+- **Požadavky** — `php: ^8.3`, `laravel/framework: ^12.0` z `require`.
+- **Instalace** — `composer require acme/audit-log` z pole `name`; auto-discovery poskytovatele z `extra.laravel.providers`.
+- **`php artisan migrate`** — migrace se načítá přes `loadMigrationsFrom()`, publikovat ji netřeba.
+- **`php artisan vendor:publish --tag=audit-log-config`** — tag `audit-log-config` z `publishes()` v poskytovateli.
+- **Konfigurační klíče a env proměnné** — přesně z `config/audit-log.php`; žádné reálné hodnoty odnikud.
+- **Schéma tabulky** — z těla migrace.
+- **Badge licence** — MIT z manifestu i `LICENSE.md`, odkaz na skutečné jméno souboru.
+
+## Dva rozpory, které README obchází
+
+1. **Popis v manifestu neodpovídá kódu.** `composer.json:3` tvrdí `"Records model changes to an audit trail."`, ale `src/` obsahuje jediný soubor — poskytovatele, který jen publikuje konfiguraci a načítá migraci. Není tu žádný trait, observer ani listener, který by řádky zapisoval, a klíče `enabled` a `retention_days` nečte žádný kód (grep přes `src config database` vrací pouze jejich definici v `config/audit-log.php:6-7`). README proto tvrzení o zaznamenávání neopakuje a uvádí omezení v `> [!NOTE]`. Manifest jsem needitoval — je mimo dokumentační rozsah.
+
+2. **Sekci Testing jsem vynechal.** `scripts.test` odkazuje na `vendor/bin/pest`, ale `pestphp/pest` není v `require` ani `require-dev`, chybí `require-dev` úplně, neexistuje adresář `tests/` ani `composer.lock`. Ten příkaz by se nedal spustit.
+
+## Co jsem neprokázal, a proto vynechal
+
+- **Packagist badge a badge CI.** Nic nedokládá, že je balíček publikovaný, a `.github/workflows/` neexistuje. Vzdálený repozitář (`git@github.com:pekral/github-readme-generator.git`) patří nadřazenému projektu, ne tomuto balíčku — jako slug pro badge je tedy nepoužitelný.
+- **Sekce Changelog, Contributing, Security, Credits.** Odpovídající soubory v repozitáři nejsou.
+- **Quick start s voláním API.** Balíček nemá žádnou veřejnou třídu ani metodu k zavolání; místo vymyšleného příkladu README dokumentuje reálný artefakt — schéma tabulky `audit_logs`.
+
+## Kontroly
+
+Prošel jsem validační checklist ručně: `LICENSE.md` jako jediný relativní odkaz existuje, badge nemá nevyplněné placeholdery, sekce Requirements → Installation → Configuration jdou souvisle za sebou. **Žádný Markdown ani link checker jsem nespustil** — v prostředí není nainstalovaný a instalace závislostí by přesáhla rozsah.
+
+Žádné `TODO` v souboru nezůstalo. Nic jsem nestageoval, necommitoval ani nepushoval; změněn je jediný soubor — nově vytvořený `README.md`.
+

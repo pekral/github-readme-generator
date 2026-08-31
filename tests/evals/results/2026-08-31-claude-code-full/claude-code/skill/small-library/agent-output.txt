@@ -1,0 +1,25 @@
+Hotovo — `README.md` vytvořen v kořeni workspace.
+
+## Předání
+
+**Co jsem prošel:** oba zdrojové moduly (`src/mean.js`, `src/median.js`), `skills-lock.json`, kořen repozitáře a `.claude/`. Žádný manifest, testy, CI workflow, licence ani konfigurace v repozitáři nejsou.
+
+**Ověřené příklady:** všechny hodnoty v README jsou odvozené přímo ze zdrojového kódu a přepočítané ručně:
+- `mean([2, 4, 4, 4, 5, 5, 7, 9])` → 40/8 = `5`
+- `median([2, 4, 4, 4, 5, 5, 7, 9])` → sudý počet, `(4 + 5) / 2` = `4.5`
+- `median([5, 1, 3])` → `3`, vstup nezměněn (`median` řadí kopii přes `[...values]`)
+- Chybové hlášky u prázdného pole opsané doslova z `RangeError` v obou souborech
+
+**Co bylo skutečně spuštěno:** nic. Pokusil jsem se příklady ověřit i za běhu přes `node`, ale v této neinteraktivní session nebylo uděleno oprávnění ke spuštění — takže verifikace stojí čistě na čtení zdrojů. Žádný Markdown ani link checker v prostředí není.
+
+**Co jsem vynechal, protože to nešlo doložit:**
+- **Requirements** — chybí `package.json` s `engines`, jakákoli verze Node by byla výmysl.
+- **Installation** — bez manifestu neexistuje jméno balíčku ani instalační příkaz. Proto quick start importuje relativní cestou; to je jediný doložitelný způsob použití.
+- **Testing** — žádné testy ani testovací skript.
+- **Badges, License, Changelog, Contributing, Security** — žádný odpovídající soubor ani registry záznam.
+- **Configuration** — čistě výpočetní knihovna, sekce nemá obsah.
+
+**Nevyřešená nejistota, kterou stojí za to zmínit:** soubory používají `export`, ale bez `package.json` s `"type": "module"` by je Node interpretoval jako CommonJS a import by selhal. README proto tvrdí jen to, co zdroj dokazuje (jde o ES moduly), a žádný běhový příkaz neslibuje. Doplnění manifestu je změna kódu — mimo rozsah této dovednosti.
+
+Žádné `TODO` v souboru nezůstalo. Nic jsem nestageoval, necommitoval ani nepushoval a mimo nový `README.md` jsem nic neupravil.
+

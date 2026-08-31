@@ -1,0 +1,20 @@
+{
+  "scenario": "node-package",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 1,
+    "invalidBadge": 0,
+    "brokenLink": 0,
+    "missingInformation": 0
+  },
+  "errors": 1,
+  "checked": 10,
+  "hallucinationRate": 0.1,
+  "findings": [
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "npm test # runs the test suite via node --test"
+    }
+  ]
+}

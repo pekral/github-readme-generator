@@ -1,0 +1,31 @@
+Hotovo — `README.md` v kořeni workspace.
+
+## Co jsem prověřil
+
+**Prohlédnuté soubory:** `package.json`, `package-lock.json`, `LICENSE`, `src/index.js`, `test/index.test.js`, `scripts/build.js`.
+
+**Spuštěné příkazy:**
+- `npm test` → 2 testy, oba prošly (`slugifies text`, `honours a custom separator`)
+- `npm run build` → prošlo bez chyby
+- `node -v` → v22.22.0 (splňuje `engines.node: ">=20"`)
+
+**Příklady v README** jsou přesně ty, které ověřuje test suite — `slugify('Hello, World!')` → `'hello-world'` a varianta s `{ separator: '_' }` → `'hello_world'`. Nic jsem nedomýšlel; popis čtyř transformačních kroků je odečtený řádek po řádku z `src/index.js`.
+
+## Co jsem vynechal a proč
+
+- **`npm run lint` není v README.** Skript v manifestu je, ale spuštění skončilo `sh: eslint: command not found` — eslint není v `devDependencies` (manifest nemá žádné závislosti) a v repozitáři není ani eslint konfigurace. Dokumentovat ho jako funkční příkaz by byla nepravda. **Doporučení:** buď doplnit `eslint` do `devDependencies` + config, nebo skript z `package.json` odstranit.
+- **Žádné badge.** Není tu CI workflow (žádný `.github/`), takže build badge by byl vymyšlený; npm version badge by předpokládal publikaci, kterou z repozitáře doložit nelze.
+- **Chybí sekce Contributing / Security / Changelog** — odpovídající soubory v repozitáři nejsou.
+- **Bez odkazu na repozitář nebo autora** — `package.json` nemá pole `repository` ani `author`.
+
+## Neověřitelné
+
+Instalační příkaz `npm install @acme/slugify` je odvozený z `name` v manifestu (balíček není `private`), ale **že je skutečně publikovaný na npm registry, jsem z repozitáře ověřit nemohl** — sítě jsem se nedotýkal.
+
+`.claude/skills/` a `skills-lock.json` jsem do README nezahrnul: `skills-lock.json` ukazuje `"source": "../../../../../../../.."`, jde tedy o lešení eval harnessu, ne o součást balíčku.
+
+## Stav
+
+Změněn jediný soubor — nově vytvořený `README.md`. Nic jsem nestageoval, necommitoval ani nepushoval. Markdown ani link checker v prostředí k dispozici nebyl, takže žádný takový nástroj neproběhl; relativní odkaz na `LICENSE` jsem ověřil proti výpisu souborů ručně.
+
+Decompression error: ZlibError

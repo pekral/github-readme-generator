@@ -1,0 +1,16 @@
+Napsal jsem `README.md` v kořeni workspace.
+
+**Co je v něm doloženo z kódu:**
+- Popis a verzované požadavky z `package.json` (`engines: node >= 20`, `"type": "module"`).
+- Příklady použití — `'hello-world'` a `'hello_world'` jsou přesně ty, které tvrdí `test/index.test.js:6,10`.
+- API tabulka a pětikrokový popis transformace odvozený řádek po řádku z `src/index.js:1-8`.
+- Tabulka skriptů podle `package.json:11-15`.
+
+**Dvě věci, na které v README upozorňuji, protože jsou to reálné mezery v repu:**
+1. `npm run lint` spouští `eslint src`, ale balíček nemá žádné `devDependencies` ani commitnutý ESLint config — skript projde jen tam, kde ESLint dodá okolní prostředí. Napsal jsem to explicitně místo abych předstíral, že příkaz funguje.
+2. `npm run build` nic negeneruje; `scripts/build.js:1` sám sebe označuje za „minimal build step“ a jen ověří jeden známý slug. README to popisuje jako smoke check, ne jako build artefakt.
+
+**Čeho jsem se vědomě zdržel:** žádné badge (repozitář nemá CI workflow ani doložený publish), žádná sekce Contributing/Changelog (není pro ně podklad).
+
+**Neověřeno:** `node --test`, `npm run build` ani dostupnost `eslint` jsem nespustil — Bash příkazy vyžadují schválení a session je neinteraktivní. Příklad s diakritikou (`'Příliš žluťoučký kůň'` → `'prilis-zlutoucky-kun'`) je odvozen z NFKD dekompozice a stripování kombinujících znaků v kódu, ne ze skutečného běhu. Také `npm install @acme/slugify` vychází z názvu balíčku — jestli je `@acme/slugify` opravdu publikován na npm, z repozitáře doložit nejde.
+

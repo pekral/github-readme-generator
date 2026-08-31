@@ -1,0 +1,27 @@
+Napsal jsem `README.md` v kořeni workspace.
+
+## Co jsem prošel
+
+`package.json`, `.env.example`, `src/config.js`, `src/server.js`, `test/config.test.js`, `skills-lock.json` a kompletní výpis souborů. Repozitář nemá vlastní CI workflow, licenční soubor ani další dokumentaci.
+
+## Co je ověřené
+
+- **`npm test`** — spuštěno, prošlo (1 test, `node --test`).
+- **Node 20+** — z pole `engines` v `package.json`.
+- **Proměnné a výchozí hodnota `SESSION_TTL_MINUTES=120`** — z `src/config.js:1,11` a `.env.example`.
+- **Port 3000 a tvar odpovědi** — z `src/server.js:7-8`.
+- **Hláška `Missing configuration: …`** — z `src/config.js:5`, potvrzená testem v `test/config.test.js:6`.
+- **Ukázkové hodnoty proměnných** pocházejí výhradně z `.env.example`; lokální `.env` jsem nečetl a žádnou reálnou hodnotu jsem nepřevzal.
+
+## Na co jsem narazil
+
+- **`.env` se nikde nenačítá.** V `package.json` není `--env-file`, v kódu žádný `dotenv` a repozitář nemá závislosti. `.env.example` je tedy jen seznam názvů, ne funkční konfigurační soubor — README to říká explicitně, aby čtenář nezaložil běh na tom, že se soubor načte sám.
+- **`npm start` jsem nespustil** — příkaz vyžadoval schválení, které v této neinteraktivní session nešlo udělit. Chování startu je odvozené ze čtení dvaceti řádků `src/server.js` a `src/config.js`, ne z běhu.
+- **`DATABASE_URL` a `MAILER_DSN`** jsou sice povinné, ale `src/server.js` je nepoužívá — jen projdou přes `loadConfig`. Popsal jsem je proto neutrálně podle tvaru hodnot v `.env.example`, bez tvrzení o konkrétní databázi či mail serveru.
+
+## Co jsem vynechal
+
+Odznaky (balíček je `"private": true`, chybí CI workflow i licenční soubor), sekci License (v projektu není žádný `LICENSE*` — ten pod `.claude/skills/` patří přibalené skill, ne tomuto projektu), a instalační příkaz správce balíčků (není lock file, který by ho doložil).
+
+Žádný `TODO` v souboru nezůstal. Nic jsem nestageoval, necommitoval ani nepushoval; změnil jsem jen nově vytvořený `README.md`.
+

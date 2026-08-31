@@ -1,0 +1,20 @@
+Hotovo — `README.md` vytvořen.
+
+**Co jsem prošel:** `package.json`, `bin/slugify.js`, `test/cli.test.js`, `LICENSE`, `.github/pr-checks.yml`, `skills-lock.json`, `git remote`.
+
+**Co je ověřené:**
+- `npm test` — spuštěno, 3/3 testy prošly (`node --test`).
+- `slugify "Hello, World!"` → `hello-world` a `--sep _` → `hello_world` — kryté testy v `test/cli.test.js`.
+- `--upper` → `HELLO-WORLD` a `Release notes 2026` → `release-notes-2026` — odvozené ze zdroje (`bin/slugify.js:24-26`), ne z testu.
+- Node.js ≥ 20 z `engines.node`, MIT z `LICENSE` i z `license` v manifestu, název příkazu `slugify` z pole `bin`.
+
+**Co jsem neověřil nebo vynechal:**
+- **CI badge vynechán.** `.github/pr-checks.yml` leží mimo `.github/workflows/` (soubor to sám v komentáři přiznává), takže se nikdy nespustí — a i kdyby, má jen trigger `pull_request`, který nikdy neprodukuje běh na výchozí větvi. Workflow jsem neupravoval, to je mimo rozsah.
+- **npm badge a instalace z registru vynechány.** Nic v repozitáři nedokládá, že `@acme/slugify-cli` je publikovaný — chybí lock file i pole `repository`. Instalaci proto README popisuje z checkoutu (`npm install -g .`); tento příkaz jsem **nespouštěl**, protože globální instalace mutuje systém.
+- **Přímé spuštění CLI mi prostředí nepovolilo** (odmítnutá oprávnění pro `node bin/slugify.js`), výstupy v README tedy stojí na testech a čtení zdroje, ne na zachyceném běhu.
+- `git remote` ukazuje na `pekral/github-readme-generator`, tedy na nadřazený repozitář, ne na tento balíček — jako zdroj odkazů jsem ho nepoužil.
+- Funkce `run()` je sice exportovaná, ale manifest deklaruje jen `bin` (žádné `main` ani `exports`), takže jsem JS API nedokumentoval jako veřejné.
+- Sekci `Configuration` jsem vypustil — žádné env proměnné ani konfigurační soubory neexistují.
+
+Žádný `TODO` v souboru nezůstal. Markdown/link checker v prostředí není, žádný neběžel. Nic jsem nestageoval, necommitoval ani nepushoval; změna se dotkla pouze nového `README.md`.
+

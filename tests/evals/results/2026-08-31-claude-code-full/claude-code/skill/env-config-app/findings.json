@@ -1,0 +1,40 @@
+{
+  "scenario": "env-config-app",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 5,
+    "invalidBadge": 0,
+    "brokenLink": 0,
+    "missingInformation": 0
+  },
+  "errors": 5,
+  "checked": 13,
+  "hallucinationRate": 0.3846,
+  "findings": [
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "export APP_URL=http://localhost:3000"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "export DATABASE_URL=postgres://user:password@localhost:5432/invoices"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "export MAILER_DSN=smtp://localhost:1025"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "acme-invoices at http://localhost:3000"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "Missing configuration: DATABASE_URL, MAILER_DSN"
+    }
+  ]
+}

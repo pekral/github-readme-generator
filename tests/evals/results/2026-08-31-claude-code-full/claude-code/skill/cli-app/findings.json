@@ -1,0 +1,50 @@
+{
+  "scenario": "cli-app",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 6,
+    "invalidBadge": 0,
+    "brokenLink": 0,
+    "missingInformation": 1
+  },
+  "errors": 7,
+  "checked": 18,
+  "hallucinationRate": 0.3889,
+  "findings": [
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "npm install -g ."
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "hello-world"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "hello_world"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "HELLO-WORLD"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "slugify Release notes 2026"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "release-notes-2026"
+    },
+    {
+      "kind": "missingInformation",
+      "detail": "The global install command the bin field proves is missing.",
+      "evidence": "install-command"
+    }
+  ]
+}

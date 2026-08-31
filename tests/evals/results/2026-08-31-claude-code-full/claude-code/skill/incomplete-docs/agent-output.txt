@@ -1,0 +1,22 @@
+README je hotové: `README.md` v kořeni workspace.
+
+**Co jsem prohlédl:** `package.json`, `LICENSE`, celý `src/` (`index.js`, `retry.js`, `backoff.js`, `cancellation.js`), `test/retry.test.js` a `docs/` (`index.md`, `installation.md`, `retry.md`).
+
+**Ověřené údaje:**
+- Node.js ≥ 20 — `engines.node` v `package.json`, potvrzeno `docs/installation.md`.
+- `npm install @acme/retry` — doslova z `docs/installation.md`.
+- `npm test` — spouští `scripts.test` (`node --test`) z `package.json`.
+- Podpisy a defaulty (`attempts = 3`, `base = 100`, `cap = 5000`), text výjimky `Operation cancelled.` i hodnoty `backoff(0) === 100` a `backoff(50) === 5000` pocházejí přímo ze zdrojů a z testů.
+- Příklad s `fetch()` je převzatý z `docs/retry.md`, doplněný o `attempts`/`token` podle skutečného API.
+
+**Co jsem vynechal a proč:**
+- **npm badge** — nic v repozitáři nedokládá, že je balíček publikovaný v registru. Zůstal jen license badge (MIT z `LICENSE` i z manifestu).
+- **CI badge** — `.github/workflows/` neexistuje.
+- **Sekce Configuration** — knihovna nečte žádné env proměnné ani konfigurační klíče.
+- **Changelog / Contributing / Security / Credits** — odpovídající soubory v repozitáři nejsou.
+- Dokumentace v `docs/` je podle vlastního `index.md` neúplná („Backoff tuning and cancellation are not written up yet"), proto README nese kompletní quick start i popis API samo a na `docs/` jen odkazuje.
+
+**Nespuštěné kontroly:** `node --test` i `git remote -v` byly zamítnuty oprávněními, takže testy jsem neověřil spuštěním a neznám slug repozitáře — proto v README nejsou žádné absolutní odkazy na GitHub. Žádný linter Markdownu ani kontrola odkazů v prostředí k dispozici nebyla; relativní cesty (`LICENSE`, `docs/index.md`) jsem ověřil proti výpisu souborů.
+
+Zbylo bez `TODO`. Nic jsem nestageoval, necommitoval ani nepushnul, a měnil jsem výhradně `README.md`.
+

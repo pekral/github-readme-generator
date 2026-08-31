@@ -1,0 +1,31 @@
+Napsal jsem `README.md` v kořeni workspace.
+
+**Co jsem četl jako podklad**
+
+| Tvrzení v README | Zdroj |
+| --- | --- |
+| Monorepo přes npm workspaces, root je private | `package.json` (`workspaces`, `private: true`) |
+| Node.js ≥ 20, ESM | `engines.node`, `"type": "module"` |
+| `@acme/cli` závisí jen na `@acme/core` | `packages/cli/package.json` |
+| Příkaz `acme` | `bin` field + `packages/cli/bin/acme.js` |
+| Výstup `Hello World` | `bin/acme.js` (join argv → `titleCase`) + `packages/core/test/core.test.js` |
+| `titleCase('acme cli') → 'Acme Cli'` | `packages/cli/test/cli.test.js` |
+| Chování `titleCase` (nechává velká písmena být) | regex `/\b[a-z]/g` v `packages/core/src/index.js` |
+| `npm test` = `node --test packages/*/test/*.test.js` | root `scripts.test` |
+| MIT, Copyright (c) 2026 Acme | `LICENSE` |
+
+**Co jsem záměrně vynechal**
+
+- **Žádné badge a žádný odkaz na repozitář.** `git remote` ukazuje na `pekral/github-readme-generator` — to je nadřazený repozitář, ne tento workspace (leží uvnitř něj jako fixture v `tests/evals/`). Klonovací URL by tedy byla nepravdivá.
+- **Žádná sekce Configuration** — v repozitáři není `.env.example`, config schéma ani env proměnná.
+- **Žádné CI badge** — v repozitáři nejsou žádné workflow soubory.
+- **Instalaci z registry jsem nezopakoval.** README jednotlivých balíčků uvádějí `npm install @acme/core` a `npm install -g @acme/cli`, ale publikaci na npm jsem nemohl ověřit, takže root README dokumentuje jen instalaci workspace (`npm install`) a na balíčkové README odkazuje.
+
+**Co neproběhlo**
+
+- Reference skillu (`readme-structure.md`, `evidence-policy.md`, `validation-checklist.md`) se nepodařilo načíst — čtení bylo zamítnuto oprávněními. Psal jsem podle pravidel v samotném `SKILL.md`.
+- **Testy jsem nespustil** — `node --test` bylo rovněž zablokováno oprávněními. Příkazy i očekávaný výstup jsou dohledané ze zdrojů a testů, ale nejsou odzkoušené spuštěním. Stejně tak `npx acme hello world` je odvozeno z `bin` fieldu a workspaces, ne z běhu.
+- Žádný Markdown ani link-checker v prostředí neběžel.
+
+Změněn byl jediný soubor — nový `README.md`. Nic jsem nestageoval ani necommitoval.
+

@@ -1,0 +1,35 @@
+{
+  "scenario": "monorepo",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 4,
+    "invalidBadge": 0,
+    "brokenLink": 0,
+    "missingInformation": 0
+  },
+  "errors": 4,
+  "checked": 14,
+  "hallucinationRate": 0.2857,
+  "findings": [
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "npx acme hello world"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "Hello World"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "npm test --workspace @acme/core"
+    },
+    {
+      "kind": "invalidCommand",
+      "detail": "Command is not one the repository defines.",
+      "evidence": "npm test --workspace @acme/cli"
+    }
+  ]
+}

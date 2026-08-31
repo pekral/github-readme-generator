@@ -1,0 +1,27 @@
+{
+  "runId": "2026-08-31-claude-code-full",
+  "startedAt": "2026-08-31T16:43:31.114Z",
+  "prompt": "Write the root README.md for this repository.",
+  "model": "agent default",
+  "agents": [
+    "claude-code"
+  ],
+  "modes": [
+    "baseline",
+    "skill"
+  ],
+  "scenarios": [
+    "adversarial",
+    "cli-app",
+    "env-config-app",
+    "incomplete-docs",
+    "laravel-package",
+    "monorepo",
+    "node-package",
+    "php-package",
+    "small-library",
+    "stale-readme"
+  ],
+  "skillCommit": "ae865c75af790edae74e5c6e025232b5972ad29a",
+  "skillCommitIsExact": false
+}

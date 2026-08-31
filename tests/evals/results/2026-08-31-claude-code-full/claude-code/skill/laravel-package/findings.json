@@ -1,0 +1,14 @@
+{
+  "scenario": "laravel-package",
+  "counts": {
+    "unsupportedClaim": 0,
+    "invalidCommand": 0,
+    "invalidBadge": 0,
+    "brokenLink": 0,
+    "missingInformation": 0
+  },
+  "errors": 0,
+  "checked": 12,
+  "hallucinationRate": 0,
+  "findings": []
+}
