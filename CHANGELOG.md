@@ -5,9 +5,55 @@ All notable changes to `github-readme-generator` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 1.0.0-beta.1 - 2026-09-02
+
+First tagged release, published as a public beta. The manifests carried a
+`1.0.0` from 2026-08-23 that was never tagged and never released; this section
+supersedes it and describes what the beta actually contains.
+
+Beta because two things are not finished. The skill is exercised against Claude
+Code only — the other hosts it installs into are packaged, not tested. And the
+benchmark that would measure whether the skill helps is not yet trustworthy: its
+scorer mistakes command output for commands and a logo for a badge
+([#11](https://github.com/pekral/github-readme-generator/issues/11)), so no
+number from it is published as evidence.
 
 ### Added
+
+- The canonical skill in `skills/github-readme-generator/`, with `SKILL.md` and
+  three on-demand references: structure, evidence policy, and validation
+  checklist.
+- Evidence-first workflow — scan the repository, map every claim to a source,
+  and omit anything that cannot be traced to a file.
+- Three modes: create a README, update one while preserving valid branding and
+  hand-written prose, or audit without writing.
+- Header block guidance for both cases: a `<picture>` wrapper with light/dark
+  assets and an explicit `<h1>` for projects that own a logo, a plain Markdown
+  heading for those that do not.
+- Badge templates for package version, license, CI, and downloads, each with the
+  evidence it requires.
+- Per-ecosystem rules for PHP, Node, Python, Rust, and Go, covering where each
+  keeps its manifest, install command, test command, and registry.
+- A fixed reader path — Requirements, Installation, Configuration, Quick start —
+  so nobody scrolls back to install the thing.
+- Ten test scenarios in `tests/scenarios.md`, each with activation and output
+  invariants, among them a workflow that cannot run on the default branch and a
+  manifest description the repository contradicts.
+- Distribution through `npx skills add pekral/github-readme-generator`, which
+  covers Claude Code, Codex, Cursor, and every other agent the `skills` CLI
+  knows, and brings `list`, `update`, and `remove` with it. Both plugin hosts
+  also carry a marketplace entry: `.claude-plugin/` for Claude Code, and
+  `.codex-plugin/plugin.json` with a repo marketplace at
+  `.agents/plugins/marketplace.json` for Codex.
+- `skills/github-readme-generator/LICENSE.md` — a copy of the root notice, so an
+  installed copy stays licensed even though installers take that directory alone.
+- A skill description that keys off what a user actually types — "write a
+  README", "update the README", "audit this README" — rather than off project
+  state. In testing, wording that described when a project *needs* a README left
+  the agent free to write one itself without ever invoking the skill.
+- `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1), plus bug report, feature
+  request, and pull request templates under `.github/`.
+- `.gitignore` for the local skill copies an installer writes.
 
 - `tests/repository.test.mjs` — the repository checked against its own claims:
   the files the skill declares, its licence copy matching the root one, every
@@ -28,12 +74,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   against ten fixture repositories — PHP, Laravel, Node, CLI, monorepo, an app
   with environment configuration, a stale README, a repository with no manifest,
   one with incomplete docs, and one carrying adversarial instructions — twice per
-  agent, with and without the skill, on Claude Code, Codex, and Cursor.
+  agent, with and without the skill. The harness carries invocation templates
+  for Claude Code, Codex and Cursor; only Claude Code has been run.
 - A deterministic scorer that needs no network and no model: it counts
   unsupported claims, invalid commands, invalid badges, broken links, and missing
   information against each fixture's ground truth, and reports a hallucination
   rate per README. Generation and scoring are separate programs, so a recorded
-  run can be rescored without paying for generation again.
+  run can be rescored without paying for generation again. The scorer has known
+  defects — it reads command output as commands and a logo as a badge
+  ([#11](https://github.com/pekral/github-readme-generator/issues/11)) — so no
+  figure it produces is published as evidence yet.
 - `node --test tests/evals/*.test.mjs` — crafted READMEs with known defects,
   plus a sweep that fails when a fixture's ground truth drifts from its own
   repository.
@@ -57,57 +107,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   topics with a proposed description and topic candidates traced to sources
   already read, missing community health files, and README links with no target.
   Reported as text; nothing is written and no repository setting is applied.
-- Two test scenarios: a workflow that cannot run on the default branch, and a
-  manifest description the repository contradicts.
-- Codex plugin packaging — `.codex-plugin/plugin.json` and a repo marketplace at
-  `.agents/plugins/marketplace.json`, installable with
-  `codex plugin marketplace add pekral/github-readme-generator`.
-- `.gitignore` for the local skill copies an installer writes.
-
-### Changed
-
-- The skill description now keys off what a user actually types — "write a
-  README", "update the README", "audit this README" — instead of describing when
-  a project needs one. In testing, the previous wording left the agent free to
-  write the README itself without ever invoking the skill.
-
-### Fixed
-
-- Installed copies now carry the MIT notice. Installers copy only
-  `skills/github-readme-generator/`, which had no license file, so a copy did not
-  meet the one condition MIT sets.
-- `.codex-plugin/plugin.json` now declares `license`, `author`, `homepage`,
-  `repository`, and `keywords`, matching the Claude Code manifest.
-
-### Removed
-
-- `install.sh`. Installing is now `npx skills add pekral/github-readme-generator`,
-  which covers Claude Code, Codex, Cursor, and every other agent the `skills` CLI
-  knows, and brings `list`, `update`, and `remove` with it.
-
-## 1.0.0 - 2026-08-23
-
-First release.
-
-### Added
-
-- The canonical skill in `skills/github-readme-generator/`, with `SKILL.md` and
-  three on-demand references: structure, evidence policy, and validation
-  checklist.
-- Evidence-first workflow — scan the repository, map every claim to a source,
-  and omit anything that cannot be traced to a file.
-- Three modes: create a README, update one while preserving valid branding and
-  hand-written prose, or audit without writing.
-- Header block guidance for both cases: a `<picture>` wrapper with light/dark
-  assets and an explicit `<h1>` for projects that own a logo, a plain Markdown
-  heading for those that do not.
-- Badge templates for package version, license, CI, and downloads, each with the
-  evidence it requires.
-- Per-ecosystem rules for PHP, Node, Python, Rust, and Go, covering where each
-  keeps its manifest, install command, test command, and registry.
-- A fixed reader path — Requirements, Installation, Configuration, Quick start —
-  so nobody scrolls back to install the thing.
-- Distribution as a Claude Code plugin through the `pekral` marketplace, plus
-  `install.sh` for Codex and Cursor with a `--check` mode for CI.
-- Eight test scenarios in `tests/scenarios.md`, each with activation and output
-  invariants.

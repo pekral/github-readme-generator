@@ -1,7 +1,7 @@
 # Test scenarios
 
-Run each scenario in a clean session of every target host (Codex, Claude Code,
-Cursor). Test two things separately:
+Run each scenario in a clean session of Claude Code, the host the skill is
+tested against. Test two things separately:
 
 1. **Activation** — did the skill trigger at the right moment, and stay quiet for
    requests outside its scope?
@@ -125,18 +125,23 @@ Every scenario must also satisfy:
 
 ## Host coverage log
 
-Record which host each scenario was executed in, or note explicitly that a host
-was unavailable.
+Claude Code is the only host the skill is tested against. The other hosts it
+installs into are packaged, not verified, and adding a column for one of them
+before a scenario has ever been run there would claim coverage that does not
+exist.
 
-| Scenario | Codex | Claude Code | Cursor |
-| --- | --- | --- | --- |
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
+Record the date a scenario was last executed and what it showed. An empty row
+means the scenario has not been run since this log was started.
+
+| Scenario | Last run under Claude Code | Result |
+| --- | --- | --- |
+| 1 | | |
+| 2 | | |
+| 3 | | |
+| 4 | | |
+| 5 | | |
+| 6 | | |
+| 7 | | |
+| 8 | | |
+| 9 | | |
+| 10 | | |

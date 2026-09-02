@@ -1,0 +1,33 @@
+name: Feature request
+description: Something the skill should handle and does not.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The case it does not handle
+      description: >-
+        Describe the repository or the request that comes out wrong today, not
+        the solution you have in mind for it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: What evidence would support it
+      description: >-
+        The skill may only state what a file proves. For a new claim, badge, or
+        section, name the file it would be read from — a manifest key, a
+        workflow trigger, a lockfile. A proposal with no source behind it cannot
+        be implemented without inventing something.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Which ecosystems or hosts it affects
+      description: PHP, Node, Python, Rust, Go — or all of them. Optional.
+    validations:
+      required: false

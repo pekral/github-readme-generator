@@ -15,6 +15,10 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SKILL_DIR = join(ROOT, 'skills', 'github-readme-generator');
 
+// Major.minor.patch with an optional prerelease, so a beta can be released the
+// same way a stable version is: 1.0.0, 1.0.0-beta.1, 2.0.0-rc.2.
+const VERSION = String.raw`\d+\.\d+\.\d+(?:-[0-9A-Za-z.]+)?`;
+
 const read = (path) => readFileSync(join(ROOT, path), 'utf8');
 const exists = (path) => existsSync(join(ROOT, path));
 
@@ -173,7 +177,7 @@ test('the three manifests agree on one version', () => {
 
   assert.equal(entry.version, plugin.version, 'the marketplace entry and the plugin manifest disagree');
   assert.equal(codex.version, plugin.version, 'the Codex manifest disagrees with the Claude Code one');
-  assert.match(plugin.version, /^\d+\.\d+\.\d+$/, 'the version is not semantic');
+  assert.match(plugin.version, new RegExp(`^${VERSION}$`), 'the version is not semantic');
   assert.equal(codex.name, plugin.name, 'the two plugin manifests name different plugins');
 });
 
@@ -184,15 +188,20 @@ test('the changelog accounts for the version the manifests declare', () => {
 
   assert.ok(headings.length > 0, 'the changelog has no sections');
 
-  const released = headings.filter((heading) => /^\d+\.\d+\.\d+/.test(heading)).map((heading) => heading.split(' ')[0]);
+  const isRelease = new RegExp(`^${VERSION} `);
+  const released = headings.filter((heading) => isRelease.test(heading)).map((heading) => heading.split(' ')[0]);
   assert.ok(
     released.includes(version) || headings[0] === 'Unreleased',
     `the manifests declare ${version}, which the changelog neither released nor supersedes with an Unreleased section`,
   );
 
   // A released heading carries its date, so a reader can tell when it shipped.
-  for (const heading of headings.filter((item) => /^\d+\.\d+\.\d+/.test(item))) {
-    assert.match(heading, /^\d+\.\d+\.\d+ - \d{4}-\d{2}-\d{2}$/, `changelog heading "${heading}" has no release date`);
+  for (const heading of headings.filter((item) => isRelease.test(item))) {
+    assert.match(
+      heading,
+      new RegExp(`^${VERSION} - \\d{4}-\\d{2}-\\d{2}$`),
+      `changelog heading "${heading}" has no release date`,
+    );
   }
 });
 
@@ -209,7 +218,7 @@ test('a released version has a matching tag, and a tag has a matching changelog 
   if (tags.length === 0) return;
 
   const changelog = read('CHANGELOG.md');
-  const released = [...changelog.matchAll(/^## (\d+\.\d+\.\d+)/gm)].map((match) => match[1]);
+  const released = [...changelog.matchAll(new RegExp(`^## (${VERSION}) `, 'gm'))].map((match) => match[1]);
 
   for (const tag of tags) {
     const version = tag.replace(/^v/, '');
