@@ -1,0 +1,76 @@
+name: Bug report
+description: The skill produced something wrong, or failed to activate at all.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The skill's one promise is that every claim in a README traces back to a
+        file in the repository. A README that says something the repository does
+        not support is the most valuable bug you can report here.
+
+  - type: dropdown
+    id: host
+    attributes:
+      label: Agent host
+      description: >-
+        The skill is tested against Claude Code. It is packaged for the others,
+        so a report from one of them is useful — just say which.
+      options:
+        - Claude Code
+        - Codex
+        - Cursor
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install
+    attributes:
+      label: How it was installed
+      options:
+        - npx skills add
+        - Claude Code plugin marketplace
+        - Codex plugin marketplace
+        - Copied the skill directory by hand
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Skill version or commit
+      description: The `version` from the plugin manifest, or the commit you installed from.
+      placeholder: 1.0.0-beta.1
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: >-
+        What you asked for, and what the skill did. If it wrote a README, paste
+        the part that is wrong rather than the whole file.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should have happened
+      description: >-
+        For an unsupported claim, name the file that should have been the
+        evidence — or say that no file in the repository supports it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repository
+    attributes:
+      label: The repository it ran on
+      description: >-
+        A link if it is public. Otherwise describe the shape: ecosystem, which
+        manifests exist, whether there was a README already, anything unusual.
+    validations:
+      required: true

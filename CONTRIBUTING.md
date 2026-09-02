@@ -1,6 +1,7 @@
 # Contributing
 
-Thanks for considering a contribution.
+Thanks for considering a contribution. Participation is held to the
+[Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## The canonical skill lives in one place
 
@@ -53,12 +54,20 @@ the three manifests, a dated section in `CHANGELOG.md`, and a `v`-prefixed git
 tag. `tests/repository.test.mjs` fails when a tag has no changelog section, so a
 tag pushed without its entry breaks the build rather than passing quietly.
 
+While the project is in beta the version carries a `-beta.N` suffix and its
+GitHub Release is marked as a pre-release, so nobody pins a stable version to
+something that is not one.
+
 Changes to the skill's behaviour should also be exercised against
 [`tests/scenarios.md`](tests/scenarios.md). Run the affected scenario in a clean
 session and check both halves: that the skill activated at the right moment, and
-that its output satisfies the invariants. Record which host you used — the
-scenarios expect Claude Code, Codex, and Cursor, and noting an unavailable host
-is more useful than leaving the cell blank.
+that its output satisfies the invariants. Record the run in the host coverage
+log at the end of that file.
+
+Claude Code is the host the skill is tested against. It is packaged for Codex,
+Cursor, and everything else the `skills` CLI installs into, but nothing there
+has been verified — so documentation may say the skill is *packaged for* those
+hosts and must not say it is tested against them.
 
 A change meant to make the skill *more accurate*, rather than merely different,
 belongs in the benchmark: [`tests/evals/README.md`](tests/evals/README.md)
@@ -75,12 +84,24 @@ type prefix: `Order Configuration before Quick start`, not `fix: reorder`.
 
 Maintainers only. Bump `version` in all three places — `.claude-plugin/plugin.json`,
 the plugin entry in `.claude-plugin/marketplace.json`, and `.codex-plugin/plugin.json`
-— then:
+— move the unreleased changelog entries under a dated heading for that version,
+then:
 
 ```text
-claude plugin tag --push -m "Release %s"
+claude plugin tag --dry-run
+node --test tests/repository.test.mjs
+git tag -a v1.2.3 -m "Release 1.2.3"
+git push origin v1.2.3
+gh release create v1.2.3 --verify-tag --notes-from-tag
 ```
 
-The command refuses to tag when the two versions disagree. Installed copies stay
-on their current version until their owner runs `claude plugin marketplace
-update pekral` and `claude plugin update github-readme-generator`.
+`claude plugin tag --dry-run` reports whether the plugin manifest and the
+marketplace entry agree, which is what makes it worth running. Do not let it
+create the tag: it writes `github-readme-generator--v1.2.3`, and both the
+changelog check in `tests/repository.test.mjs` and GitHub's own release list
+expect the plain `v`-prefixed form.
+
+Add `--prerelease` to `gh release create` while the version carries a `-beta.N`
+suffix. Installed copies stay on their current version until their owner runs
+`claude plugin marketplace update pekral` and `claude plugin update
+github-readme-generator`.

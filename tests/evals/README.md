@@ -9,6 +9,15 @@ The benchmark exists because the project makes a factual promise: *READMEs groun
 in repository evidence, with no invented claims*. That promise is testable, so it
 should be tested rather than asserted.
 
+**It does not answer that question yet.** The scorer counts help text and command
+output as invented commands, and a repository's own logo as an invalid badge
+([#11](https://github.com/pekral/github-readme-generator/issues/11)). On the one
+ten-scenario run performed so far, defects of that kind account for nearly every
+finding on both sides — more than the two modes differ by. Until #11 is fixed, a
+number out of this harness measures the checker, not the skill, and no such
+number may be published as evidence for the skill. The publishing rule below
+stands on top of that one, not instead of it.
+
 ## Requirements
 
 Node.js 20 or newer, and the CLI of whichever agent you want to measure. The scorer

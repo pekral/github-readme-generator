@@ -11,7 +11,7 @@
       "name": "github-readme-generator",
       "source": "./",
       "description": "Write or refresh a repository README from what the project actually contains",
-      "version": "1.0.0",
+      "version": "1.0.0-beta.1",
       "category": "documentation",
       "tags": [
         "readme",

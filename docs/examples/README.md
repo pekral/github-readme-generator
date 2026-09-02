@@ -54,9 +54,12 @@ A claim that it does would need a harder sample than the one recorded here.
 
 Every pair came from run `2026-08-31-claude-code-full`, recorded on 2026-08-31
 with Claude Code 2.1.251 on its default model, against the skill as it stands at
-commit `d7cfae8`. The raw run — twenty generated READMEs, each with the prompt,
-agent version, model, timings, and skill commit that produced it — is on the
-`publish-benchmark-results` branch.
+commit `d7cfae8`. That run is not published, and its scores are not quoted
+anywhere: the checker that produced them reads help text and command output as
+invented commands, and a repository's own logo as an invalid badge
+([#11](https://github.com/pekral/github-readme-generator/issues/11)), which
+moves a run's totals by more than the two modes differ. What these pages quote
+is the README text each mode wrote, which those defects do not touch.
 
 The benchmark harness itself is documented in
 [`tests/evals/README.md`](../../tests/evals/README.md). To regenerate a pair:

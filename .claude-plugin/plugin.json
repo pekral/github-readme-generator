@@ -2,7 +2,7 @@
   "name": "github-readme-generator",
   "displayName": "GitHub README Generator",
   "description": "Create or update a repository-root README.md from verified code, manifests, scripts, tests and workflows \u2014 no invented commands, badges or claims",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.1",
   "author": {
     "name": "Petr Kr\u00e1l",
     "email": "kral.petr.88@gmail.com",

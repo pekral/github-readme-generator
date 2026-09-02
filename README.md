@@ -5,9 +5,13 @@
 
 `github-readme-generator` teaches a coding agent to write or refresh a
 repository's root `README.md` from what the project actually contains — its
-code, manifests, scripts, tests, workflows, and existing docs. One canonical
-skill definition serves every host; Claude Code, Codex, and Cursor are the three
-it is packaged and tested against.
+code, manifests, scripts, tests, workflows, and existing docs.
+
+One canonical skill definition serves every host. It is developed and tested
+against Claude Code; the same definition installs into Codex, Cursor and the
+other agents the `skills` CLI knows, but no scenario has been run there yet, so
+those hosts are packaged rather than verified. That gap, and a benchmark whose
+scorer is not yet trustworthy, are why this is a public beta.
 
 ## Requirements
 
@@ -136,18 +140,28 @@ so plainly.
 
 ## Testing
 
-Two suites answering two different questions.
+Two suites, two different questions. Only the first of them is currently
+answered.
 
 [`tests/scenarios.md`](tests/scenarios.md) asks whether the skill behaves: ten
 manual scenarios — from a documented PHP package to a monorepo to a
-secrets-handling case — each with activation and output invariants, plus a host
-coverage log to fill in.
+secrets-handling case — each with activation and output invariants, plus a
+coverage log for recording which of them has been run under Claude Code, so far
+empty.
 
 [`tests/evals/`](tests/evals/README.md) asks whether it helps: the same plain
-prompt against the same ten fixture repositories, with and without the skill, on
-Claude Code, Codex and Cursor, scored by a deterministic checker that counts
-unsupported claims, invalid commands, invalid badges, broken links and missing
-information.
+prompt against the same ten fixture repositories, with and without the skill,
+scored by a deterministic checker that counts unsupported claims, invalid
+commands, invalid badges, broken links and missing information. The harness
+carries invocation templates for Codex and Cursor as well, but no recorded run
+has used them.
+
+That second question is open, and the benchmark is not yet evidence for
+anything. Its scorer has known defects — it reads help text and command output
+as commands, and a repository's own logo as a badge
+([#11](https://github.com/pekral/github-readme-generator/issues/11)) — large
+enough to swamp the difference between the two modes. So no figure from it is
+quoted here, and none should be quoted elsewhere until that issue is closed.
 
 ```text
 node tests/evals/run.mjs --dry-run
@@ -158,12 +172,11 @@ The scorer and every fixture's ground truth run in CI on Node.js 20 and 22. The
 agent invocations never do — they cost money and need credentials CI has no
 business holding.
 
-One run is recorded so far:
+One run is published:
 [`2026-08-31-claude-code-subset`](tests/evals/results/2026-08-31-claude-code-subset/summary.md)
-— Claude Code, both modes, two of the ten scenarios. Both modes scored zero
-findings. It shows the harness works end to end; two scenarios on one agent is
-far too small to support a claim about the skill either way, so this README makes
-none.
+— Claude Code, both modes, two of the ten scenarios, zero findings on each. It
+shows the harness works end to end. It says nothing about the skill, and this
+README claims nothing from it.
 
 ## Updating
 
@@ -186,7 +199,8 @@ See [CHANGELOG](CHANGELOG.md).
 
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md).
+See [CONTRIBUTING](CONTRIBUTING.md), and the
+[Code of Conduct](CODE_OF_CONDUCT.md) that participation is held to.
 
 ## Security
 

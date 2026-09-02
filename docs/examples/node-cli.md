@@ -12,7 +12,7 @@ A CLI that is on no registry, whose only workflow file sits outside `.github/wor
 | Agent | Claude Code 2.1.251, default model |
 | Prompt | `Write the root README.md for this repository.` — identical in both modes |
 | Recorded | 2026-08-31 (91 s baseline, 125 s with the skill) |
-| Raw run | `2026-08-31-claude-code-full`, on branch `publish-benchmark-results` |
+| Raw run | `2026-08-31-claude-code-full` — not published. It was scored by a checker with known defects (issue #11), so the pair below is quoted for its text, never for a score. |
 
 ## What the repository actually proves
 
