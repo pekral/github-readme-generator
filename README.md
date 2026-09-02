@@ -1,5 +1,6 @@
 # A portable Agent Skill for writing READMEs that don't lie
 
+[![Latest release](https://img.shields.io/github/v/release/pekral/github-readme-generator?include_prereleases&style=flat-square)](https://github.com/pekral/github-readme-generator/releases)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 ![Tests](https://github.com/pekral/github-readme-generator/workflows/Tests/badge.svg)
 
@@ -140,8 +141,14 @@ so plainly.
 
 ## Testing
 
-Two suites, two different questions. Only the first of them is currently
-answered.
+Three checks, three different questions. Only the first has an answer on record.
+
+[`tests/repository.test.mjs`](tests/repository.test.mjs) asks whether this
+repository holds to its own claims: every file the skill declares is present,
+its licence copy matches the root one, every relative documentation link
+resolves, each scenario has a host coverage row, the three manifests agree on
+one version, and a released version has both a changelog entry and a matching
+tag.
 
 [`tests/scenarios.md`](tests/scenarios.md) asks whether the skill behaves: ten
 manual scenarios — from a documented PHP package to a monorepo to a
@@ -156,21 +163,23 @@ commands, invalid badges, broken links and missing information. The harness
 carries invocation templates for Codex and Cursor as well, but no recorded run
 has used them.
 
-That second question is open, and the benchmark is not yet evidence for
-anything. Its scorer has known defects — it reads help text and command output
-as commands, and a repository's own logo as a badge
-([#11](https://github.com/pekral/github-readme-generator/issues/11)) — large
-enough to swamp the difference between the two modes. So no figure from it is
-quoted here, and none should be quoted elsewhere until that issue is closed.
+That third question is open, and the benchmark is not yet evidence for anything.
+Its scorer has known defects — it reads help text and command output as
+commands, and a repository's own logo as a badge — large enough to swamp the
+difference between the two modes. So no figure from it is quoted here, and none
+should be quoted elsewhere until the scorer stops counting them.
+[#11](https://github.com/pekral/github-readme-generator/issues/11) recorded
+those defects and was closed as not planned, which retired the ticket rather
+than the defect.
 
 ```text
-node tests/evals/run.mjs --dry-run
+node --test tests/repository.test.mjs
 node --test tests/evals/*.test.mjs
+node tests/evals/run.mjs --dry-run
 ```
 
-The scorer and every fixture's ground truth run in CI on Node.js 20 and 22. The
-agent invocations never do — they cost money and need credentials CI has no
-business holding.
+The first two run in CI on Node.js 20 and 22. The agent invocations never do —
+they cost money and need credentials CI has no business holding.
 
 One run is published:
 [`2026-08-31-claude-code-subset`](tests/evals/results/2026-08-31-claude-code-subset/summary.md)
