@@ -114,6 +114,23 @@ Invariants: the contradiction is reported in the handover summary with both
 sources, the manifest line and the file that refutes it; the README does not
 repeat the contradicted claim; the manifest is not modified.
 
+## 11. Oversized catalogue section
+
+*Setup:* a package whose evidence supports a capability catalogue of 30 skills
+in four groups, each group with its own table, plus a short `Testing` section,
+an existing `docs/rules.md` the repository ships, and a rule list whose section
+would be named `Rules`.
+
+Invariants: the catalogue section moves to `docs/<slug>.md` derived from its
+heading; the README keeps the heading and two to four lines naming the scale
+(`30 skills`) and linking the page; the page has one `#`, an intro paragraph, a
+four-row group index with per-group counts, and its subsections promoted one
+level; every relative link in the page resolves from `docs/`; `Testing` is
+written exactly as it would be without the gate; `docs/rules.md` is not
+overwritten and the rule list stays in the README, with the collision named in
+the handover summary. Run the skill a second time on the result: it produces no
+diff.
+
 ## Cross-cutting invariants
 
 Every scenario must also satisfy:
@@ -148,3 +165,4 @@ means the scenario has not been run since this log was started.
 | 8 | | |
 | 9 | | |
 | 10 | | |
+| 11 | | |

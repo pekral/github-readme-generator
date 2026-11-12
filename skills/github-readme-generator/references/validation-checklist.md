@@ -29,6 +29,12 @@ becomes a line in the handover summary.
 10. No sentence merely announces the block below it, and nothing is stated twice
     in two sections.
 11. The diff touches only documentation, within the agreed scope.
+12. Every section outside the install path was run through the gate in
+    `section-split.md`. Each moved section left a summary of two to four lines
+    with its scale and a link; each new page has exactly one `#`, an intro, an
+    index when it has three or more groups, and no skipped heading level; every
+    relative link in it and every link into it resolves; no page that existed
+    before this run was overwritten.
 
 Run any Markdown, link, or documentation test the environment safely allows. If
 none is available, say so in the summary rather than implying a check ran.
@@ -45,6 +51,8 @@ Report, briefly:
   including any badge dropped because its workflow cannot run on the default
   branch, and any manifest description the repository contradicts, quoted
   alongside the source that refutes it
+- which sections moved to which pages, and any section that tripped the gate
+  but stayed — an install-path section, or a page that already existed
 - whether any `TODO` remains
 - that nothing was staged, committed, or pushed — unless the user ordered it
 
