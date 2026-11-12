@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update mode brings an existing README to the README standard — header shape,
+  section names and order — while keeping the author's prose and logo, instead
+  of changing only the outdated parts. Scenario 5's invariant follows (#25).
+
 - The benchmark keeps every Markdown page an agent writes besides the README
   under `pages/` in the case directory, and lists them in `meta.json`. The
   scorer accepts those pages as link targets and checks the links inside them

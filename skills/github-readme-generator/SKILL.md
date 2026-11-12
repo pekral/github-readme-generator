@@ -93,7 +93,9 @@ and state it in the handover summary.
   branding, useful hand-written explanation, and working links. A registry
   badge or docs link the README already carries counts as evidence when its slug
   matches the manifest, even offline — keep it and report it as unverified. Fix
-  only what is outdated, unsupported, duplicated, or badly ordered.
+  what is outdated, unsupported, or duplicated, and bring the structure to the
+  standard in `references/readme-structure.md` — header shape, section names
+  and order — keeping the author's prose and the existing logo inside it.
 - **Audit** — analysis only. Write nothing. Return findings with sources and a
   recommended fix order. Cover the README, and the two public surfaces beside it
   — repository metadata, and the community health files a README links to — as
