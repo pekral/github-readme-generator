@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- An SVG logo and standalone icon in the Arch App Services visual style,
+  with a checked document representing a README grounded in repository sources.
+  The logo appears in the README header.
+
 ### Changed
 
 - The README title is the project name; the purpose moves into a two- or
