@@ -48,7 +48,8 @@ workspace, installs the skill there in `skill` mode only, runs the agent, and re
 | File | Contents |
 | --- | --- |
 | `README.md` | exactly what the agent wrote |
-| `meta.json` | agent, agent version, model, mode, scenario, prompt, full command, skill commit, timestamps, exit code |
+| `pages/` | every other Markdown page the agent wrote or changed — a section it moved to `docs/`, for one — at its path in the repository |
+| `meta.json` | agent, agent version, model, mode, scenario, prompt, full command, skill commit, timestamps, exit code, written pages |
 | `agent-output.txt` | the agent's own stdout and stderr |
 | `findings.json` | the scorer's verdict, written by `report.mjs` |
 
@@ -56,7 +57,7 @@ workspace, installs the skill there in `skill` mode only, runs the agent, and re
 matrix that was requested. `summary.json` and `summary.md` are written by `report.mjs`.
 
 The workspaces themselves are not committed — they are copies of fixtures plus an
-installed skill. Everything needed to audit a result is in the four files above.
+installed skill. Everything needed to audit a result is in the files above.
 
 ## Modes
 
@@ -113,7 +114,7 @@ of badge the repository earns, and is permissive about the owner/repo slug insid
 | Unsupported claims | a `forbidden` pattern in the ground truth matches — an invented feature, an invented config key, a contradicted runtime, a leaked secret |
 | Invalid commands | a line in a shell code block is not one the repository defines |
 | Invalid badges | a badge URL matches no badge the repository earns |
-| Broken links | a relative link resolves to no file, or an external link is not one the repository points at |
+| Broken links | a relative link resolves to no file in the fixture or in `pages/`, or an external link is not one the repository points at; links inside `pages/` are checked from their own directory |
 | Missing information | a `required` pattern the repository strongly supports never appears |
 
 `hallucinationRate` is errors divided by verifiable statements — commands, badges,

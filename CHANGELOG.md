@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- The benchmark keeps every Markdown page an agent writes besides the README
+  under `pages/` in the case directory, and lists them in `meta.json`. The
+  scorer accepts those pages as link targets and checks the links inside them
+  from their own directory, so a section moved to `docs/` is no longer scored as
+  a broken link.
+
 ## 1.0.0 - 2026-11-12
 
 First stable release. Host verification remains limited to Claude Code, and

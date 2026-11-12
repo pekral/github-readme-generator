@@ -1,8 +1,8 @@
 // Deterministic scorer: one generated README, one fixture ground truth, one findings document.
 // No network, no model, no randomness — the same inputs always produce the same findings.
 
-import { readFileSync, existsSync } from 'node:fs';
-import { join, resolve, normalize } from 'node:path';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { join, resolve, normalize, dirname, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const SHELL_FENCES = new Set(['', 'text', 'sh', 'bash', 'zsh', 'shell', 'console', 'shell-session']);
@@ -101,7 +101,8 @@ function isExternal(target) {
   return /^[a-z][a-z0-9+.-]*:/i.test(target) || target.startsWith('//');
 }
 
-function resolvesInsideRepo(repoDir, target) {
+/** True when the target, read from `fromDir`, names a file inside one of the roots. */
+function resolvesInside(roots, target, fromDir = '') {
   const raw = target.split('#')[0].split('?')[0];
 
   let path;
@@ -113,16 +114,31 @@ function resolvesInsideRepo(repoDir, target) {
   }
 
   if (path === '') return true;
-  const absolute = resolve(repoDir, normalize(path));
-  if (!absolute.startsWith(resolve(repoDir))) return false;
-  return existsSync(absolute);
+  return roots.some((root) => {
+    const absolute = resolve(root, normalize(join(fromDir, path)));
+    return absolute.startsWith(resolve(root)) && existsSync(absolute);
+  });
+}
+
+/** Markdown pages the run wrote besides the README, as { path, markdown } relative to `pagesDir`. */
+export function readPages(pagesDir, directory = pagesDir) {
+  if (!pagesDir || !existsSync(directory)) return [];
+  const pages = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) pages.push(...readPages(pagesDir, path));
+    else if (entry.name.endsWith('.md')) pages.push({ path: relative(pagesDir, path), markdown: readFileSync(path, 'utf8') });
+  }
+  return pages.sort((a, b) => a.path.localeCompare(b.path));
 }
 
 /**
  * Score one README against one ground truth.
+ * `pages` are the Markdown pages the run wrote besides the README, read from `pagesDir`:
+ * links may point at them, and their own links are checked from their own directory.
  * Returns findings plus the counts the benchmark table reports.
  */
-export function score(markdown, truth, repoDir) {
+export function score(markdown, truth, repoDir, { pagesDir = null, pages = [] } = {}) {
   const findings = [];
   const add = (kind, detail, evidence) => findings.push({ kind, detail, evidence });
 
@@ -140,17 +156,30 @@ export function score(markdown, truth, repoDir) {
     }
   }
 
-  const links = extractLinks(markdown);
-  for (const link of links) {
-    if (link.startsWith('#')) continue;
+  // A page the run wrote is a valid link target, alongside the fixture repository.
+  const roots = pagesDir ? [repoDir, pagesDir] : [repoDir];
+  const checkLink = (link, fromDir, evidence) => {
+    if (link.startsWith('#')) return;
     if (isExternal(link)) {
       if (!matchesAny(link, truth.links?.allowedExternal ?? [], truth.links?.allowedExternalPatterns ?? [], 'i')) {
-        add('brokenLink', 'External link is not one the repository points at.', link);
+        add('brokenLink', 'External link is not one the repository points at.', evidence);
       }
-      continue;
+      return;
     }
-    if (!resolvesInsideRepo(repoDir, link)) {
-      add('brokenLink', 'Relative link has no target in the repository.', link);
+    if (!resolvesInside(roots, link, fromDir)) {
+      add('brokenLink', 'Relative link has no target in the repository.', evidence);
+    }
+  };
+
+  const links = extractLinks(markdown);
+  for (const link of links) checkLink(link, '', link);
+
+  // Links inside a written page are read from that page's own directory.
+  const pageLinks = [];
+  for (const page of pages) {
+    for (const link of extractLinks(page.markdown)) {
+      pageLinks.push(link);
+      checkLink(link, dirname(page.path), `${page.path}: ${link}`);
     }
   }
 
@@ -185,7 +214,7 @@ export function score(markdown, truth, repoDir) {
   };
   for (const finding of unique) counts[finding.kind] += 1;
 
-  const checked = commands.length + images.length + links.length
+  const checked = commands.length + images.length + links.length + pageLinks.length
     + (truth.forbidden?.length ?? 0) + (truth.required?.length ?? 0);
   const errors = unique.length;
 
@@ -206,7 +235,9 @@ export function loadTruth(fixtureDir) {
 
 export function scoreFile(readmePath, fixtureDir) {
   const truth = loadTruth(fixtureDir);
-  return score(readFileSync(readmePath, 'utf8'), truth, join(fixtureDir, 'repo'));
+  const pagesDir = join(dirname(readmePath), 'pages');
+  const written = existsSync(pagesDir) ? { pagesDir, pages: readPages(pagesDir) } : {};
+  return score(readFileSync(readmePath, 'utf8'), truth, join(fixtureDir, 'repo'), written);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
