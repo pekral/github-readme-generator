@@ -5,6 +5,24 @@ All notable changes to `github-readme-generator` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+- The README title is the project name; the purpose moves into a two- or
+  three-sentence intro. One left-aligned header shape per case, no horizontal
+  rules, no emoji in headings.
+- Section names are fixed, in sentence case — `Quick start`, not `Quickstart`.
+- `Installation` always shows the main install command, also for packages with
+  a separate documentation site. Optional configuration states its default and
+  links the full reference.
+- The first example is the shortest complete path to a useful result, and a
+  warning about overwritten files sits next to its command.
+- At most four badges, one badge style, and a GitHub release badge for skills
+  and plugins without a package registry.
+- A guide length of 100–200 lines for a simple package and 200–300 for a more
+  complex project.
+
 ## 1.0.0-beta.1 - 2026-09-02
 
 First tagged release, published as a public beta. The manifests carried a
