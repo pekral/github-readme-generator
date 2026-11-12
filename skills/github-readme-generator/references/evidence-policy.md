@@ -80,8 +80,9 @@ the documentation-only diff.
   alone runs only when a human triggers it, which the repository cannot prove.
   And a workflow file outside `.github/workflows/` never runs at all. When no
   trigger puts a run on the default branch, omit the badge and name the gap in
-  the handover summary. Never propose changing the workflow to make the badge
-  work — that is a code change, and it is out of scope.
+  the handover summary. Never propose moving, renaming, or editing a workflow
+  file, not even as a hint about where it belongs: report why it earns no badge
+  and stop. A workflow change is a code change, and it is out of scope.
 - Use at most four badges, in the order version, license, CI, downloads.
 - Keep one badge style: the shields.io templates below use `flat-square`. A badge
   a source renders itself, such as the GitHub Actions badge, stays as that
