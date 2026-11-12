@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The handover names why a workflow earns no CI badge and stops there: it never
   proposes moving, renaming, or editing the workflow file, not even as a hint
   that a misplaced file belongs in `.github/workflows/` (#26).
+- A Node CLI with a `bin` field is installed as that command — from the
+  registry when publication is evidenced, otherwise `npm install --global .`
+  from a checkout — and its help output is pointed to by the help command,
+  never transcribed into the README (#24).
 
 ## 1.0.0 - 2026-11-12
 
