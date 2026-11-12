@@ -118,8 +118,8 @@ repeat the contradicted claim; the manifest is not modified.
 
 *Setup:* a package whose evidence supports a capability catalogue of 30 skills
 in four groups, each group with its own table, plus a short `Testing` section,
-an existing `docs/rules.md` the repository ships, and a rule list whose section
-would be named `Rules`.
+an existing `docs/rules.md` the repository ships, and a list of 20 rules whose
+section would be named `Rules`.
 
 Invariants: the catalogue section moves to `docs/<slug>.md` derived from its
 heading; the README keeps the heading and two to four lines naming the scale
