@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 const HELP = `Usage: slugify [options] <text>
 
 Options:
@@ -26,6 +29,8 @@ export function run(argv) {
   return upper ? slug.toUpperCase() : slug;
 }
 
-if (process.argv[1]?.endsWith('slugify.js')) {
+// Run only when executed directly — also through the `slugify` link an install
+// creates — and stay silent when a test imports `run`.
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   process.stdout.write(`${run(process.argv.slice(2))}\n`);
 }
