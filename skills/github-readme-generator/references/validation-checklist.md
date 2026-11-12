@@ -49,7 +49,8 @@ Report, briefly:
 - which checks were actually run
 - which information could not be proven, and what was therefore omitted —
   including any badge dropped because its workflow cannot run on the default
-  branch, and any manifest description the repository contradicts, quoted
+  branch, stated as the reason alone, never with a proposal to move, rename, or
+  edit the workflow file, and any manifest description the repository contradicts, quoted
   alongside the source that refutes it
 - which sections moved to which pages, and any section that tripped the gate
   but stayed — an install-path section, or a page that already existed
