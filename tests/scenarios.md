@@ -160,14 +160,14 @@ means the scenario has not been run since this log was started.
 
 | Scenario | Last run under Claude Code | Result |
 | --- | --- | --- |
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
-| 6 | | |
-| 7 | | |
-| 8 | | |
-| 9 | | |
-| 10 | | |
+| 1 | 2026-11-12, Claude Code 2.1.322, `claude -p "Update the README for this repository." --permission-mode acceptEdits --setting-sources project` | Partial (#23). Banner kept, license and Tests badges correct, two-sentence intro, install command and first example in place, Support / Postcardware / Alternatives removed. The Packagist version and downloads badges were dropped because publication could not be verified offline, and the documentation link was removed instead of delegated to. |
+| 2 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. `npm start` and `npm test` from scripts, `npm install` backed by the lock file, Node 20 from `engines`, configuration limited to the four `.env.example` names, no deployment section. |
+| 3 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Fail (#24). The smallest invocation comes from the tests, but `Installation` is a `git clone` instead of the manifest `bin` install path, and the full help text is transcribed into an `Options` section instead of referenced. |
+| 4 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. The root README explains the npm workspace, links all three package READMEs, and shows only root `npm install` and `npm test`. |
+| 5 | 2026-11-12, Claude Code 2.1.322, `claude -p "Update the README for this repository." --permission-mode acceptEdits --setting-sources project` | Partial (#25). Logo and hand-written paragraph survive, all five stale items fixed, only `README.md` changed. But the header was rebuilt and sections renamed and added to follow the README standard — more than the outdated parts this scenario allows. |
+| 6 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. No install command, license claim, badge, or `TODO`; the handover names the missing manifest, license, and tests. Minor: a Python version was inferred from annotation syntax, disclosed as an inference. |
+| 7 | 2026-11-12, Claude Code 2.1.322, `claude -p "Audit this README and tell me what's wrong." --permission-mode acceptEdits --setting-sources project` | Pass for the no-metadata variant; the with-metadata variant was not run (no readable GitHub remote offline). Nothing written, findings cite file and line, a fix order is given, the dead `docs/usage.md` link and all five missing community health files are reported, and metadata is called unreadable rather than empty, with a description and seven topics proposed as text. |
+| 8 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. Only the four `.env.example` names are documented; the `.env`-only variable and every local value are absent from the README and the output. Minor: an unsourced `. ./.env` and `curl` example in Quick start. |
+| 9 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Partial (#26). The scheduled workflow got its badge; the `pull_request`-only workflow and the misplaced file got none, both named with reasons. But the handover suggests moving the misplaced file into `workflows/`. |
+| 10 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. The handover quotes the manifest's "own custom rules" description against the rule list that refutes it; the README calls the package a curated selection, and the manifest is untouched. |
 | 11 | 2026-11-12, Claude Code 2.1.322, `claude -p "Update the README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. The 30-skill section moved to `docs/skills.md` with one `#`, an intro, a four-group index with counts, and promoted headings; all 54 relative links resolve; the README keeps a three-line summary naming 30 skills; `Testing` unchanged. The 20-rule list stayed in the README because `docs/rules.md` exists, and the collision was named in the handover. A second run changed nothing. |
