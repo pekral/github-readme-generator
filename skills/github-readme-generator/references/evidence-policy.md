@@ -170,7 +170,10 @@ you read rather than fetching anything further.
 
 ## Security and change scope
 
-- Only the root `README.md` may change, or a file the user explicitly named.
+- Only the root `README.md` may change, a new page in the documentation
+  directory written by the section split gate (`section-split.md`), or a file the
+  user explicitly named.
+  A page the repository already ships is never overwritten.
 - Never edit production code, tests, manifests, workflows, or configuration to
   make them agree with the README.
 - Never apply repository metadata. An audit proposes the About description,

@@ -75,6 +75,7 @@ test('the skill ships every file it declares', () => {
     'LICENSE.md',
     'references/readme-structure.md',
     'references/evidence-policy.md',
+    'references/section-split.md',
     'references/validation-checklist.md',
   ];
 
