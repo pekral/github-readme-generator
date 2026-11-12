@@ -124,3 +124,32 @@ each one with its trigger and a group index with counts.
 
 A bare `See docs/skill-catalog.md.` is not a summary. Neither is a number
 without a noun, or a scale the page does not bear out.
+
+## Name the page
+
+- **Path** — `docs/<slug>.md`, where the slug is the section heading in lower
+  case, with every run of characters other than ASCII letters and digits
+  replaced by one `-`, and no leading or trailing `-`: `Skill Catalog` becomes
+  `docs/skill-catalog.md`, `Rules & Overview` becomes `docs/rules-overview.md`.
+- **Existing layout** — when the repository already keeps its Markdown
+  documentation in another directory (`doc/`, `documentation/`), use that
+  directory instead of creating `docs/`. When a site generator owns the
+  navigation (`mkdocs.yml`, a Docusaurus or VitePress config), write the page but
+  leave the configuration alone, and name in the handover summary the page that
+  still needs adding to the navigation.
+
+## Never overwrite, and run twice without a diff
+
+- **The target page exists and the README section already links to it** — an
+  earlier run moved this section. Leave both as they are: the summary is below
+  both thresholds, so the gate keeps it, and the page is not regenerated. If the
+  page has fallen behind the repository, report it in the handover summary
+  instead of rewriting it.
+- **The target page exists for any other reason** — the repository ships it.
+  Never overwrite it, and never write a numbered variant beside it. Keep the
+  section in the README as composed, and name the collision in the handover
+  summary.
+- **The target page does not exist** — write it.
+
+A second run on the result therefore changes nothing: every moved section is
+already a summary that links a page that exists.
