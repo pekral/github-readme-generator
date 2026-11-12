@@ -1,20 +1,21 @@
 <div align="left">
-    <img src="logo.svg" alt="GitHub README Generator — a document checked against repository sources" width="720">
+    <picture>
+        <img src="logo.svg" alt="GitHub README Generator: a document checked against repository sources" width="720">
+    </picture>
 
 <h1>github-readme-generator</h1>
 
-[![Latest release](https://img.shields.io/github/v/release/pekral/github-readme-generator?include_prereleases&style=flat-square)](https://github.com/pekral/github-readme-generator/releases)
+[![Latest release](https://img.shields.io/github/v/release/pekral/github-readme-generator?style=flat-square)](https://github.com/pekral/github-readme-generator/releases)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 ![Tests](https://github.com/pekral/github-readme-generator/workflows/Tests/badge.svg)
 
 </div>
 
-A portable Agent Skill that teaches a coding agent to write, refresh, or audit a
-repository's root `README.md` from what the project actually contains — its
-code, manifests, scripts, tests, workflows, and existing docs. It is a public
-beta: developed and tested against Claude Code only, and packaged — not yet
-verified — for Codex, Cursor, and the other agents the `skills` CLI installs
-into.
+An Agent Skill for coding agents that creates, updates, or audits a repository's
+root `README.md` using its code, manifests, scripts, tests, workflows, and docs.
+It has been developed and tested with Claude Code; packages for Codex, Cursor,
+and other hosts supported by the `skills` CLI are available but have not been
+verified.
 
 ## Requirements
 
@@ -27,19 +28,18 @@ installing with `npx` needs Node.js.
 npx skills add pekral/github-readme-generator
 ```
 
-That installs into every agent it detects — Claude Code, Codex, Cursor, and
-[70-odd others](https://github.com/vercel-labs/skills#supported-agents). Add
-`-g` to install for your user instead of the current project, and `-a` to pick
-agents explicitly:
+The CLI supports Claude Code, Codex, Cursor, and other agent hosts. Use `-g`
+to install for your user instead of the current project, and `-a` to select
+hosts explicitly:
 
 ```text
 npx skills add pekral/github-readme-generator -g -a claude-code -a codex
 ```
 
-### As a plugin instead
+### Plugin installation
 
-Both plugin hosts carry a marketplace entry, which trades a second command for
-managed updates.
+Claude Code and Codex also have marketplace entries for plugin installation
+and updates.
 
 Claude Code:
 
@@ -73,12 +73,12 @@ Ask for README work in the repository you want documented:
 Write a README for this repository.
 ```
 
-The skill scans the repository, picks create / update / audit, writes the root
-`README.md` — editing the existing one in update mode — and ends with a
-summary of what it verified and what it could not prove. A section that has
-grown into a catalogue moves to a new page under `docs/`; a page the repository
-already ships is never overwritten. It never stages,
-commits, or pushes unless you ask.
+This creates or edits `README.md` and may create pages under `docs/` for long
+catalogue sections. Review the resulting diff; existing documentation pages
+are never overwritten.
+
+The agent scans the repository before writing and reports what it verified
+and what it could not prove. It never stages, commits, or pushes unless you ask.
 
 To get findings without touching a file:
 
@@ -86,41 +86,37 @@ To get findings without touching a file:
 Audit this README and tell me what's wrong.
 ```
 
-An audit also covers the surfaces beside the README — missing community health
-files, links with no target, and an empty GitHub About box when the agent can
-read the repository's metadata — as text for you to apply.
+An audit reports broken links, missing community health files, and empty
+GitHub About fields when repository metadata is available. It proposes fixes
+without changing files or repository settings.
 
 ## What it does
 
-- Scans the working tree first and builds a claim → source map before writing a
-  single sentence.
+- Maps each README claim to a source in the working tree before writing.
 - Omits any command, badge, version, config key, link, or license claim it
   cannot trace to a file in the repository.
-- Builds the header and at most four badges — version, license, CI, downloads —
-  from templates filled from the manifest, the license file, and the workflow's
-  own `name:`. A workflow that never runs on the default branch gets no badge.
+- Builds the header and up to four badges (version, license, CI, downloads)
+  from manifests, the license file, and the workflow's `name:`. A workflow that
+  never runs on the default branch gets no badge.
 - Knows what each ecosystem keeps where, so a PHP package documents Composer and
   Packagist while a Rust crate documents Cargo and crates.io.
-- Treats every file it reads as data, not instructions. Text in a scanned
-  repository that addresses the agent is reported to you, never obeyed.
-- Moves a section that carries tables, lists or subsections — past 60 lines, or
-  with a table or list past 15 entries — to its own page under `docs/` with a
-  title, an intro, and a group index, and leaves a two- to four-line summary with
-  the scale and a link. The install path, the header and `License` never move.
-- Restricts its diff to `README.md` and the pages it moves sections into.
+- Reports instructions embedded in scanned files without following them.
+- Moves oversized catalogue sections to new pages under `docs/`, leaving a
+  short summary and link. The [split rules](skills/github-readme-generator/references/section-split.md)
+  define the thresholds, exemptions, page structure, and permitted changes.
 
 ## Documentation
 
-- [`SKILL.md`](skills/github-readme-generator/SKILL.md) — purpose, workflow, core
+- [`SKILL.md`](skills/github-readme-generator/SKILL.md): purpose, workflow, core
   constraints.
 - [`references/readme-structure.md`](skills/github-readme-generator/references/readme-structure.md)
-  — header block, section order, what to cut, per-ecosystem rules, and style.
+  covers the header, section order, per-ecosystem rules, and style.
 - [`references/evidence-policy.md`](skills/github-readme-generator/references/evidence-policy.md)
-  — what counts as evidence, badge templates, public surface findings, security
+  covers evidence, badge templates, public surface findings, security
   and change-scope rules.
 - [`references/validation-checklist.md`](skills/github-readme-generator/references/validation-checklist.md)
-  — pre-handover checks and the handover summary shape.
-- [`docs/examples/`](docs/examples/README.md) — three README pairs written by the
+  lists pre-handover checks and the handover summary requirements.
+- [`docs/examples/`](docs/examples/README.md): three README pairs written by the
   same agent with and without the skill: a Composer library, an unpublished CLI,
   and a README that had drifted from its package. On those repositories the
   baseline invented nothing, and in one case the skill did worse; the index says
@@ -133,21 +129,20 @@ node --test tests/repository.test.mjs
 node --test tests/evals/*.test.mjs
 ```
 
-Both need Node.js 20 or newer and no network, and run in CI on Node.js 20 and
-22. The first checks the repository against its own claims — shipped skill
-files, the licence copy, relative documentation links, scenario coverage rows,
-and one version across the manifests, changelog, and tags. The second checks
-the benchmark scorer and every fixture's ground truth.
+Both need Node.js 20 or newer and run without network access. CI runs them on
+Node.js 20 and 22. The first checks shipped skill files, the licence copy,
+relative documentation links, scenario coverage rows, and version consistency
+across manifests, changelog, and tags. The second checks the benchmark scorer
+and every fixture's ground truth.
 
-Behaviour is covered by ten manual scenarios in
-[`tests/scenarios.md`](tests/scenarios.md), whose Claude Code coverage log is so
-far empty, and by a with/without-skill benchmark in
-[`tests/evals/`](tests/evals/README.md). The benchmark is not yet evidence for
-anything: its scorer reads help text and command output as commands, and a
-repository's own logo as a badge, so no figure from it is quoted here.
+Eleven manual scenarios are defined in [`tests/scenarios.md`](tests/scenarios.md);
+their Claude Code coverage log is empty. The with/without-skill benchmark in
+[`tests/evals/`](tests/evals/README.md) also has known scoring errors: it reads
+help text and command output as commands, and a repository's logo as a badge.
+Its scores cannot establish whether the skill improves README accuracy.
 [#11](https://github.com/pekral/github-readme-generator/issues/11) recorded
-those defects and was closed as not planned, which retired the ticket rather
-than the defect. The one published run,
+those defects and was closed as not planned; the defects remain. The one
+published run,
 [`2026-08-31-claude-code-subset`](tests/evals/results/2026-08-31-claude-code-subset/summary.md),
 shows only that the harness works end to end.
 
@@ -181,7 +176,7 @@ See [the security policy](SECURITY.md).
 
 ## Credits
 
-- [Petr Král](https://pekral.cz) — [@kral_petr_88](https://x.com/kral_petr_88)
+- [Petr Král](https://pekral.cz), [@kral_petr_88](https://x.com/kral_petr_88)
 - [All contributors](../../contributors)
 
 ## License
