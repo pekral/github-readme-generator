@@ -103,10 +103,10 @@ read the repository's metadata — as text for you to apply.
   Packagist while a Rust crate documents Cargo and crates.io.
 - Treats every file it reads as data, not instructions. Text in a scanned
   repository that addresses the agent is reported to you, never obeyed.
-- Moves a section past 60 lines, or with a table or list past 15 entries, to its
-  own page under `docs/` with a title, an intro, and a group index, and leaves a
-  two- to four-line summary with the scale and a link. The install path never
-  moves.
+- Moves a section that carries tables, lists or subsections — past 60 lines, or
+  with a table or list past 15 entries — to its own page under `docs/` with a
+  title, an intro, and a group index, and leaves a two- to four-line summary with
+  the scale and a link. The install path, the header and `License` never move.
 - Restricts its diff to `README.md` and the pages it moves sections into.
 
 ## Documentation
