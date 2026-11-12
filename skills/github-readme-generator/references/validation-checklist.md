@@ -15,13 +15,17 @@ becomes a line in the handover summary.
    whose `on:` triggers can produce a run on the default branch — a workflow that
    cannot is left without one.
 5. Stated runtime and framework versions agree with the manifests and CI.
-6. No duplicated sections and no inconsistent heading levels.
+6. No duplicated sections and no inconsistent heading levels. Section names
+   match `readme-structure.md` verbatim (`Quick start`), no heading carries an
+   emoji, and no horizontal rule separates sections.
 7. No placeholders, unless the user explicitly requested a `TODO` skeleton.
 8. No example contains a real secret or personal data taken from the local
    environment.
 9. The document reads in order: identity → first successful use → contributor
    information, with Requirements, Installation, Configuration and Quick start
-   consecutive and unbroken.
+   consecutive and unbroken. The title is the project name, the intro is two or
+   three sentences, `Installation` shows the main install command itself, and a
+   warning about overwritten files sits next to its command.
 10. No sentence merely announces the block below it, and nothing is stated twice
     in two sections.
 11. The diff touches only documentation, within the agreed scope.

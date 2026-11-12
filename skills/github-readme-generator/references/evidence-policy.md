@@ -82,7 +82,10 @@ the documentation-only diff.
   trigger puts a run on the default branch, omit the badge and name the gap in
   the handover summary. Never propose changing the workflow to make the badge
   work — that is a code change, and it is out of scope.
-- Prefer at most four meaningful badges. Add more only with obvious reader value.
+- Use at most four badges, in the order version, license, CI, downloads.
+- Keep one badge style: the shields.io templates below use `flat-square`. A badge
+  a source renders itself, such as the GitHub Actions badge, stays as that
+  source serves it. Never add a badge service only to make the row look uniform.
 - Never put dynamic numbers (stars, downloads) into prose.
 - Reuse an existing logo or banner when it clearly belongs to the project. Never
   generate a new one unless asked.
@@ -125,6 +128,18 @@ the filename, and the repository slug must match the real remote.
 ```markdown
 ![<Workflow name>](https://github.com/<owner>/<repo>/workflows/<Workflow name>/badge.svg)
 ```
+
+**Release instead of a registry — for a skill or plugin with no package
+registry.**
+
+Evidence: a published GitHub release of this repository, not just a tag. It
+takes the version slot.
+
+```markdown
+[![Latest release](https://img.shields.io/github/v/release/<owner>/<repo>?include_prereleases&style=flat-square)](https://github.com/<owner>/<repo>/releases)
+```
+
+Drop `include_prereleases` when the project has a stable release to show.
 
 For other ecosystems use the registry's own equivalent (npm, PyPI, crates.io,
 pkg.go.dev) under the same rule: the package must be published, and the slug

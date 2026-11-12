@@ -11,8 +11,9 @@ unbroken — no section may sit between two steps of it. Configuration comes
 before the first example because an example that needs unset configuration to
 work is not a quick start.
 
-1. header block — optional logo or light/dark banner, title, badges (see below)
-2. one paragraph: what it does, for whom, why it helps
+1. header block — existing logo or light/dark banner, project name, badges (see
+   below)
+2. intro: two or three concrete sentences on what it does and for whom
 3. `Requirements` — verified runtimes, tools, system prerequisites
 4. `Installation` — verified install command
 5. `Configuration` — existing config keys and env var names, never real secrets
@@ -25,9 +26,35 @@ work is not a quick start.
 12. `Credits` — verified names, or a contributors link
 13. `License` — short verified statement plus a link to the license file
 
-A capability list is not part of the install path, so it goes after it. Put it
-above `Requirements` only when the project's value is genuinely unclear without
-it — and then keep it to three or four lines.
+A capability list is not part of the install path, so it goes after it — never
+between the intro and `Requirements`. The same holds for developer information
+and project history: none of it may sit inside the install path.
+
+### Section names
+
+Use the names above verbatim, in sentence case: `Quick start`, never
+`Quickstart`, `Quick Start`, or `Getting started`; `Requirements`, never
+`Prerequisites`. When updating a README, rename a section that carries the same
+content under another name rather than adding a second one.
+
+### The install path
+
+- `Installation` contains the main install command itself, in a code block. A
+  link alone ("see the docs") is not an installation section; link the docs for
+  variants and edge cases after the command.
+- Configuration the first run cannot work without comes before `Quick start`.
+  For optional configuration, state the default behaviour in a sentence and link
+  the full reference in the documentation instead of reproducing it.
+- The first example is the shortest complete path to a useful result, not a tour
+  of the API surface.
+- A limitation, or a warning that a command overwrites or deletes files, sits
+  right next to that command — never only deeper in the documentation.
+
+### Length
+
+As a guide, a simple package lands at 100–200 lines and a more complex project
+at 200–300. This is a signal to cut or move detail into the documentation, not a
+limit to enforce mechanically.
 
 `Support`, `Sponsors`, `Alternatives`, `Roadmap`, `Deployment`, `API`, and
 `Architecture` are optional. Add one only when it matters for this project and
@@ -52,8 +79,13 @@ one padded to look complete.
 
 ## Header block
 
-The header carries identity before anything else: visual mark, one-line promise,
-then the evidence badges. Two shapes, chosen by whether the project owns a logo.
+The header carries identity before anything else: visual mark, project name,
+evidence badges, then the intro. It is left-aligned. Two shapes, chosen by
+whether the project owns a logo; use exactly these two, so every README built
+with this skill has the same header.
+
+The title is the project name, so a reader who searched for it finds it at once.
+The purpose goes into the intro sentences, not into the heading.
 
 **With a logo or banner** — wrap the whole header so the assets, title, and
 badges read as one unit. Inside an HTML block, Markdown headings stop working, so
@@ -67,7 +99,7 @@ blank line around them.
         <img alt="<meaningful description>" src="<light asset>">
     </picture>
 
-<h1><short benefit sentence></h1>
+<h1><project name></h1>
 
 <badge lines>
 
@@ -78,18 +110,22 @@ Wrap the `<picture>` in a link only when the existing README already links it an
 the target still belongs to the project. Never add a sponsor, campaign, or
 tracking URL of your own.
 
-**Without a logo** — no HTML wrapper. A plain Markdown heading followed by a
+Keep an existing logo or banner; never create a new image. **Without a logo** —
+no HTML wrapper. A plain Markdown heading followed by a
 blank line and the badge lines:
 
 ```markdown
-# <short benefit sentence>
+# <project name>
 
 <badge lines>
 ```
 
+No horizontal rule after the header or between sections — headings already
+separate them.
+
 Badges go on consecutive lines, each its own line, in a stable order: package
-version, license, CI, downloads. Take the markup from the templates in
-`evidence-policy.md` and drop any badge whose evidence is missing.
+version, license, CI, downloads — at most four. Take the markup from the
+templates in `evidence-policy.md` and drop any badge whose evidence is missing.
 
 ## Ecosystem specifics
 
@@ -122,11 +158,11 @@ Beyond the table, let language conventions decide what a reader needs:
 ````markdown
 <!-- header block: see "Header block" above for the logo variant -->
 
-# <short benefit or project name>
+# <project name>
 
 <!-- optional: 1-4 verified badges, from the evidence-policy templates -->
 
-<One short paragraph: what the project does, who it is for, why it is useful.>
+<Two or three concrete sentences: what the project does and who it is for.>
 
 ## Requirements
 
@@ -215,8 +251,8 @@ domain, not filler that would fit any project.
 - **Simple library** — `What it does` can collapse into the intro paragraph and
   the first example.
 - **Documented package** — when a separate documentation site is authoritative
-  for installation and usage, shorten those sections to a clear link instead of
-  duplicating the docs.
+  for installation and usage, keep the main install command and the first
+  example, and link the docs for everything else instead of duplicating them.
 - **Application** — the quick start must describe a verified path from a clean
   environment to a first run.
 - **CLI** — show the real install command, the smallest verified invocation, and
@@ -231,13 +267,11 @@ domain, not filler that would fit any project.
 - Keep the language of a good existing README.
 - For a new public open-source repository with no other instruction, use English.
 - Write plainly: active voice, short paragraphs, no marketing filler.
-- Let the title describe the outcome or purpose rather than repeating the package
-  name, when the project's identity allows it.
-- Use emoji sparingly or not at all.
+- No emoji in headings, and none as decoration in prose.
 - Use GitHub Flavored Markdown.
 - Use GitHub admonitions only for genuinely important notes, warnings, or
   irreversible steps.
-- Keep heading levels consistent; never repeat a section.
+- Keep heading levels consistent; never repeat a section or a statement.
 - Give every image meaningful alternative text.
 
 ## Deliberately not copied from reference projects
