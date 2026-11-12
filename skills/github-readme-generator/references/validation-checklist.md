@@ -27,7 +27,9 @@ becomes a line in the handover summary.
    three sentences, `Installation` shows the main install command itself, and a
    warning about overwritten files sits next to its command.
 10. No sentence merely announces the block below it, and nothing is stated twice
-    in two sections.
+    in two sections. A CLI's help output is pointed to by its help command, never
+    transcribed, and a `bin` command is installed as `readme-structure.md` §
+    *Ecosystem specifics* says.
 11. The diff touches only documentation, within the agreed scope.
 12. Every section outside the install path was run through the gate in
     `section-split.md`. Each moved section left a summary of two to four lines

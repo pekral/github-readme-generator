@@ -148,6 +148,13 @@ Beyond the table, let language conventions decide what a reader needs:
   mentions the vendor publish or migration step only when the repository
   contains one. Version constraints come from `require`, never from the CI
   matrix alone.
+- **Node CLI** — a `package.json` with a `bin` field installs the command it
+  names, never `node bin/<file>.js`. Use the registry command
+  (`npm install --global <name>`) only when publication is evidenced — a release
+  workflow that publishes, existing docs, or a registry entry you read.
+  Otherwise install from a checkout: clone the evidenced remote, then
+  `npm install --global .` (the lock file's package manager equivalent when one
+  is proven). The quick start then invokes the `bin` name.
 - **Typed languages** — prefer an example that shows the types a caller gets
   back, when it costs no extra lines.
 - **Applications of any language** — the quick start describes environment setup
@@ -256,7 +263,9 @@ domain, not filler that would fit any project.
 - **Application** — the quick start must describe a verified path from a clean
   environment to a first run.
 - **CLI** — show the real install command, the smallest verified invocation, and
-  a pointer to the full help output.
+  the help command (`<bin> --help`) as the pointer to the full option list. Never
+  transcribe the help output: no `Options` or `Usage` section copying it, and at
+  most the options the quick start itself uses.
 - **Monorepo** — explain the purpose of the whole, then link to each package
   README. Never mix per-package commands into the root instructions.
 - **No documentation site** — the README must carry a sufficient quick start
