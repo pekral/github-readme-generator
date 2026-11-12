@@ -18,10 +18,11 @@ correctness, structure, and the absence of hallucination — not exact wording.
 Invariants: the badge row is exactly version, license, tests, and downloads,
 with the Packagist slug taken from `composer.json` and the workflow badge built
 from the workflow's `name:`; the license badge states the manifest's SPDX
-identifier and links to `LICENSE.md`; the banner is preserved; the intro is one
-short paragraph; install commands come from `composer.json`; installation and
-usage delegate to the docs link instead of duplicating them; no project-specific
-section (support, postcardware, alternatives) is carried over.
+identifier and links to `LICENSE.md`; the banner is preserved; the intro is two
+or three sentences; the main install command comes from `composer.json` and
+stays in `Installation`, and the first example stays in `Quick start`, while
+everything else delegates to the docs link instead of duplicating it; no
+project-specific section (support, postcardware, alternatives) is carried over.
 
 ## 2. Node application without a README
 
