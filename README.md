@@ -1,8 +1,13 @@
-# github-readme-generator
+<div align="left">
+    <img src="logo.svg" alt="GitHub README Generator — a document checked against repository sources" width="720">
+
+<h1>github-readme-generator</h1>
 
 [![Latest release](https://img.shields.io/github/v/release/pekral/github-readme-generator?include_prereleases&style=flat-square)](https://github.com/pekral/github-readme-generator/releases)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 ![Tests](https://github.com/pekral/github-readme-generator/workflows/Tests/badge.svg)
+
+</div>
 
 A portable Agent Skill that teaches a coding agent to write, refresh, or audit a
 repository's root `README.md` from what the project actually contains — its
