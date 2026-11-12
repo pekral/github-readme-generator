@@ -6,10 +6,11 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readdirSync } from 'node:fs';
+import { readdirSync, mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { score, loadTruth, extractCommands, extractImages, extractLinks } from './score.mjs';
+import { score, loadTruth, readPages, extractCommands, extractImages, extractLinks } from './score.mjs';
 
 const EVALS_DIR = dirname(fileURLToPath(import.meta.url));
 const FIXTURES_DIR = join(EVALS_DIR, 'fixtures');
@@ -278,4 +279,54 @@ test('every fixture has a ground truth the scorer can load', () => {
     assert.equal(empty.counts.missingInformation, (truth.required ?? []).length, `${scenario} required checks do not all fire on an empty README`);
     assert.equal(empty.errors, empty.counts.missingInformation, `${scenario} reports a defect in an empty README`);
   }
+});
+
+/** A throwaway directory holding the pages a run wrote, removed after the test. */
+function withPages(files, check) {
+  const pagesDir = mkdtempSync(join(tmpdir(), 'written-pages-'));
+  try {
+    for (const [path, markdown] of Object.entries(files)) {
+      mkdirSync(dirname(join(pagesDir, path)), { recursive: true });
+      writeFileSync(join(pagesDir, path), markdown);
+    }
+    check(pagesDir, readPages(pagesDir));
+  } finally {
+    rmSync(pagesDir, { recursive: true, force: true });
+  }
+}
+
+const brokenLinks = (result) => result.findings
+  .filter((finding) => finding.kind === 'brokenLink')
+  .map((finding) => finding.evidence)
+  .sort();
+
+test('a page the run wrote is a link target, and its own links are read from its directory', () => {
+  const scenario = 'small-library';
+  const truth = loadTruth(join(FIXTURES_DIR, scenario));
+  const repo = join(FIXTURES_DIR, scenario, 'repo');
+  const page = ['# Catalog', '', '[Mean](../src/mean.js)', '[Missing](../nowhere.md)', '[Self](#catalog)'].join('\n');
+
+  withPages({ 'docs/catalog.md': page }, (pagesDir, pages) => {
+    assert.deepEqual(pages.map((entry) => entry.path), [join('docs', 'catalog.md')]);
+
+    const readme = ['See the [catalog](docs/catalog.md).', 'And [a page nobody wrote](docs/gone.md).'].join('\n');
+    const result = score(readme, truth, repo, { pagesDir, pages });
+
+    assert.deepEqual(brokenLinks(result), ['docs/catalog.md: ../nowhere.md', 'docs/gone.md']);
+  });
+});
+
+test('without written pages, a link to an unwritten page stays broken', () => {
+  const result = judge('small-library', 'See the [catalog](docs/catalog.md).');
+  assert.deepEqual(brokenLinks(result), ['docs/catalog.md']);
+});
+
+test('a link cannot escape the written pages directory', () => {
+  const scenario = 'small-library';
+  const truth = loadTruth(join(FIXTURES_DIR, scenario));
+
+  withPages({}, (pagesDir, pages) => {
+    const result = score('[Outside](../../etc/hosts)', truth, join(FIXTURES_DIR, scenario, 'repo'), { pagesDir, pages });
+    assert.deepEqual(brokenLinks(result), ['../../etc/hosts']);
+  });
 });

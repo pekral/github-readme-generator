@@ -3,7 +3,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, cpSync, readdirSync } from 'node:fs';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { join, dirname, resolve } from 'node:path';
+import { join, dirname, resolve, relative } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const EVALS_DIR = dirname(fileURLToPath(import.meta.url));
@@ -112,6 +112,30 @@ function installSkill(workspace, skillsAgentId) {
   }
 }
 
+/** Every Markdown file under a directory, as paths relative to it, skipping hidden and dependency directories. */
+function markdownFiles(root, directory = root) {
+  const found = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    if (entry.name.startsWith('.') || entry.name === 'node_modules' || entry.name === 'vendor') continue;
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) found.push(...markdownFiles(root, path));
+    else if (entry.name.endsWith('.md')) found.push(relative(root, path));
+  }
+  return found;
+}
+
+/**
+ * The Markdown pages the agent wrote besides the root README — a section it moved
+ * to docs/, for one. A page the fixture already shipped counts only when its content changed.
+ */
+export function writtenPages(workspace, fixtureRepo) {
+  return markdownFiles(workspace).filter((page) => {
+    if (page === 'README.md') return false;
+    const original = join(fixtureRepo, page);
+    return !existsSync(original) || readFileSync(original, 'utf8') !== readFileSync(join(workspace, page), 'utf8');
+  }).sort();
+}
+
 function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun }) {
   const caseDir = join(runDir, agentId, mode, scenario);
   const workspace = join(caseDir, 'workspace');
@@ -136,6 +160,9 @@ function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun 
   const produced = existsSync(generated);
   if (produced) cpSync(generated, join(caseDir, 'README.md'));
 
+  const pages = writtenPages(workspace, join(FIXTURES_DIR, scenario, 'repo'));
+  for (const page of pages) cpSync(join(workspace, page), join(caseDir, 'pages', page));
+
   writeFileSync(join(caseDir, 'meta.json'), `${JSON.stringify({
     agent: agentId,
     agentLabel: agent.label,
@@ -151,6 +178,7 @@ function runOne({ agentId, agent, mode, scenario, prompt, model, runDir, dryRun 
     finishedAt,
     exitCode: result.status,
     producedReadme: produced,
+    writtenPages: pages,
   }, null, 2)}\n`);
   writeFileSync(join(caseDir, 'agent-output.txt'), `${result.stdout ?? ''}\n${result.stderr ?? ''}`);
 
