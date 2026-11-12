@@ -2,6 +2,9 @@
 .agents/skills/
 .claude/skills/
 
+# Git worktrees Claude Code creates for isolated work
+.claude/worktrees/
+
 # Benchmark workspaces: throwaway fixture copies with an installed skill. The
 # generated README, its meta.json and its findings.json are committed instead.
 tests/evals/results/*/*/*/*/workspace/
