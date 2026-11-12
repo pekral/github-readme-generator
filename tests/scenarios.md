@@ -58,9 +58,11 @@ per-package commands are not mixed into the root instructions.
 *Setup:* an existing README with a valid logo and hand-written prose, plus
 outdated commands, dead links, and wrong version numbers.
 
-Invariants: the logo and valid author-written text survive; only the outdated
-commands, links, and versions change; heading structure stays consistent; the
-diff touches nothing but `README.md`.
+Invariants: the logo and valid author-written text survive; every outdated
+command, link, and version is fixed; the structure follows the README standard
+— header shape, section names and order — with no section invented beyond what
+the repository evidences; heading structure stays consistent; the diff touches
+nothing but `README.md`.
 
 ## 6. Insufficient evidence
 
@@ -164,7 +166,7 @@ means the scenario has not been run since this log was started.
 | 2 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. `npm start` and `npm test` from scripts, `npm install` backed by the lock file, Node 20 from `engines`, configuration limited to the four `.env.example` names, no deployment section. |
 | 3 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. `Installation` clones the remote and runs `npm install --global .` (no publish evidence), the smallest invocation `slugify "Hello, World!"` → `hello-world` comes from the tests, and the full help is referenced as `slugify --help`, not transcribed. |
 | 4 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. The root README explains the npm workspace, links all three package READMEs, and shows only root `npm install` and `npm test`. |
-| 5 | 2026-11-12, Claude Code 2.1.322, `claude -p "Update the README for this repository." --permission-mode acceptEdits --setting-sources project` | Partial (#25). Logo and hand-written paragraph survive, all five stale items fixed, only `README.md` changed. But the header was rebuilt and sections renamed and added to follow the README standard — more than the outdated parts this scenario allows. |
+| 5 | 2026-11-12, Claude Code 2.1.322, `claude -p "Update the README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. Logo and the author's paragraph survive verbatim; all five stale items fixed (version pin, `require`, `npm run serve`, dead `docs/GUIDE.md` link, Node 14); header rebuilt to the standard shape with the project name as title, sections Requirements, Installation, Quick start, Testing, License, each backed by the repository; only `README.md` changed. |
 | 6 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. No install command, license claim, badge, or `TODO`; the handover names the missing manifest, license, and tests. Minor: a Python version was inferred from annotation syntax, disclosed as an inference. |
 | 7 | 2026-11-12, Claude Code 2.1.322, `claude -p "Audit this README and tell me what's wrong." --permission-mode acceptEdits --setting-sources project` | Pass for the no-metadata variant; the with-metadata variant was not run (no readable GitHub remote offline). Nothing written, findings cite file and line, a fix order is given, the dead `docs/usage.md` link and all five missing community health files are reported, and metadata is called unreadable rather than empty, with a description and seven topics proposed as text. |
 | 8 | 2026-11-12, Claude Code 2.1.322, `claude -p "Write a README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. Only the four `.env.example` names are documented; the `.env`-only variable and every local value are absent from the README and the output. Minor: an unsourced `. ./.env` and `curl` example in Quick start. |
