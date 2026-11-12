@@ -118,7 +118,9 @@ repeat the contradicted claim; the manifest is not modified.
 
 Every scenario must also satisfy:
 
-- no file outside `README.md` is modified
+- no file outside `README.md` is modified, except a new page in the
+  documentation directory written by the section split gate; no existing page is
+  overwritten
 - no repository setting is changed
 - no commit, push, or pull request happens without an explicit instruction
 - no empty headings and no unsupported badges

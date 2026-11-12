@@ -38,9 +38,10 @@ to production code, configuration, or tests.
    padded.
 4. **Install path first.** Requirements → Installation → Configuration → Quick
    start run in that order, unbroken, so the reader never scrolls back.
-5. **Documentation-only diff.** Modify only the root `README.md`, or another file
-   the user names. Never edit code, tests, manifests, workflows, or config to
-   "match the README".
+5. **Documentation-only diff.** Modify only the root `README.md`, a new page in
+   the documentation directory (`docs/` by default) for a section the split gate
+   moves out, or another file the user names. Never overwrite a page the repository already ships, and never edit
+   code, tests, manifests, workflows, or config to "match the README".
 6. **No git side effects.** No staging, committing, pushing, or opening a PR
    unless the user explicitly asks. Preserve the user's existing working-tree changes.
 7. **No secrets.** Document variable *names* from safe templates; never copy real
@@ -103,6 +104,11 @@ and state it in the handover summary.
 Follow the adaptive template and style rules in
 `references/readme-structure.md`. Load it before drafting.
 
+Then run every composed section through the size-and-complexity gate in
+`references/section-split.md`, before anything is written. A section that
+trips it moves to its own page under `docs/` and leaves a summary behind. In
+audit mode the gate only reports which sections would move.
+
 ### 5. Validate and hand over
 
 Run `references/validation-checklist.md` before finishing. Run any Markdown,
@@ -124,5 +130,8 @@ Load on demand, not up front:
 - `references/evidence-policy.md` — what counts as evidence, commands and examples,
   badges and visual header, public surface findings, security and change scope.
   Read while scanning and whenever a claim feels unsupported.
+- `references/section-split.md` — when a section moves to its own page under
+  `docs/`, how that page is built, and what the README keeps. Read after
+  drafting, before writing.
 - `references/validation-checklist.md` — pre-handover checks and the handover
   summary shape. Read before finishing.
