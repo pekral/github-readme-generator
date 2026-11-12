@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.0.0 - 2026-11-12
+
+First stable release. Host verification remains limited to Claude Code, and
+the benchmark scorer still has the defects recorded in #11. This release
+does not add host coverage or establish an accuracy improvement.
+
 ### Added
 
 - An SVG logo and standalone icon in the Arch App Services visual style,
@@ -25,6 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Rechecked the root README against the shipped skill and its validation
+  checklist, including the section split rules. The first example now warns
+  about file changes, the testing section names all eleven manual scenarios,
+  and the release badge shows stable versions.
+- Updated the three versioned plugin manifests to `1.0.0`.
 - The README title is the project name; the purpose moves into a two- or
   three-sentence intro. One left-aligned header shape per case, no horizontal
   rules, no emoji in headings.
