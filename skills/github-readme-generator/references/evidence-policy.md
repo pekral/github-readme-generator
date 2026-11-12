@@ -32,10 +32,21 @@ spots must be marked.
 | Runtime or framework version | manifest constraints, CI matrix, engine fields, lock files |
 | Public API in an example | current source, tests, shipped examples |
 | Config key or env var | config files, config schema, `.env.example`, code that reads it |
-| Badge | package registry entry, release source, CI workflow file that can run on the default branch, coverage service config, license file |
+| Badge | package registry entry, release source, CI workflow file that can run on the default branch, coverage service config, license file, a registry badge the existing README already carries whose slug matches the manifest |
 | License | `LICENSE*` file, manifest license field |
 | Credits | `CONTRIBUTING*`, existing credits, repository contributors |
 | Related document link | the file actually present in the repository |
+| Documentation site link | a documentation link the existing README already carries |
+
+### Carried-over evidence
+
+In update mode, the README the maintainer already ships is itself evidence. A
+registry badge it carries whose package slug matches the manifest `name`, and a
+documentation site link it carries, stay even when the registry or site cannot
+be reached from this environment. Name each one in the handover summary as
+*kept but unverified*. Drop it only on evidence against it — a slug that
+differs from the manifest, or a check that ran and failed — never because a
+check could not run.
 
 Repository metadata (description, topics, homepage) counts only when it comes
 from a trustworthy source you actually read.
@@ -113,7 +124,9 @@ filename, which may be `LICENSE`, `LICENSE.md`, or `LICENSE.txt`.
 **PHP package published on Packagist.**
 
 Evidence: the `name` field of `composer.json`, and the package existing on
-Packagist. Without published-package evidence, use no registry badge.
+Packagist — or, in update mode, the existing README already carrying this
+badge for the same slug (see *Carried-over evidence*). Without either, use no
+registry badge.
 
 ```markdown
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/<vendor>/<package>.svg?style=flat-square)](https://packagist.org/packages/<vendor>/<package>)
