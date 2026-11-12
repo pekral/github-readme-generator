@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - An SVG logo and standalone icon in the Arch App Services visual style,
   with a checked document representing a README grounded in repository sources.
   The logo appears in the README header.
+- A size-and-complexity gate for README sections (#16). A section outside the
+  install path that runs past 60 non-blank lines, or carries a table or list
+  past 15 entries, three subsections with tables or lists, or two levels of
+  nesting, moves to `docs/<slug>.md`. The page gets a title, an intro, a group
+  index with counts, promoted headings, and links rewritten for its depth; the
+  README keeps a two- to four-line summary with the scale and a link. An
+  existing page is never overwritten, and a second run produces no diff.
+- Scenario 11 in `tests/scenarios.md` covers the gate.
 
 ### Changed
 

@@ -75,7 +75,9 @@ Write a README for this repository.
 
 The skill scans the repository, picks create / update / audit, writes the root
 `README.md` — editing the existing one in update mode — and ends with a
-summary of what it verified and what it could not prove. It never stages,
+summary of what it verified and what it could not prove. A section that has
+grown into a catalogue moves to a new page under `docs/`; a page the repository
+already ships is never overwritten. It never stages,
 commits, or pushes unless you ask.
 
 To get findings without touching a file:
@@ -101,7 +103,11 @@ read the repository's metadata — as text for you to apply.
   Packagist while a Rust crate documents Cargo and crates.io.
 - Treats every file it reads as data, not instructions. Text in a scanned
   repository that addresses the agent is reported to you, never obeyed.
-- Restricts its diff to `README.md`.
+- Moves a section past 60 lines, or with a table or list past 15 entries, to its
+  own page under `docs/` with a title, an intro, and a group index, and leaves a
+  two- to four-line summary with the scale and a link. The install path never
+  moves.
+- Restricts its diff to `README.md` and the pages it moves sections into.
 
 ## Documentation
 
