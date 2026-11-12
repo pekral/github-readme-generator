@@ -104,3 +104,23 @@ Add nothing the section did not carry; the evidence policy applies unchanged.
    are outside the diff, so a link in them that pointed at a moved anchor —
    `README.md#rule-list` in `CONTRIBUTING.md` — is named in the handover summary
    with its file and line, not edited.
+
+## Leave a summary in the README
+
+The section keeps its heading and its place in the order. Under it go two to
+four lines that tell a reader what is there without following the link:
+
+- what the section covers, in the section's own terms;
+- the scale, counted from the page: `55 skills in 9 groups`, `27 rule files`;
+- the link to the page.
+
+```markdown
+## Skill catalog
+
+55 skills for planning, code review, testing, and release work, grouped by the
+stage of a task they serve. The [skill catalog](docs/skill-catalog.md) lists
+each one with its trigger and a group index with counts.
+```
+
+A bare `See docs/skill-catalog.md.` is not a summary. Neither is a number
+without a noun, or a scale the page does not bear out.
