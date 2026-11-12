@@ -71,8 +71,8 @@ Add nothing the section did not carry; the evidence policy applies unchanged.
    section's own terms.
 3. **Index** — when the page carries three or more groups (`##` headings after
    promotion), a table of the groups, each linking to its anchor, with the
-   number of entries in it: the data rows of its table, or the items of its
-   list. Two groups or fewer need no index.
+   number of entries in it: the data rows of its tables plus the items of its
+   lists. Two groups or fewer need no index.
 
    ```markdown
    | Group | Entries |
@@ -149,6 +149,9 @@ without a noun, or a scale the page does not bear out.
   Never overwrite it, and never write a numbered variant beside it. Keep the
   section in the README as composed, and name the collision in the handover
   summary.
+- **Two sections of this run share a slug** — `Rules` and `Rules!` both become
+  `rules.md`. The first one writes the page; the second stays in the README as
+  composed and is named in the handover summary, like any other collision.
 - **The target page does not exist** — write it.
 
 A second run on the result therefore changes nothing: every moved section is
