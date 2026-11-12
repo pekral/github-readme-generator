@@ -10,6 +10,11 @@ tested against. Test two things separately:
 Compare each run against the same request without the skill. Judge factual
 correctness, structure, and the absence of hallucination — not exact wording.
 
+A clean session means only the copy under test is loaded. A copy installed in
+`~/.claude/skills/` wins over the one in the workspace's `.claude/skills/`, so
+copy the skill into the workspace and run with `--setting-sources project` —
+otherwise the run tests whichever version happens to be installed.
+
 ## 1. PHP library with external documentation
 
 *Setup:* a package with a banner asset, a `composer.json`, a `LICENSE.md`, a
@@ -165,4 +170,4 @@ means the scenario has not been run since this log was started.
 | 8 | | |
 | 9 | | |
 | 10 | | |
-| 11 | | |
+| 11 | 2026-11-12, Claude Code 2.1.322, `claude -p "Update the README for this repository." --permission-mode acceptEdits --setting-sources project` | Pass. The 30-skill section moved to `docs/skills.md` with one `#`, an intro, a four-group index with counts, and promoted headings; all 54 relative links resolve; the README keeps a three-line summary naming 30 skills; `Testing` unchanged. The 20-rule list stayed in the README because `docs/rules.md` exists, and the collision was named in the handover. A second run changed nothing. |
