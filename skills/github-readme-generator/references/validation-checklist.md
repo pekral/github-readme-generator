@@ -13,7 +13,9 @@ becomes a line in the handover summary.
    identifier the repository actually states and links to the real license
    filename; a published package carries its badge, and so does a CI workflow
    whose `on:` triggers can produce a run on the default branch — a workflow that
-   cannot is left without one.
+   cannot is left without one. A registry badge or documentation link carried
+   over from the existing README is kept when its slug matches the manifest,
+   even if publication could not be checked.
 5. Stated runtime and framework versions agree with the manifests and CI.
 6. No duplicated sections and no inconsistent heading levels. Section names
    match `readme-structure.md` verbatim (`Quick start`), no heading carries an
@@ -52,7 +54,9 @@ Report, briefly:
 - which information could not be proven, and what was therefore omitted —
   including any badge dropped because its workflow cannot run on the default
   branch, stated as the reason alone, never with a proposal to move, rename, or
-  edit the workflow file, and any manifest description the repository contradicts, quoted
+  edit the workflow file; any registry badge or documentation link kept from
+  the existing README but unverified because the check could not run; and any
+  manifest description the repository contradicts, quoted
   alongside the source that refutes it
 - which sections moved to which pages, and any section that tripped the gate
   but stayed — an install-path section, or a page that already existed

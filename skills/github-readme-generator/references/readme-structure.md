@@ -260,6 +260,10 @@ domain, not filler that would fit any project.
 - **Documented package** — when a separate documentation site is authoritative
   for installation and usage, keep the main install command and the first
   example, and link the docs for everything else instead of duplicating them.
+  A docs link the existing README carries is enough to delegate to, even when
+  the site cannot be reached. Quick start then holds that first example alone:
+  further options, variants, and how-it-works detail are left to the docs link,
+  not restated inline because the site was unchecked.
 - **Application** — the quick start must describe a verified path from a clean
   environment to a first run.
 - **CLI** — show the real install command, the smallest verified invocation, and

@@ -90,8 +90,10 @@ and state it in the handover summary.
 - **Create** — write a new README from verified information; omit what is missing
   and report it.
 - **Update** — diff the README against the current repository. Keep valid
-  branding, useful hand-written explanation, and working links. Fix only what is
-  outdated, unsupported, duplicated, or badly ordered.
+  branding, useful hand-written explanation, and working links. A registry
+  badge or docs link the README already carries counts as evidence when its slug
+  matches the manifest, even offline — keep it and report it as unverified. Fix
+  only what is outdated, unsupported, duplicated, or badly ordered.
 - **Audit** — analysis only. Write nothing. Return findings with sources and a
   recommended fix order. Cover the README, and the two public surfaces beside it
   — repository metadata, and the community health files a README links to — as

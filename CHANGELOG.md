@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   registry when publication is evidenced, otherwise `npm install --global .`
   from a checkout — and its help output is pointed to by the help command,
   never transcribed into the README (#24).
+- In update mode, a registry badge or documentation link the existing README
+  already carries counts as evidence when its slug matches the manifest. It is
+  kept and reported as kept but unverified when the registry or site cannot be
+  reached, instead of being dropped. A documented package keeps only its first
+  example in Quick start and leaves the rest to that link (#23).
 
 ## 1.0.0 - 2026-11-12
 
